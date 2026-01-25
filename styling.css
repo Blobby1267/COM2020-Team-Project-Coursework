@@ -31,4 +31,6 @@ button{
     padding: 10px;
     border: 2px solid #0c0505;
     width: 250px;
+label{
+    text-align: left;
 }
