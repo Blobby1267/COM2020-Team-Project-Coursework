@@ -5,5 +5,16 @@ CREATE TABLE IF NOT EXISTS group_table (
 );
 
 -- SELECT * FROM group_table;
-
 -- SELECT name FROM sqlite_master WHERE type='table';
+
+CREATE TABLE IF NOT EXISTS user_table (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    display_name TEXT NOT NULL,
+    role TEXT CHECK(role IN ('participant', 'moderator')) NOT NULL,
+    group_id INTEGER,
+    FOREIGN KEY (group_id) REFERENCES group_table(group_id)
+);
+
+-- SELECT * FROM user_table;
+-- SELECT name FROM sqlite_master WHERE type='table';
+
