@@ -18,3 +18,14 @@ CREATE TABLE IF NOT EXISTS user_table (
 -- SELECT * FROM user_table;
 -- SELECT name FROM sqlite_master WHERE type='table';
 
+CREATE TABLE IF NOT EXISTS action_type (
+    action_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category TEXT NOT NULL,
+    action_name TEXT NOT NULL,
+    unit TEXT NOT NULL,
+    co2e_per_unit REAL NOT NULL,
+    notes TEXT
+);
+
+-- SELECT * FROM action_type;
+-- SELECT name FROM sqlite_master WHERE type='table';
