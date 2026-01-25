@@ -29,3 +29,18 @@ CREATE TABLE IF NOT EXISTS action_type (
 
 -- SELECT * FROM action_type;
 -- SELECT name FROM sqlite_master WHERE type='table';
+
+CREATE TABLE IF NOT EXISTS action_log (
+    log_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    action_type_id INTEGER NOT NULL,
+    quantity REAL NOT NULL,
+    date TEXT NOT NULL,
+    calculated_co2e REAL NOT NULL,
+    evidence_required INTEGER CHECK(evidence_required IN (0,1)),
+    FOREIGN KEY (user_id) REFERENCES user_table(user_id),
+    FOREIGN KEY (action_type_id) REFERENCES action_type(action_type_id)
+);
+
+--SELECT * FROM action_log;
+--SELECT name FROM sqlite_master WHERE type='table';
