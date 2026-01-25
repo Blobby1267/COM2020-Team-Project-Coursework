@@ -1,3 +1,5 @@
+package src.main.java.com;
+
 public class Main {
     static class User {
         private String username;
