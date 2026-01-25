@@ -3,8 +3,12 @@ h1 {
     text-align: middle;
     font-size: 20px;
     font-weight: bold;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
 
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    height:auto;
+    background-color: linear-gradient(to right, rgb(11, 133, 117) 0%, rgb(11, 133, 117) 30%, white 30%, white 100%  );
 }
 
 .color-block{
@@ -12,4 +16,19 @@ h1 {
     height: 300px;
     background-color: lightseagreen;
 
+}
+
+input{
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid #0c0505;
+    width: 250px;
+}
+
+button{
+    background-color: rgb(9, 73, 93);
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid #0c0505;
+    width: 250px;
 }
