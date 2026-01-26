@@ -76,3 +76,17 @@ CREATE TABLE IF NOT EXISTS submission (
 --SELECT * FROM submission;
 --SELECT name from sqlite_master WHERE type='table';
 
+CREATE TABLE IF NOT EXISTS moderation_decision(
+    decision_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    submission_id INTEGER NOT NULL,
+    moderator_id INTEGER NOT NULL,
+    decision TEXT CHECK(decision IN ('Approved', 'Rejected')) NOT NULL,
+    reason TEXT,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (submission_id) REFERENCES submission(submission_id),
+    FOREIGN KEY (moderator_id) REFERENCES user_table(user_id)
+);
+
+--SELECT * FROM moderation_decision;
+--SELECT name from sqlite_master WHERE type='table';
+
