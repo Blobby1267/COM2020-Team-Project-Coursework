@@ -1,2 +1,5 @@
 # Team-Project
-https://docs.google.com/document/d/1oMZoaGZKyMbLoGqKo7rHFDdQog8alZLrtOIWBsHrWew/edit?usp=sharing
+
+
+Requirements:
+Apache maven (to boot server)
