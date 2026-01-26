@@ -73,6 +73,6 @@ CREATE TABLE IF NOT EXISTS submission (
     FOREIGN KEY (group_id) REFERENCES group_table(group_id)
 );
 
-SELECT * FROM submission;
-SELECT name from sqlite_master WHERE type='table';
+--SELECT * FROM submission;
+--SELECT name from sqlite_master WHERE type='table';
 
