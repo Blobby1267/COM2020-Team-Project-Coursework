@@ -1,0 +1,96 @@
+h1 {
+    color:white;
+    text-align: left;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    height:auto;
+    background: linear-gradient(to right, #007D69 0%, #007D69 30%, white 30%, white 100%  );
+}
+
+input{
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid #0c0505;
+    width: 250px;
+    background-color: white;
+}
+
+button{
+    background-color: #003C3C;
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid #003C3C;
+    width: 250px;
+    color: white;
+    font-size: 25px;
+}
+label{
+    text-align: left;
+}
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    background-color: #007D69 30%;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
+
+header{
+	background-color: #003C3C;
+    height: 75px;
+}
+
+select{
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid #003C3C;
+    width: 250px;
+}
