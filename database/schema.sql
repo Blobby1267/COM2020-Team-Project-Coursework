@@ -60,3 +60,19 @@ CREATE TABLE IF NOT EXISTS challenge (
 --SELECT * FROM challenge;
 --SELECT name FROM sqlite_master WHERE type='table';
 
+CREATE TABLE IF NOT EXISTS submission (
+    submission_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    challenge_id INTEGER NOT NULL,
+    user_id INTEGER,
+    group_id INTEGER,
+    status TEXT CHECK(status IN ('Pending', 'Approved', 'Rejected')) NOT NULL,
+    total_co2e REAL NOT NULL,
+    submitted_at TEXT NOT NULL,
+    FOREIGN KEY (challenge_id) REFERENCES challenge(challenge_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (group_id) REFERENCES group_table(group_id)
+);
+
+SELECT * FROM submission;
+SELECT name from sqlite_master WHERE type='table';
+
