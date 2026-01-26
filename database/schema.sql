@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS group_table (
 CREATE TABLE IF NOT EXISTS user_table (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
     display_name TEXT NOT NULL,
-    role TEXT CHECK(role IN ('participant', 'moderator')) NOT NULL,
+    user_role TEXT CHECK(user_role IN ('participant', 'moderator')) NOT NULL,
+    year_of_study TEXT CHECK(year_of_study IN ('1st Year', '2nd Year', '3rd Year', '4th Year', 'PostGraduate')) NOT NULL,
+    campus TEXT CHECK(campus IN ('Streatham', 'St Lukes', 'Penryn', 'Truro')) NOT NULL,
     group_id INTEGER,
     FOREIGN KEY (group_id) REFERENCES group_table(group_id)
 );
@@ -44,3 +46,17 @@ CREATE TABLE IF NOT EXISTS action_log (
 
 --SELECT * FROM action_log;
 --SELECT name FROM sqlite_master WHERE type='table';
+
+CREATE TABLE IF NOT EXISTS challenge (
+    challenge_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    challenge_title TEXT NOT NULL,
+    description TEXT,
+    frequency TEXT CHECK(frequency IN('Daily', 'Weekly', 'Monthly')),
+    start_date TEXT NOT NULL,
+    end_date TEXT NOT NULL,
+    scope TEXT CHECK(scope IN('Personal', 'Group')) NOT NULL
+);
+
+--SELECT * FROM challenge;
+--SELECT name FROM sqlite_master WHERE type='table';
+
