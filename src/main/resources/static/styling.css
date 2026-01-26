@@ -28,6 +28,13 @@ button{
     color: white;
     font-size: 25px;
 }
+
+.log-out button{
+    width: 6em;
+    height: 3em;
+    position: fixed;
+    float:right;
+}
 label{
     text-align: left;
 }
@@ -94,3 +101,10 @@ select{
     border: 2px solid #003C3C;
     width: 250px;
 }
+
+#logo {
+    width: 3em;
+    height: 3em;
+}
+
+
