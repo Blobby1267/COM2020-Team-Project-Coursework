@@ -20,4 +20,17 @@ public class LoginController {
         }
         return "redirect:/webpage.html?error=true"; // Try again
     }
+
+    @PostMapping("/register")
+    public String handleRegister(@RequestParam String username, @RequestParam String password) {
+        if (userRepository.findByUsername(username) == null) {
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(password);
+            newUser.setPoints(0); // Default points
+            userRepository.save(newUser);
+            return "redirect:/webpage.html?registered=true";
+        }
+        return "redirect:/webpage.html?error=exists";
+    }
 }
