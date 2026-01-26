@@ -8,7 +8,11 @@ h1 {
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     height:auto;
-    background: linear-gradient(to right, #007D69 0%, #007D69 30%, white 30%, white 100%  );
+    background-image: url('https://www.bing.com/th/id/OIP.Gb45YfRt5DytOK0w6wTndQHaGr?w=234&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2');
+    <!-- filler image-->
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 input{
@@ -28,23 +32,39 @@ button{
     color: white;
     font-size: 25px;
 }
+
+.log-out button{
+    width: 6em;
+    height: 3em;
+    position: fixed;
+    float:right;
+}
 label{
     text-align: left;
+}
+
+select{
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid #003C3C;
+    width: 250px;
 }
 
 .sidebar {
     margin: 0;
     padding: 0;
     width: 300px;
-    background-color: #007D69 30%;
+    background-color: #007D69;
     position: fixed;
     height: 100%;
     overflow: auto;
+    color: white;
 }
 
 .sidebar a {
   display: block;
-  color: black;
+  color: white;
   padding: 16px;
   text-decoration: none;
 }
@@ -87,10 +107,9 @@ header{
     height: 75px;
 }
 
-select{
-    background-color: white;
-    border-radius: 15px;
-    padding: 10px;
-    border: 2px solid #003C3C;
-    width: 250px;
+#logo {
+    width: 3em;
+    height: 3em;
 }
+
+
