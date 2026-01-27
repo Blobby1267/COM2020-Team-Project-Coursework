@@ -33,12 +33,14 @@ button{
     font-size: 25px;
 }
 
-.log-out button{
-    width: 6em;
-    height: 3em;
-    position: fixed;
-    float:right;
+.log-out {
+    background-color: #007D69;
+    width: 75px;
+    color: white;
+    font-size: 15px;
+    padding: 0px;
 }
+
 label{
     text-align: left;
 }
@@ -104,7 +106,9 @@ div.content {
 
 header{
 	background-color: #003C3C;
-    height: 75px;
+    height: 70px;
+    display: flex;
+    text-align: left;
 }
 
 #logo {

@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
 
 @Entity // Tells Java this maps to a database table
+@Table(name = "users")
 public class User {
     @Id  // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing ID
