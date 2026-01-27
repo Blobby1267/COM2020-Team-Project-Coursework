@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.carbon.model.User;
 import com.carbon.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 public class LoginController {
@@ -16,12 +17,13 @@ public class LoginController {
     public String handleLogin(@RequestParam String username, @RequestParam String password) {
         User user = userRepository.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
-            return "redirect:/dashboard.html"; // Success!
+            return "redirect:/main_screen.html"; // Success!
         }
-        return "redirect:/webpage.html?error=true"; // Try again
+        return "redirect:/login.html?error=true"; // Try again
     }
 
     @PostMapping("/register")
+    @Transactional
     public String handleRegister(@RequestParam String username, @RequestParam String password) {
         if (userRepository.findByUsername(username) == null) {
             User newUser = new User();
@@ -29,8 +31,8 @@ public class LoginController {
             newUser.setPassword(password);
             newUser.setPoints(0); // Default points
             userRepository.save(newUser);
-            return "redirect:/webpage.html?registered=true";
+            return "redirect:/main_screen.html?registered=true";
         }
-        return "redirect:/webpage.html?error=exists";
+        return "redirect:/login.html?error=exists";
     }
 }
