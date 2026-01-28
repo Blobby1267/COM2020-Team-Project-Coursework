@@ -143,9 +143,10 @@ select{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100%;
+    width: 80%;
     margin-block: 20px;
     margin-inline: 20px;
+    flex: 1;
 }
 
 #task-information-container h1{
