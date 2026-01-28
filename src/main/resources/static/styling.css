@@ -170,12 +170,12 @@ select{
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    font-size: 50px;
+    font-size: 30px;
     color: white;
     text-align: center;
     background-color: #007D69;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 10px;
+    margin-left: 800px;
 }
