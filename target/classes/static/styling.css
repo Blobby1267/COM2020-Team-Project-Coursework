@@ -183,6 +183,11 @@ select{
     overflow: scroll;
 }
 
+.container {
+    display: flex;
+    gap: 10px;
+}
+
 .circle{
     width: 300px;
     height: 300px;
