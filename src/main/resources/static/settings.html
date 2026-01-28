@@ -25,6 +25,78 @@
         <a href="challenges.html">Challenges</a>
         <a href="settings.html">Settings</a>
       </div>
+
+      <div id="task-information-container">
+        <div class="task-box" id="settings-box">
+
+
+          <h2>Update username:</h2>
+          <form action="/update_username" method="post">
+            <fieldset>
+              <p>
+                  <input name="old-username" placeholder="Old username..." />
+              </p>
+              <p>
+                  <input name="new-username" placeholder="New username..."/>
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+            </fieldset>
+          </form>
+
+
+          <h2>Update password:</h2>
+          <form action="/update_password" method="post">
+            <fieldset>
+              <p>
+                  <input name="old-password" placeholder="Old password..." />
+              </p>
+              <p>
+                  <input name="new-password" placeholder="New password..."/>
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+            </fieldset>
+          </form>
+
+          <h2>Update role:</h2>
+          <form action="/update_role" method="post">
+            <fieldset>
+              <p>
+                <select name="roles">
+                    <option value="1st">First Year</option>
+                    <option value="2nd">Second Year</option>
+                    <option value="3rd">Third Year</option>
+                    <option value="4th">Fourth Year</option>
+                    <option value="postgrad">PostGraduate</option>
+                    <option value="staff">Staff</option>
+                </select>
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+            </fieldset>
+          </form>
+
+          <h2>Update campus:</h2>
+          <form action="/update_campus" method="post">
+            <fieldset>
+              <p>
+                <select name="campus">
+                    <option value="streatham">Streatham </option>
+                    <option value="Stlukes">St Lukes</option>
+                    <option value="penryn">Penryn </option>
+                    <option value="truro">Truro</option>
+                </select>
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+            </fieldset>
+          </form>         
+        </div>
     </div>
 </body>
-</html>
+</html> 

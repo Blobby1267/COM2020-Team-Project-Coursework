@@ -121,7 +121,7 @@ select{
     width: 100px;
     height: 80%;
     color: white;
-    font-size: 20px;
+    font-size: 15px;
     padding-inline: 10px;
 }
 
@@ -154,6 +154,11 @@ select{
     color: darkgreen;
 }
 
+#task-information-container h2{
+    font-size: 15px;
+    color: white;
+}
+
 #task-information-container .task-box{
     padding: 10px;
     margin-inline-start: 10px;
@@ -178,4 +183,5 @@ select{
     justify-content: center;
     align-items: center;
     margin-left: 800px;
+    margin-top: 200px;
 }
