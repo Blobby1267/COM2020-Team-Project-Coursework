@@ -42,6 +42,17 @@ button{
     font-size: 25px;
 }
 
+.settings-submit{
+    background-color: #003C3C;
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid #003C3C;
+    width: 260px;
+    color: white;
+    font-size: 25px;
+}
+
+
 label{
     text-align: left;
 }
@@ -185,7 +196,7 @@ select{
 
 .container {
     display: flex;
-    gap: 10px;
+    gap: 50px;
 }
 
 .circle{
