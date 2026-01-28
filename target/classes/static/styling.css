@@ -5,11 +5,20 @@ h1 {
     font-weight: bold;
 }
 
-body {
+*{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    height:auto;
+}
+
+
+
+html, body{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
     background-image: url('https://www.bing.com/th/id/OIP.Gb45YfRt5DytOK0w6wTndQHaGr?w=234&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2');
-    <!-- filler image-->
+    /*-- filler image-->*/
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -33,14 +42,6 @@ button{
     font-size: 25px;
 }
 
-.log-out {
-    background-color: #007D69;
-    width: 75px;
-    color: white;
-    font-size: 15px;
-    padding: 0px;
-}
-
 label{
     text-align: left;
 }
@@ -56,11 +57,11 @@ select{
 .sidebar {
     margin: 0;
     padding: 0;
-    width: 300px;
+    width: 20%;
     background-color: #007D69;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
+    /* position: fixed; */
+    height: auto;
+    /* overflow: auto; */
     color: white;
 }
 
@@ -81,13 +82,8 @@ select{
   color: white;
 }
 
-div.content {
-    margin-left: 200px;
-    padding: 1px 16px;
-    height: 1000px;
-}
 
-@media screen and (max-width: 700px) {
+/* @media screen and (max-width: 700px) {
     .sidebar {
         width: 100%;
         height: auto;
@@ -95,28 +91,76 @@ div.content {
     }
     .sidebar a {float: left;}
     div.content {margin-left: 0;}
-}
+} */
 
-@media screen and (max-width: 400px) {
+/* @media screen and (max-width: 400px) {
     .sidebar a {
         text-align: center;
         float: none;
     }
-}
+} */
 
-header{
+/*TOP BAR*/
+
+#top-bar{
 	background-color: #003C3C;
     height: 70px;
     display: flex;
-    text-align: left;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #logo {
-    width: 3em;
-    height: 3em;
+    height: 100%;
 }
 
+.log-out {
+    background-color: #007D69;
+    width: 100px;
+    height: 100%;
+    color: white;
+    font-size: 15px;
+    padding-inline: 20px;
+}
 
-p{
+/* p{
     text-align: right;
+} */
+
+/*TASK/MAIN PAGE*/
+
+#main-task-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+
+}
+
+#task-information-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-block: 20px;
+    margin-inline: 20px;
+}
+
+#task-information-container h1{
+    font-size: 20px;
+    color: darkgreen;
+}
+
+#task-information-container .task-box{
+    padding: 10px;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    background-color: #04AA6D;
+    width: 30%;
+
+    border-radius: 10px;
+    height: auto;
+    overflow: scroll;
 }

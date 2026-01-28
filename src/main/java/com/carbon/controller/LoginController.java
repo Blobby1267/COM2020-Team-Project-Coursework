@@ -20,10 +20,10 @@ public class LoginController {
         User user = userRepository.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
             LOGGER.info("User has successfully signed in.");
-            return "redirect:/dashboard.html"; // Success!
+            return "redirect:/tasks.html"; // Success!
         }
         LOGGER.info("User password is incorrect.");
-        return "redirect:/webpage.html?error=true"; // Try again
+        return "redirect:/login.html?error=true"; // Try again
     }
 
     @PostMapping("/register")
@@ -35,9 +35,9 @@ public class LoginController {
             newUser.setPoints(0); // Default points
             userRepository.save(newUser);
             LOGGER.info("User has been created.");
-            return "redirect:/webpage.html?registered=true";
+            return "redirect:/tasks.html?registered=true";
         }
         LOGGER.info("User already exists.");
-        return "redirect:/webpage.html?error=exists";
+        return "redirect:/login.html?error=exists";
     }
 }

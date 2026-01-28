@@ -1,34 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title> Carbon Challenge! </title>
-    <link rel="stylesheet" href="styling.css">
-</head>
+    <title>Carbon Challenge!</title>
+    <link rel="stylesheet" href="styling.css" />
+  </head>
 
-<body>
-    <header style="background-color:#003C3C">
-        <img src="src\main\resources\Screenshot 2026-01-26 150352.png" id="logo" alt="jhjkh">
-        <h1>FOOTPRINT</h1>
-        <button type="submit" id="log-out button">Log Out</button>
-    </header>
-
-        <!-- The sidebar -->
-    <div class="sidebar">
-    <a class="active" href="tasks.html">Tasks</a>
-    <a href="profile.html">Profile</a>
-    <a href="leaderboard.html">Leaderboard</a>
-    <a href="groups.html">Groups</a>
-    <a href="analytics.html">Analytics</a>
-    <a href="evidence.html">Evidence</a>
-    <a href="challenges.html">Challenges</a>
-    <a href="settings.html">Settings</a>
+  <body>
+    <div id="top-bar">
+      <img src="Screenshot 2026-01-26 150352.png" id="logo" alt="footprint" />
+      <h1>FOOTPRINT</h1>
+      <button type="submit" class="log-out">Log Out</button>
     </div>
 
-    <div>
-        <p>
-            tasks page
-        </p>
+    <!-- The sidebar -->
+    <div id="main-task-container">
+      <div class="sidebar">
+        <a class="active" href="tasks.html">Tasks</a>
+        <a href="profile.html">Profile</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="groups.html">Groups</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="challenges.html">Challenges</a>
+        <a href="settings.html">Settings</a>
+      </div>
+
+      <div id="task-information-container">
+        <div class="task-box" id="daily-tasks">
+          <h1>Daily Tasks:</h1>
+        </div>
+        <div class="task-box" id="weekly-tasks">
+          <h1>Weekly Tasks:</h1>
+          <p>
+          </p>
+        </div>
+        <div class="task-box" id="monthly-tasks">
+          <h1>Monthly Challenges:</h1>
+          <p>
+          </p>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
