@@ -52,6 +52,16 @@ button{
     font-size: 25px;
 }
 
+.delete-button{
+    background-color: rgb(231, 59, 59);
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid rgb(231, 59, 59);
+    width: 250px;
+    color: white;
+    font-size: 25px;
+}
+
 
 label{
     text-align: left;
@@ -174,7 +184,7 @@ select{
     padding: 10px;
     margin-inline-start: 10px;
     margin-inline-end: 10px;
-    background-color: #04AA6D;
+    background-color: #007D69;
     width: 30%;
 
     border-radius: 10px;
@@ -188,6 +198,17 @@ select{
     margin-inline-end: 10px;
     background-color: #007D69;
     width: 60%;
+
+    border-radius: 10px;
+    height: auto;
+}
+
+#task-information-container .profile-box{
+    padding: 10px;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    background-color: #007D69;
+    width: 85%;
 
     border-radius: 10px;
     height: auto;
