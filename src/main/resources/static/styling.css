@@ -214,6 +214,18 @@ select{
     height: auto;
 }
 
+#task-information-container .challenges-box{
+    padding: 10px;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    background-color: #007D69;
+    width: 90%;
+
+    border-radius: 10px;
+    height: auto;
+    overflow: scroll;
+}
+
 .container {
     display: flex;
     gap: 50px;
