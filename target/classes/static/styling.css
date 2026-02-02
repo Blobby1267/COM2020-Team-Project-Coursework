@@ -208,7 +208,7 @@ select{
     margin-inline-start: 10px;
     margin-inline-end: 10px;
     background-color: #007D69;
-    width: 85%;
+    width: 100%;
 
     border-radius: 10px;
     height: auto;
@@ -219,7 +219,7 @@ select{
     margin-inline-start: 10px;
     margin-inline-end: 10px;
     background-color: #007D69;
-    width: 90%;
+    width: 100%;
 
     border-radius: 10px;
     height: auto;
@@ -242,6 +242,4 @@ select{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 800px;
-    margin-top: 200px;
 }
