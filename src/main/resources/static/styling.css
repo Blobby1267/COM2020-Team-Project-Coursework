@@ -226,6 +226,29 @@ select{
     overflow: scroll;
 }
 
+#task-information-container .groups-box{
+    padding: 10px;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    background-color: #007D69;
+    width: 50%;
+
+    border-radius: 10px;
+    height: auto;
+    overflow: scroll;
+}
+
+#task-information-container .groups2-box{
+    padding: 10px;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    background-color: #007D69;
+    width: 50%;
+
+    border-radius: 10px;
+    height: 50%;
+}
+
 .container {
     display: flex;
     gap: 50px;
@@ -243,3 +266,18 @@ select{
     justify-content: center;
     align-items: center;
 }
+
+table{
+    border: 2px solid #007D69;
+    border-radius: 10px;
+    border-collapse: collapse;
+    width: 90%;
+}
+
+th, td{
+    padding: 8px;
+    text-align: left;
+    border-bottom: 3px solid #007D69;
+}
+
+tr:hover{background-color: #007D69;}
