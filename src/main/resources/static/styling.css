@@ -268,16 +268,16 @@ select{
 }
 
 table{
-    border: 2px solid #007D69;
+    border: 2px solid white;
     border-radius: 10px;
-    border-collapse: collapse;
     width: 90%;
 }
 
 th, td{
     padding: 8px;
     text-align: left;
-    border-bottom: 3px solid #007D69;
+    border-bottom: 3px solid white;
+    color: white;
 }
 
-tr:hover{background-color: #007D69;}
+tr:hover{background-color: #869391;}
