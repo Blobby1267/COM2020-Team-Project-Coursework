@@ -197,7 +197,7 @@ select{
     margin-inline-start: 10px;
     margin-inline-end: 10px;
     background-color: #007D69;
-    width: 60%;
+    width: 53%;
 
     border-radius: 10px;
     height: auto;
@@ -268,16 +268,18 @@ select{
 }
 
 table{
-    border: 2px solid white;
+    border: 5px solid white;
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
+    background-color: white;
+    height: auto;
 }
 
 th, td{
     padding: 8px;
     text-align: left;
     border-bottom: 3px solid white;
-    color: white;
+    color: #007D69;
 }
 
 tr:hover{background-color: #869391;}
