@@ -18,7 +18,6 @@ html, body{
     padding: 0;
     margin: 0;
     background-image: url('Background.png');
-    /*-- filler image-->*/
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -246,7 +245,7 @@ label{
     gap: 50px;
 }
 
-.circle{
+#container .circle{
     width: 300px;
     height: 300px;
     border-radius: 50%;
@@ -257,6 +256,7 @@ label{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
 }
 
 table{

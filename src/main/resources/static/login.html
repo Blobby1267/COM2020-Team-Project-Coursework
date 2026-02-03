@@ -11,48 +11,55 @@
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
     </div>
-    <div class="sidebar">
-    <form action="/register" method="post">
-            <p>
-                <input name="username" placeholder="Username..." />
-            </p>
-            <p>
-                <input name="password" placeholder="Password..."/>
-            </p>
-            <p>
-                <select name="roles">
-                    <option value="1st">First Year</option>
-                    <option value="2nd">Second Year</option>
-                    <option value="3rd">Third Year</option>
-                    <option value="4th">Fourth Year</option>
-                    <option value="postgrad">PostGraduate</option>
-                    <option value="staff">Staff</option>
-                </select>
-            </p>
-            <p>
-                <select name="campus">
-                    <option value="streatham">Streatham </option>
-                    <option value="Stlukes">St Lukes</option>
-                    <option value="penryn">Penryn </option>
-                    <option value="truro">Truro</option>
-                </select>
-            </p>
-            <p>
-                <button type="submit">SIGN UP</button>
-            </p>
-    </form>
-    <form action="/login" method="post">
-            <p>
-                <input name="username" placeholder="Username..." />
-            </p>
-            <p>
-                <input name="password" placeholder="Password..."/>
-            </p>
-            <p>
-                <button type="submit">LOG IN</button>
-            </p>
-    </form>
+    <div id="main-task-container">
+        <div class="sidebar">
+            <form action="/register" method="post">
+                    <p>
+                        <input name="username" placeholder="Username..." />
+                    </p>
+                    <p>
+                        <input name="password" placeholder="Password..."/>
+                    </p>
+                    <p>
+                        <select name="roles">
+                            <option value="1st">First Year</option>
+                            <option value="2nd">Second Year</option>
+                            <option value="3rd">Third Year</option>
+                            <option value="4th">Fourth Year</option>
+                            <option value="postgrad">PostGraduate</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                    </p>
+                    <p>
+                        <select name="campus">
+                            <option value="streatham">Streatham </option>
+                            <option value="Stlukes">St Lukes</option>
+                            <option value="penryn">Penryn </option>
+                            <option value="truro">Truro</option>
+                        </select>
+                    </p>
+                    <p>
+                        <button type="submit">SIGN UP</button>
+                    </p>
+            </form>
+            <form action="/login" method="post">
+                    <p>
+                        <input name="username" placeholder="Username..." />
+                    </p>
+                    <p>
+                        <input name="password" placeholder="Password..."/>
+                    </p>
+                    <p>
+                        <button type="submit">LOG IN</button>
+                    </p>
+            </form>
+
+        </div>
+        <div id="container">
+            <div class="circle">
+                We have saved XX tonnes of CO2
+            </div>
+        </div>
     </div>
-    <div class="circle">We have saved XX tonnes of carbon emissions!</div>
 </body>
 </html>
