@@ -15,6 +15,9 @@ public class User {
     private String username;
     private String password;
     private int points;
+    private String role = "First Year";
+    private String campus = "streatham";
+
 
     // getters
     public Long getId() {
@@ -29,6 +32,12 @@ public class User {
     public int getPoints() {
         return points;
     }
+    public String getRole() {
+        return role;
+    }
+    public String getCampus() {
+        return campus;
+    }
 
     // setters
     public void setUsername(String username) {
@@ -39,5 +48,11 @@ public class User {
     }
     public void setPoints(int points) {
         this.points = points;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public void setCampus(String campus) {
+        this.campus = campus;
     }
 }
