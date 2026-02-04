@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class Challenge {
     @Id  // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing ID
-    private Long id; // Unique identifier
+    private Long id;
     private String title;
     private String description;
     private int points;
