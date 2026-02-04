@@ -464,3 +464,51 @@ VALUES (
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-02-04 12:46:17.936929Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CHALLENGE" not found; SQL statement:
+INSERT INTO challenge (challenge_title, description, frequency, start_date, end_date, scope, points)
+VALUES (
+  'Meat-Free Week',
+  'Eat plant-based meals every day for a week to reduce food-related CO2 emissions.',
+  'Daily',
+  '2026-03-15',
+  '2026-03-22',
+  'Personal',
+  15
+) [42102-224]
+2026-02-04 12:47:52.485561Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CHALLENGE" not found; SQL statement:
+INSERT INTO challenge (DESCRIPTION, END_DATE, FREQUENCY, POINTS, SCOPE, START_DATE, TITLE)
+VALUES (
+  'Eat plant-based meals every day for a week to reduce food-related CO2 emissions.',
+  '2026-03-22',
+  'Daily',
+  15,
+  'Personal',
+  '2026-03-15',
+  'Meat-Free Week'
+) [42102-224]
+2026-02-04 12:47:52.486560Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CHALLENGE" not found; SQL statement:
+INSERT INTO challenge (DESCRIPTION, END_DATE, FREQUENCY, POINTS, SCOPE, START_DATE, TITLE)
+VALUES (
+  'Organize and take part in a local park clean-up; collect litter and recycle where possible.',
+  '2026-04-01',
+  'Monthly',
+  20,
+  'Group',
+  '2026-04-01',
+  'Community Park Clean-up'
+) [42102-224]
+2026-02-04 12:49:43.474880Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CHALLENGE" not found; SQL statement:
+INSERT INTO challenge (DESCRIPTION, END_DATE, FREQUENCY, POINTS, SCOPE, START_DATE, TITLE)
+VALUES (
+  'Organize and take part in a local park clean-up; collect litter and recycle where possible.',
+  '2026-04-01',
+  'Monthly',
+  20,
+  'Personal',
+  '2026-04-01',
+  'Community Park Clean-up'
+) [42102-224]
