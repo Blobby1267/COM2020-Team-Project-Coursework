@@ -275,3 +275,7 @@ th, td{
 }
 
 tr:hover{background-color: #d2d3d3;}
+
+.hidden-row{
+    display: none;
+}
