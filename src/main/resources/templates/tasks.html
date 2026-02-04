@@ -41,11 +41,29 @@
         </div>
         <div class="task-box" id="weekly-tasks">
           <h1>Weekly Tasks:</h1>
+          <table>
+            <tr th:each="challenge : ${weeklyChallenges}">
+              <td th:text="${challenge.title}"></td>
+              <td th:text="${challenge.points}"></td>
+            </tr>
+            <tr class="hidden-row">
+              <td colspan="2">EXTRA INFORMATION!!!!!</td>
+            </tr>
+          </table>
           <p>
           </p>
         </div>
         <div class="task-box" id="monthly-tasks">
           <h1>Monthly Challenges:</h1>
+          <table>
+            <tr th:each="challenge : ${monthlyChallenges}">
+              <td th:text="${challenge.title}"></td>
+              <td th:text="${challenge.points}"></td>
+            </tr>
+            <tr class="hidden-row">
+              <td colspan="2">EXTRA INFORMATION!!!!!</td>
+            </tr>
+          </table>
           <p>
           </p>
         </div>
