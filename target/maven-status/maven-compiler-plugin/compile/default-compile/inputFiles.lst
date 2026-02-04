@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-C:\Team-Project\src\main\java\com\carbon\repository\UserRepository.java
-C:\Team-Project\src\main\java\com\carbon\service\ChallengeService.java
-C:\Team-Project\src\main\java\com\carbon\TeamProjectApplication.java
-C:\Team-Project\src\main\java\com\carbon\repository\ChallengeRepository.java
-C:\Team-Project\src\main\java\com\carbon\model\Challenge.java
-C:\Team-Project\src\main\java\com\carbon\controller\ChallengePageController.java
-C:\Team-Project\src\main\java\com\carbon\model\User.java
-C:\Team-Project\src\main\java\com\carbon\controller\LoginController.java
-=======
 C:\Users\Gamer\OneDrive\Documents\Uni\Year 2\New folder\Team-Project-1\src\main\java\com\carbon\controller\ChallengePageController.java
 C:\Users\Gamer\OneDrive\Documents\Uni\Year 2\New folder\Team-Project-1\src\main\java\com\carbon\model\Challenge.java
 C:\Users\Gamer\OneDrive\Documents\Uni\Year 2\New folder\Team-Project-1\src\main\java\com\carbon\repository\ChallengeRepository.java
@@ -16,4 +6,3 @@ C:\Users\Gamer\OneDrive\Documents\Uni\Year 2\New folder\Team-Project-1\src\main\
 C:\Users\Gamer\OneDrive\Documents\Uni\Year 2\New folder\Team-Project-1\src\main\java\com\carbon\TeamProjectApplication.java
 C:\Users\Gamer\OneDrive\Documents\Uni\Year 2\New folder\Team-Project-1\src\main\java\com\carbon\controller\LoginController.java
 C:\Users\Gamer\OneDrive\Documents\Uni\Year 2\New folder\Team-Project-1\src\main\java\com\carbon\service\ChallengeService.java
->>>>>>> ed964fd71c90089c2815cada16213b0418486b9b
