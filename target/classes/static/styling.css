@@ -322,3 +322,23 @@ tr:hover{background-color: #d2d3d3;}
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
+
+.collapse{
+    background-color: white;
+    color: #007D69;
+    cursor: pointer;
+    padding: 10px;
+    width: auto;
+    border: none;
+}
+
+.collapse:hover{
+    background-color: #d2d3d3;
+}
+
+.content{
+    padding: 0 10px;
+    display: none;
+    overflow: hidden;
+    background-color: white;
+}
