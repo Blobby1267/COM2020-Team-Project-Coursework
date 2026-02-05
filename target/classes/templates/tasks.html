@@ -55,7 +55,7 @@
         </div>
         <div class="task-box" id="monthly-tasks">
           <h1>Monthly Challenges:</h1>
-          <table>
+          <!-- <table>
             <tr th:each="challenge : ${monthlyChallenges}">
               <td th:text="${challenge.title}"></td>
               <td th:text="${challenge.points}"></td>
@@ -63,11 +63,28 @@
             <tr class="hidden-row">
               <td colspan="2">EXTRA INFORMATION!!!!!</td>
             </tr>
-          </table>
-          <!-- <button type="button" class="collapse">th:text="${challenge.title}"</button>
-          <div class="content">
-            <p>th:text="${challenge.points}"</p>
-          </div> -->
+          </table> -->
+          <div class="row">
+            <div class="column" onclick="openTab('b1');">New task</div>
+          </div>
+
+          <div id="b1" class="containerTab" style="display:none">
+            <span onclick="this.parentElement.style.display='none'"
+            class="closebtn">x</span>
+            <h2>New task</h2>
+            <p>Task details</p>
+          </div>
+
+          <script>
+            function openTab(tab){
+              var i, x;
+              x = document.getElementsByClassName("containerTab");
+              for (i=0; i<x.length;i++){
+                x[i].style.display="none";
+              }
+              document.getElementById(tab).style.display="block";
+            }
+          </script>
           <p>
           </p>
         </div>
