@@ -512,3 +512,5 @@ VALUES (
   '2026-04-01',
   'Community Park Clean-up'
 ) [42102-224]
+2026-02-04 13:58:51.475146Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]

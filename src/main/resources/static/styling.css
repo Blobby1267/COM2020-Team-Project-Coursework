@@ -10,7 +10,6 @@ h1 {
 }
 
 
-
 html, body{
     display: flex;
     flex-direction: column;
@@ -31,6 +30,10 @@ select, input{
     width: 250px;
 }
 
+select:hover, input:hover{
+    background-color: #d2d3d3;
+}
+
 button{
     background-color: #003C3C;
     border-radius: 15px;
@@ -41,14 +44,9 @@ button{
     font-size: 25px;
 }
 
-.settings-submit{
-    background-color: #003C3C;
-    border-radius: 15px;
-    padding: 10px;
-    border: 2px solid #003C3C;
-    width: 250px;
-    color: white;
-    font-size: 25px;
+button:hover{
+    background-color: #011c21;
+    border: 2px solid #011c21;
 }
 
 .delete-button{
@@ -59,6 +57,30 @@ button{
     width: 250px;
     color: white;
     font-size: 25px;
+}
+
+.delete-button:hover{
+    background-color: rgb(141, 14, 14) ;
+    border: 2px solid rgb(141, 14, 14);
+}
+
+.log-out {
+    background-color: #007D69;
+    border: 2px solid #007D69;
+    width: 100px;
+    height: 80%;
+    color: white;
+    font-size: 15px;
+    padding-inline: 10px;
+}
+
+.log-out:hover{
+    background-color:#0d5b4e ;
+    border-color: #0d5b4e;
+}
+
+.contacts {
+    color: white;
 }
 
 
@@ -89,7 +111,7 @@ label{
   color: white;
 }
 
-.sidebar a:hover:not(.active) {
+.sidebar>a:hover:not(.active) {
   background-color: #555;
   color: white;
 }
@@ -128,18 +150,6 @@ label{
     height: 100%;
 }
 
-.log-out {
-    background-color: #007D69;
-    width: 100px;
-    height: 80%;
-    color: white;
-    font-size: 15px;
-    padding-inline: 10px;
-}
-
-/* p{
-    text-align: right;
-} */
 
 /*TASK/MAIN PAGE*/
 
@@ -278,4 +288,65 @@ tr:hover{background-color: #d2d3d3;}
 
 .hidden-row{
     display: none;
+}
+
+.new-checkbox input[type="checkbox"]{
+    display: none;
+}
+
+.new-checkbox .checkmark{
+    position: relative;
+    display: inline;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border: 2px solid #003C3C;
+    border-radius: 4px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.new-checkbox:hover .checkmark{
+    background-color: #d2d3d3;
+}
+
+.new-checkbox input:checked + .checkmark::after{
+    background-color: #007D69;
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 12px;
+    border: solid #007D69;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.column{
+    float: left;
+    width: 90%;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    
+}
+
+.containerTab{
+    padding: 10px;
+    color: white;
+}
+
+.row:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.closebtn{
+    float: right;
+    color: #007D69;
+    font-size: 35px;
+    cursor: pointer;
 }

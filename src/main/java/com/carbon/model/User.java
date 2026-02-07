@@ -14,7 +14,7 @@ public class User {
     private Long id; // Unique identifier
     private String username;
     private String password;
-    private int points;
+    private int points = 0;
     private String role = "First Year";
     private String campus = "streatham";
 

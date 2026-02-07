@@ -37,7 +37,6 @@ public class LoginController {
             User newUser = new User();
             newUser.setUsername(username);
             newUser.setPassword(password);
-            newUser.setPoints(0); // Default points
             userRepository.save(newUser);
             LOGGER.info("User has been created.");
             return "redirect:/tasks.html?registered=true";
