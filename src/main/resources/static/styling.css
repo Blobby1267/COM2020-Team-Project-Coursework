@@ -181,6 +181,11 @@ label{
     color: white;
 }
 
+#task-information-container h3{
+    font-size: 15px;
+    color: #007D69;
+}
+
 #task-information-container .task-box{
     padding: 10px;
     margin-inline-start: 10px;
@@ -325,17 +330,25 @@ tr:hover{background-color: #d2d3d3;}
 
 .column{
     float: left;
-    width: 90%;
+    width: 95%;
     padding: 10px;
-    text-align: center;
+    text-align: left;
     cursor: pointer;
-    color: white;
-    
+    color: #007D69;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+.column:hover{
+    background-color: #d2d3d3;
 }
 
 .containerTab{
     padding: 10px;
-    color: white;
+    background-color: white;
+    color: #007D69;
+    width: 95%;
+    margin-bottom: 10px;
 }
 
 .row:after{
@@ -347,6 +360,25 @@ tr:hover{background-color: #d2d3d3;}
 .closebtn{
     float: right;
     color: #007D69;
-    font-size: 35px;
+    font-size: 20px;
     cursor: pointer;
+}
+
+.closebtn:hover{
+    background-color: #d2d3d3;
+}
+
+.complete-btn{
+    background-color: #007D69;
+    border: 2px solid #007D69;
+    width: 30%;
+    height: 10%;
+    color: white;
+    font-size: 15px;
+    padding-inline: 10px;
+}
+
+.complete-btn:hover{
+    background-color:#0d5b4e ;
+    border-color: #0d5b4e;
 }

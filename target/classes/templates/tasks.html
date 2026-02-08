@@ -55,23 +55,38 @@
         </div>
         <div class="task-box" id="monthly-tasks">
           <h1>Monthly Challenges:</h1>
-          <!-- <table>
-            <tr th:each="challenge : ${monthlyChallenges}">
-              <td th:text="${challenge.title}"></td>
-              <td th:text="${challenge.points}"></td>
-            </tr>
-            <tr class="hidden-row">
-              <td colspan="2">EXTRA INFORMATION!!!!!</td>
-            </tr>
-          </table> -->
           <div class="row">
-            <div class="column" onclick="openTab('b1');">New task</div>
+            <div class="column" onclick="openTab('b1');">New task 1</div>
           </div>
 
           <div id="b1" class="containerTab" style="display:none">
             <span onclick="this.parentElement.style.display='none'"
             class="closebtn">x</span>
-            <h2>New task</h2>
+            <h3>New task 1</h3>
+            <p>Task details</p>
+            <button class="complete-btn" type="submit">Complete</button>
+          </div>
+
+          <div class="row">
+            <div class="column" onclick="openTab('b2');">New task 2</div>
+          </div>
+
+          <div id="b2" class="containerTab" style="display:none">
+            <span onclick="this.parentElement.style.display='none'"
+            class="closebtn">x</span>
+            <h3>New task 2</h3>
+            <p>Task details</p>
+          </div>
+
+
+          <div class="row">
+            <div class="column" onclick="openTab('b3');">New task 3</div>
+          </div>
+
+          <div id="b3" class="containerTab" style="display:none">
+            <span onclick="this.parentElement.style.display='none'"
+            class="closebtn">x</span>
+            <h3>New task 3</h3>
             <p>Task details</p>
           </div>
 
