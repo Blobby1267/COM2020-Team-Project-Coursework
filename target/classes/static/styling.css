@@ -299,6 +299,10 @@ tr:hover{background-color: #d2d3d3;}
     display: none;
 }
 
+.checkbox{
+    width: 20px;
+}
+
 .new-checkbox .checkmark{
     position: relative;
     display: inline;
