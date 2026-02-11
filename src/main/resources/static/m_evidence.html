@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title> Carbon Challenge! </title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+
+<body>
+    <div id="top-bar">
+      <img src="Footprint.png" id="logo" alt="footprint" />
+      <h1>FOOTPRINT</h1>
+      <button onclick="location.href='login.html'" class="log-out">Log Out</button>
+    </div>
+
+    <!-- The sidebar -->
+    <div id="main-task-container">
+      <div class="sidebar">
+        <a href="tasks.html">Tasks</a>
+        <a href="profile.html">Profile</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="groups.html">Groups</a>
+        <a href="analytics.html">Analytics</a>
+        <a class="active" href="evidence.html">Evidence</a>
+        <a href="challenges.html">Challenges</a>
+        <a href="settings.html">Settings</a>
+      </div>
+
+      <div id="task-information-container">
+        <div class="challenges-box">
+          <h1>Tasks to approve:</h1>
+          <table>
+            <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Evidence</th>
+            <th>Warnings</th>
+            <th colspan="2">Approval</th>
+            </tr>
+            <tr>
+            <td>example name</td>
+            <td>example date</td>
+            <td>[see evidence]</td>
+            <td>example warning</td>
+            <td><button class="approve-button">Approve</button></td>
+            <td><button class="deny-button">Deny</button></td>
+            </tr>
+            <tr>
+            <td>example name</td>
+            <td>example date</td>
+            <td>[see evidence]</td>
+            <td>example warning</td>
+            <td><button class="approve-button">Approve</button></td>
+            <td><button class="deny-button">Deny</button></td>
+            </tr>
+            <tr>
+              <td>example name</td>
+              <td>example date</td>
+              <td>[see evidence]</td>
+              <td>example warning</td>
+              <td><button class="approve-button">Approve</button></td>
+              <td><button class="deny-button">Deny</button></td>
+            </tr>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
