@@ -1,12 +1,23 @@
 package com.carbon;
 
 import com.carbon.model.Challenge;
+import com.carbon.repository.ChallengeRepository;
+
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.sql.Date;
+
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 
+@DataJpaTest
 public class TestChallenge {
     @Test
     void TestGetId() throws IllegalAccessException, NoSuchFieldException {
