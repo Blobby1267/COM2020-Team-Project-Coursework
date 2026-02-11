@@ -34,17 +34,9 @@
             <th>User</th>
             <th>Points</th>
             </tr>
-            <tr>
-            <td>example name</td>
-            <td>example points</td>
-            </tr>
-            <tr>
-            <td>example name</td>
-            <td>example points</td>
-            </tr>
-            <tr>
-            <td>example name</td>
-            <td>example points</td>
+            <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.points}"></td>
             </tr>
           </table>
         </div>
