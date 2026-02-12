@@ -3,6 +3,7 @@ package com.carbon;
 import com.carbon.model.Challenge;
 import com.carbon.repository.ChallengeRepository;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 public class TestChallengeIntegration{
-     @Autowired
+
+    @Autowired
     private ChallengeRepository challengeRepository;
 
     @Mock
@@ -26,7 +28,6 @@ public class TestChallengeIntegration{
     @Mock
     private Challenge challenge1;
     private Challenge challenge2;
-
 
     @BeforeEach
     public void setup() throws IllegalAccessException, NoSuchFieldException{
@@ -72,5 +73,11 @@ public class TestChallengeIntegration{
         assertNotNull(testChallenge2);
         assertEquals(1,testChallenge1.getId());
         assertEquals(2, testChallenge2.getId());
+    }
+
+    @AfterEach
+    void tearDown(){
+        challengeRepository.delete(challenge1);
+        challengeRepository.delete(challenge2);
     }
 }
