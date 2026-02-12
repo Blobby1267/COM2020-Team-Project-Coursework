@@ -5,6 +5,13 @@ h1 {
     font-weight: bold;
 }
 
+p{
+    color:white;
+    text-align: center;
+    font-size: 25px;
+}
+
+
 *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -81,11 +88,17 @@ button:hover{
 
 .contacts {
     color: white;
+    text-align: left;
+    font-size: 15px;
 }
+
 
 
 label{
     text-align: left;
+    color: white;
+    font-size: 15px;
+    align-items: center;
 }
 
 .sidebar {
@@ -250,9 +263,7 @@ label{
     margin-inline-end: 10px;
     background-color: #007D69;
     width: 50%;
-
     border-radius: 10px;
-    height: 50%;
 }
 
 .container {
@@ -260,7 +271,7 @@ label{
     gap: 50px;
 }
 
-#container .circle{
+/* #container .circle{
     width: 300px;
     height: 300px;
     border-radius: 50%;
@@ -272,7 +283,7 @@ label{
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-}
+} */
 
 table{
     border: 5px solid white;
@@ -387,4 +398,38 @@ tr:hover{background-color: #d2d3d3;}
 .complete-btn:hover{
     background-color:#0d5b4e ;
     border-color: #0d5b4e;
+}
+
+.approve-button{
+    background-color: #003C3C;
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid #003C3C;
+    width: 95%;
+    color: white;
+}
+
+.approve-button:hover{
+    background-color: #011c21;
+    border: 2px solid #011c21;
+}
+
+.deny-button{
+    background-color: rgb(231, 59, 59);
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid rgb(231, 59, 59);
+    width: 95%;
+    color: white;
+}
+
+.deny:hover{
+    background-color: rgb(141, 14, 14) ;
+    border: 2px solid rgb(141, 14, 14);
+}
+
+.login-box{
+    margin-left: 320px;
+    margin-right: 80px;
+    color: #003C3C;
 }
