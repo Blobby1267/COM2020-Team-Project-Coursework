@@ -4,16 +4,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.carbon.model.User;
+import
+ com.carbon.model.User;
 import com.carbon.repository.UserRepository;
 import java.util.logging.Logger;
 
 @Controller
 public class LoginController {
     private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
-
-    @Autowired
+    
+    @Autowired    
     private UserRepository userRepository;
+
+    public LoginController(UserRepository repo){
+        userRepository = repo;
+    }
 
     @PostMapping("/login")
     public String handleLogin(@RequestParam String username, @RequestParam String password) {
