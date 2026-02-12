@@ -86,7 +86,7 @@ button:hover{
     border-color: #0d5b4e;
 }
 
-.contacts {
+.contacts p{
     color: white;
     text-align: left;
     font-size: 15px;
