@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.carbon.model.User;
+import
+ com.carbon.model.User;
 import com.carbon.repository.UserRepository;
 import java.util.logging.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Controller
 public class LoginController {
     private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
+<<<<<<< HEAD
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -27,6 +29,16 @@ public class LoginController {
 
 
     /* 
+=======
+    
+    @Autowired    
+    private UserRepository userRepository;
+
+    public LoginController(UserRepository repo){
+        userRepository = repo;
+    }
+
+>>>>>>> 87f4f43402b1c60e97aad2201ed5b3261b2a3889
     @PostMapping("/login")
     public String handleLogin(@RequestParam String username, @RequestParam String password) {
         User user = userRepository.findByUsername(username);
