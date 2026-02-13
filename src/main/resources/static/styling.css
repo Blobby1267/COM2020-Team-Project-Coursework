@@ -6,7 +6,7 @@ h1 {
 }
 
 p{
-    color:white;
+    color: #003C3C;
     text-align: center;
     font-size: 25px;
 }
@@ -86,7 +86,7 @@ button:hover{
     border-color: #0d5b4e;
 }
 
-.contacts {
+.contacts p{
     color: white;
     text-align: left;
     font-size: 15px;
@@ -129,23 +129,6 @@ label{
   color: white;
 }
 
-
-/* @media screen and (max-width: 700px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    .sidebar a {float: left;}
-    div.content {margin-left: 0;}
-} */
-
-/* @media screen and (max-width: 400px) {
-    .sidebar a {
-        text-align: center;
-        float: none;
-    }
-} */
 
 /*TOP BAR*/
 
@@ -271,19 +254,6 @@ label{
     gap: 50px;
 }
 
-/* #container .circle{
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    font-size: 30px;
-    color: white;
-    text-align: center;
-    background-color: #007D69;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-} */
 
 table{
     border: 5px solid white;
@@ -429,7 +399,13 @@ tr:hover{background-color: #d2d3d3;}
 }
 
 .login-box{
-    margin-left: 320px;
-    margin-right: 80px;
+    margin-left: 10%;
+    margin-right: 10%;
     color: #003C3C;
+}
+
+.title{
+    text-align: center;
+    color: #003C3C;
+    font-size: 50px;
 }

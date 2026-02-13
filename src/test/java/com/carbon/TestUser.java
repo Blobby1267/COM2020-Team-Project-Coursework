@@ -1,7 +1,9 @@
+package com.carbon;
+
 import com.carbon.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions.*;
+
 import java.lang.reflect.Field;
 
 public class TestUser {
