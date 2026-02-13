@@ -1,0 +1,14 @@
+com\carbon\controller\LoginController.class
+com\carbon\repository\ChallengeRepository.class
+com\carbon\repository\LeaderboardRepository.class
+com\carbon\controller\LeaderboardController.class
+com\carbon\model\Challenge.class
+com\carbon\service\LeaderboardService.class
+com\carbon\model\LeaderboardEntry.class
+com\carbon\controller\ChallengePageController.class
+com\carbon\TeamProjectApplication.class
+com\carbon\model\User.class
+com\carbon\service\ChallengeService.class
+com\carbon\repository\UserRepository.class
+com\carbon\service\CustomUserDetailsService.class
+com\carbon\SecurityConfig.class

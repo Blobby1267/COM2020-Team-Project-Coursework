@@ -30,4 +30,6 @@ public class LeaderboardController {
     public String redirectToLeaderboard() {
         return "redirect:/leaderboard";
     }
+
+    
 }

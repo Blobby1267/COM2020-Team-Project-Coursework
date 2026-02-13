@@ -60,6 +60,15 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
+<<<<<<< HEAD
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+        </dependency>
+=======
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite</artifactId>
             <version>1.11.0-M1</version>
@@ -72,6 +81,7 @@
             <version>3.12.4</version>
             <scope>test</scope>
         </dependency> -->
+>>>>>>> 87f4f43402b1c60e97aad2201ed5b3261b2a3889
     </dependencies>
     <build>
         <plugins>
