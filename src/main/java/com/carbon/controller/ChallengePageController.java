@@ -10,6 +10,7 @@ import com.carbon.service.ChallengeService;
 
 import org.springframework.ui.Model;
 import java.util.logging.Logger;
+import org.springframework.security.core.Authentication;
 
 @Controller
 public class ChallengePageController {
@@ -26,7 +27,7 @@ public class ChallengePageController {
     private ChallengeRepository challengeRepository;
 
     @GetMapping("/tasks")
-    public String challenge(Model model) {
+    public String challenge(Authentication auth, Model model) {
         model.addAttribute("dailyChallenges", challengeService.getChallengesByFrequency("Daily"));
         model.addAttribute("weeklyChallenges", challengeService.getChallengesByFrequency("Weekly"));
         model.addAttribute("monthlyChallenges", challengeService.getChallengesByFrequency("Monthly"));

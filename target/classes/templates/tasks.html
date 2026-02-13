@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8" />
     <title>Carbon Challenge!</title>
@@ -12,7 +14,9 @@
       <h1>FOOTPRINT</h1>
       <button onclick="location.href='login.html'" class="log-out">Log Out</button>
     </div>
-
+    <div sec:authorize="isAuthenticated()">
+      <p>Welcome, <span th:text="${#authentication.name}">User</span>!</p>
+    </div>
     <!-- The sidebar -->
     <div id="main-task-container">
       <div class="sidebar">
@@ -104,6 +108,9 @@
           </p>
         </div>
       </div>
+    </div>
+    <div sec:authorize="hasRole('ROLE_MODERATOR')">
+      this is a test
     </div>
   </body>
 </html>
