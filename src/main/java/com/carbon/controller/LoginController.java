@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Controller
 public class LoginController {
     private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
-<<<<<<< HEAD
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -29,16 +28,6 @@ public class LoginController {
 
 
     /* 
-=======
-    
-    @Autowired    
-    private UserRepository userRepository;
-
-    public LoginController(UserRepository repo){
-        userRepository = repo;
-    }
-
->>>>>>> 87f4f43402b1c60e97aad2201ed5b3261b2a3889
     @PostMapping("/login")
     public String handleLogin(@RequestParam String username, @RequestParam String password) {
         User user = userRepository.findByUsername(username);
