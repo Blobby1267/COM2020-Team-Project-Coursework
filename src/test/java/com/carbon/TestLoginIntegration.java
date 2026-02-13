@@ -12,6 +12,9 @@ import com.carbon.repository.UserRepository;
 import com.carbon.controller.LoginController;
 import com.carbon.model.User;
 
+// import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
 
 @DataJpaTest
 public class TestLoginIntegration {
@@ -24,6 +27,11 @@ public class TestLoginIntegration {
 
     String usernameParam = "Davi";
     String passwordParam = "password123";
+
+    @BeforeEach
+    void setup(){
+
+    }
 
     @Test
     void TestHandleLoginSuccess() {

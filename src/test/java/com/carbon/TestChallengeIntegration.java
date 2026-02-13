@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Date;
 
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -22,10 +21,7 @@ public class TestChallengeIntegration{
     @Autowired
     private ChallengeRepository challengeRepository;
 
-    @Mock
-    ChallengeRepository mock_repo;
-
-    @Mock
+    // @Mock
     private Challenge challenge1;
     private Challenge challenge2;
 
