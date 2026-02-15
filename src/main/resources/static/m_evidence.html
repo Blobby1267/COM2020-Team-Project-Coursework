@@ -16,13 +16,13 @@
     <!-- The sidebar -->
     <div id="main-task-container">
       <div class="sidebar">
-        <a href="tasks.html">Tasks</a>
+        <a href="/tasks">Tasks</a>
         <a href="profile.html">Profile</a>
-        <a href="leaderboard.html">Leaderboard</a>
+        <a href="/leaderboard">Leaderboard</a>
         <a href="groups.html">Groups</a>
         <a href="analytics.html">Analytics</a>
-        <a class="active" href="evidence.html">Evidence</a>
-        <a href="challenges.html">Challenges</a>
+        <a class="active" href="/evidence">Evidence</a>
+        <a href="/challenges">Challenges</a>
         <a href="settings.html">Settings</a>
       </div>
 
@@ -30,40 +30,105 @@
         <div class="challenges-box">
           <h1>Tasks to approve:</h1>
           <table>
-            <tr>
-            <th>User</th>
-            <th>Date</th>
-            <th>Evidence</th>
-            <th>Warnings</th>
-            <th colspan="2">Approval</th>
-            </tr>
-            <tr>
-            <td>example name</td>
-            <td>example date</td>
-            <td>[see evidence]</td>
-            <td>example warning</td>
-            <td><button class="approve-button">Approve</button></td>
-            <td><button class="deny-button">Deny</button></td>
-            </tr>
-            <tr>
-            <td>example name</td>
-            <td>example date</td>
-            <td>[see evidence]</td>
-            <td>example warning</td>
-            <td><button class="approve-button">Approve</button></td>
-            <td><button class="deny-button">Deny</button></td>
-            </tr>
-            <tr>
-              <td>example name</td>
-              <td>example date</td>
-              <td>[see evidence]</td>
-              <td>example warning</td>
-              <td><button class="approve-button">Approve</button></td>
-              <td><button class="deny-button">Deny</button></td>
-            </tr>
-          </div>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Date</th>
+                <th>Task</th>
+                <th>Evidence</th>
+                <th colspan="2">Approval</th>
+              </tr>
+            </thead>
+            <tbody id="evidence-rows"></tbody>
+          </table>
+          <p id="moderator-message"></p>
         </div>
       </div>
     </div>
+
+    <script>
+      const rowsEl = document.getElementById("evidence-rows");
+      const messageEl = document.getElementById("moderator-message");
+
+      function formatDate(value) {
+        if (!value) {
+          return "";
+        }
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+          return value;
+        }
+        return date.toLocaleString();
+      }
+
+      function renderRow(item) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.username || ""}</td>
+          <td>${formatDate(item.submittedAt)}</td>
+          <td>${item.taskTitle || ""}</td>
+          <td><a href="/api/evidence/${item.id}/photo" target="_blank">View</a></td>
+          <td><button class="approve-button" data-id="${item.id}" data-status="ACCEPTED">Approve</button></td>
+          <td><button class="deny-button" data-id="${item.id}" data-status="REJECTED">Deny</button></td>
+        `;
+        return row;
+      }
+
+      async function loadEvidence() {
+        messageEl.textContent = "Loading...";
+        rowsEl.innerHTML = "";
+
+        try {
+          const response = await fetch("/api/moderator/evidence?status=PENDING", {
+            credentials: "same-origin"
+          });
+
+          if (!response.ok) {
+            messageEl.textContent = "Failed to load evidence.";
+            return;
+          }
+
+          const data = await response.json();
+          if (!Array.isArray(data) || data.length === 0) {
+            messageEl.textContent = "No pending evidence.";
+            return;
+          }
+
+          data.forEach((item) => rowsEl.appendChild(renderRow(item)));
+          messageEl.textContent = "";
+        } catch (error) {
+          messageEl.textContent = "Network error. Please try again.";
+        }
+      }
+
+      rowsEl.addEventListener("click", async (event) => {
+        const button = event.target;
+        if (!(button instanceof HTMLButtonElement)) {
+          return;
+        }
+        const id = button.getAttribute("data-id");
+        const status = button.getAttribute("data-status");
+        if (!id || !status) {
+          return;
+        }
+
+        button.disabled = true;
+        try {
+          const response = await fetch(`/api/moderator/evidence/${id}/status?status=${status}`, {
+            method: "POST",
+            credentials: "same-origin"
+          });
+          if (!response.ok) {
+            button.disabled = false;
+            return;
+          }
+          await loadEvidence();
+        } catch (error) {
+          button.disabled = false;
+        }
+      });
+
+      loadEvidence();
+    </script>
 </body>
 </html>
