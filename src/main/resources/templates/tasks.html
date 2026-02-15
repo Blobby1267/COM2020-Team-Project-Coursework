@@ -20,14 +20,14 @@
     <!-- The sidebar -->
     <div id="main-task-container">
       <div class="sidebar">
-        <a class="active" href="tasks.html">Tasks</a>
-        <a href="profile.html">Profile</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="groups.html">Groups</a>
-        <a href="analytics.html">Analytics</a>
-        <a href="u_evidence.html">Evidence</a>
-        <a href="u_challenges.html">Challenges</a>
-        <a href="settings.html">Settings</a>
+        <a class="active" href="tasks">Tasks</a>
+        <a href="profile">Profile</a>
+        <a href="leaderboard">Leaderboard</a>
+        <a href="groups">Groups</a>
+        <a href="analytics">Analytics</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="evidence">Evidence</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
+        <a href="settings">Settings</a>
       </div>
 
       <div id="task-information-container">
@@ -104,9 +104,6 @@
           </script>
         </div>
       </div>
-    </div>
-    <div sec:authorize="hasRole('ROLE_MODERATOR')">
-      this is a test
     </div>
   </body>
 </html>

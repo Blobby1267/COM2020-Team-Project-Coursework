@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title> Carbon Challenge! </title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+
+<body>
+    <div id="top-bar">
+      <img src="Footprint.png" id="logo" alt="footprint" />
+      <h1>FOOTPRINT</h1>
+      <button onclick="location.href='login.html'" class="log-out">Log Out</button>
+    </div>
+
+    <!-- The sidebar -->
+    <div id="main-task-container">
+      <div class="sidebar">
+        <a href="tasks.html">Tasks</a>
+        <a href="profile.html">Profile</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="groups.html">Groups</a>
+        <a href="analytics.html">Analytics</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="evidence.html">Evidence</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges.html">Challenges</a>
+        <a class="active" href="settings.html">Settings</a>
+      </div>
+
+      <div id="task-information-container">
+        <div class="settings-box container" id="settings-box">
+
+          <span>
+          <h2>Update username:</h2>
+          <form action="/update_username" method="post">
+              <p>
+                  <input name="old-username" placeholder="Old username..." />
+              </p>
+              <p>
+                  <input name="new-username" placeholder="New username..."/>
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+          </form>
+
+
+          <h2>Update password:</h2>
+          <form action="/update_password" method="post">
+              <p>
+                  <input name="old-password" placeholder="Old password..." />
+              </p>
+              <p>
+                  <input name="new-password" placeholder="New password..."/>
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+          </form>
+          </span>
+          <span>
+          <h2>Update role:</h2>
+          <form action="/update_role" method="post">
+              <p>
+                <select name="roles">
+                    <option value="1st">First Year</option>
+                    <option value="2nd">Second Year</option>
+                    <option value="3rd">Third Year</option>
+                    <option value="4th">Fourth Year</option>
+                    <option value="postgrad">PostGraduate</option>
+                    <option value="staff">Staff</option>
+                </select>
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+          </form>
+          <div>
+            
+          </div>
+          <h2>Update campus:</h2>
+          <form action="/update_campus" method="post">
+              <p>
+                <select name="campus">
+                    <option value="streatham">Streatham </option>
+                    <option value="Stlukes">St Lukes</option>
+                    <option value="penryn">Penryn </option>
+                    <option value="truro">Truro</option>
+                </select>
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+          </form>
+
+          <h1>Contact details:</h1>
+          <div class="contacts">
+            <p>Name:</p>
+            <p>Phone:</p>
+            <p>Email:</p>
+            <p>terms...</p>
+          </div>
+          </span> 
+          <span></span>
+          <span>
+            <button class="delete-button">Delete Account</button>
+          </span>     
+        </div>
+    </div>
+    </div>
+</body>
+</html> 

@@ -16,14 +16,14 @@
     <!-- The sidebar -->
     <div id="main-task-container">
       <div class="sidebar">
-        <a href="tasks.html">Tasks</a>
-        <a href="profile.html">Profile</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="groups.html">Groups</a>
-        <a href="analytics.html">Analytics</a>
-        <a href="evidence.html">Evidence</a>
-        <a href="challenges.html">Challenges</a>
-        <a class="active" href="settings.html">Settings</a>
+        <a href="tasks">Tasks</a>
+        <a href="profile">Profile</a>
+        <a href="leaderboard">Leaderboard</a>
+        <a href="groups">Groups</a>
+        <a href="analytics">Analytics</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="evidence">Evidence</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
+        <a class="active" href="settings">Settings</a>
       </div>
 
       <div id="task-information-container">

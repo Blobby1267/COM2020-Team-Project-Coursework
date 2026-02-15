@@ -10,7 +10,7 @@
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
-      <button onclick="location.href='logout'" class="log-out">Log Out</button>
+      <button onclick="location.href='login.html'" class="log-out">Log Out</button>
     </div>
 
     <!-- The sidebar -->
@@ -18,8 +18,8 @@
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
-        <a class="active" href="leaderboard">Leaderboard</a>
-        <a href="groups">Groups</a>
+        <a href="leaderboard">Leaderboard</a>
+        <a class="active" href="groups">Groups</a>
         <a href="analytics">Analytics</a>
         <a sec:authorize="hasRole('ROLE_MODERATOR')" href="evidence">Evidence</a>
         <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
@@ -27,20 +27,17 @@
       </div>
 
       <div id="task-information-container">
-        <div class="challenges-box">
-          <h1>Leaderboard</h1>
-          <table>
-            <tr>
-            <th>User</th>
-            <th>Points</th>
-            </tr>
-            <tr th:each="user : ${users}">
-            <td th:text="${user.username}"></td>
-            <td th:text="${user.points}"></td>
-            </tr>
-          </table>
+        <div class="groups-box">
+          <h1>Groups:</h1>
         </div>
-    </div>
+      </div>
+      <div id="task-information-container">
+        <div class="groups-box">
+          <h1>Join a group:</h1>
+        </div>
+        <div class="groups-box">
+          <h1>Create a groups:</h1>
+        </div>
     </div>
 </body>
 </html>
