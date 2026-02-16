@@ -73,7 +73,6 @@ public class TestChallengeIntegration{
 
     @AfterEach
     void tearDown(){
-        challengeRepository.delete(challenge1);
-        challengeRepository.delete(challenge2);
+        challengeRepository.deleteAll();
     }
 }

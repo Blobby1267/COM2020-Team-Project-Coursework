@@ -2,6 +2,7 @@ package com.carbon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,9 @@ public class TestLeaderboardIntegration {
         assertEquals(2, testEntry2.getId());
     }
 
-    @Test
-    public void TestOrderChanges(){
-        
+    @AfterEach
+    public void tearDown(){
+        leaderboardRepository.deleteAll();
+        leaderboardRepository.flush();
     }
 }
