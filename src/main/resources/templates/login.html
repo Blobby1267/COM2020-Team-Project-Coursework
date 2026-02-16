@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <title> Carbon Challenge! </title>
@@ -24,21 +24,21 @@
                         th:name="${_csrf.parameterName}"
                         th:value="${_csrf.token}"/>
                     <p>
-                        <select name="roles">
-                            <option value="1st">First Year</option>
-                            <option value="2nd">Second Year</option>
-                            <option value="3rd">Third Year</option>
-                            <option value="4th">Fourth Year</option>
-                            <option value="postgrad">PostGraduate</option>
-                            <option value="staff">Staff</option>
+                        <select name="year">
+                            <option value="First_Year">First Year</option>
+                            <option value="Second_Year">Second Year</option>
+                            <option value="Third_Year">Third Year</option>
+                            <option value="Fourth_Year">Fourth Year</option>
+                            <option value="PostGraduate">PostGraduate</option>
+                            <option value="Staff">Staff</option>
                         </select>
                     </p>
                     <p>
                         <select name="campus">
-                            <option value="streatham">Streatham </option>
-                            <option value="Stlukes">St Lukes</option>
-                            <option value="penryn">Penryn </option>
-                            <option value="truro">Truro</option>
+                            <option value="Streatham">Streatham </option>
+                            <option value="St Lukes">St Lukes</option>
+                            <option value="Penryn">Penryn </option>
+                            <option value="Truro">Truro</option>
                         </select>
                     </p>
                     <p>
@@ -73,7 +73,7 @@
                     <p>
                         C02 is the biggest contributor to global warning. it is now or never for us to take actions to reduce our carbon footprint.
                         We want to help sensitise our students and staff about how their daily actions contribute to this issue and how individually
-                        they can take stpes to reduce their emissions. Each of us matters! Every gram saved by a person adds up when everyone is 
+                        they can take steps to reduce their emissions. Each of us matters! Every gram saved by a person adds up when everyone is 
                         conscious and doing their best. We hope that this website will help you understand your emissions and motivate you to take
                         these steps for the betterment of all.
                     </p>

@@ -40,7 +40,7 @@ public class LoginController {
     }
     */ 
     @PostMapping("/register")
-    public String handleRegister(@RequestParam String username, @RequestParam String password, @RequestParam String campus) {
+    public String handleRegister(@RequestParam String username, @RequestParam String password, @RequestParam String campus, @RequestParam String year) {
         if (userRepository.findByUsername(username) == null) {
             User newUser = new User();
             newUser.setUsername(username);
@@ -48,12 +48,13 @@ public class LoginController {
             newUser.setRole("USER");
             newUser.setPoints(0);
             newUser.setCampus(campus);
+            newUser.setYear(year);
             registerUser(newUser);
             LOGGER.info("User has been created.");
-            return "redirect:/tasks.html?registered=true";
+            return "redirect:/tasks?registered=true";
         }
         LOGGER.info("User already exists.");
-        return "redirect:/login.html?error=exists";
+        return "redirect:/login?error=exists";
     }
     
     @GetMapping("/login")

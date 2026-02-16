@@ -15,8 +15,9 @@ public class User {
     private String username;
     private String password;
     private int points = 0;
-    private String role = "First Year";
+    private String role;
     private String campus = "streatham";
+    private String year = "First Year";
 
 
     // getters
@@ -38,6 +39,9 @@ public class User {
     public String getCampus() {
         return campus;
     }
+    public String getYear() {
+        return year;
+    }
 
     // setters
     public void setUsername(String username) {
@@ -54,5 +58,8 @@ public class User {
     }
     public void setCampus(String campus) {
         this.campus = campus;
+    }
+    public void setYear(String year) {
+        this.year = year;
     }
 }
