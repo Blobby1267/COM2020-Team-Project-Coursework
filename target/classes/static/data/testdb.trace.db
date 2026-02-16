@@ -28,3 +28,7 @@ FOREIGN KEY (USER_ID) REFERENCES USERS(ID),
 CONSTRAINT GROUP_USERS_GROUP
 FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(ID) [42001-224]
 >>>>>>> 7e35f9d161ce534731a52c26499e76d00a33ba0d
+2026-02-16 12:07:07.014448Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 12:30:30.732269Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
