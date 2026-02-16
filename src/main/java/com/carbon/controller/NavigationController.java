@@ -31,6 +31,26 @@ public class NavigationController {
         return hasModeratorRole(authentication) ? "m_challenges" : "redirect:/tasks";
     }
 
+    @GetMapping("/analytics")
+    public String analytics() {
+        return "analytics";
+    }
+
+    @GetMapping("/groups")
+    public String groups() {
+        return "groups";
+    }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile";
+    }
+
+    @GetMapping("/settings")
+    public String settings() {
+        return "settings";
+    }
+
     private boolean hasModeratorRole(Authentication authentication) {
         User user = userRepository.findByUsername(authentication.getName());
         if (user == null || user.getRole() == null) {
