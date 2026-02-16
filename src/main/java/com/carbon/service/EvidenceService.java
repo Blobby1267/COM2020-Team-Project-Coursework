@@ -69,6 +69,17 @@ public class EvidenceService {
         Evidence evidence = evidenceRepository.findById(evidenceId)
             .orElseThrow(() -> new IllegalArgumentException("Evidence not found: " + evidenceId));
         evidence.setStatus(status);
+        
+        // Award points to user if evidence is accepted
+        if (status == EvidenceStatus.ACCEPTED && evidence.getChallenge() != null) {
+            User user = evidence.getUser();
+            Challenge challenge = evidence.getChallenge();
+            int currentPoints = user.getPoints();
+            int challengePoints = challenge.getPoints();
+            user.setPoints(currentPoints + challengePoints);
+            userRepository.save(user);
+        }
+        
         return evidenceRepository.save(evidence);
     }
 
