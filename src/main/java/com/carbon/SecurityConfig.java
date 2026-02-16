@@ -17,10 +17,9 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/login", "/register", "/data/**", "/h2-console/**", "/**.png", "/**.css").permitAll()
-                .requestMatchers("/challenges", "/evidence").hasRole("MODERATOR")
                 .anyRequest().authenticated()
             )
-            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/**"))
             .headers(headers -> headers.frameOptions(frame -> frame.disable()))
             .formLogin(form -> form
                 .loginPage("/login")

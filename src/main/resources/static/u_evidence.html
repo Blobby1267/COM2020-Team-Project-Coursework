@@ -16,22 +16,61 @@
     <!-- The sidebar -->
     <div id="main-task-container">
       <div class="sidebar">
-        <a href="tasks.html">Tasks</a>
+        <a href="/tasks">Tasks</a>
         <a href="profile.html">Profile</a>
-        <a href="leaderboard.html">Leaderboard</a>
+        <a href="/leaderboard">Leaderboard</a>
         <a href="groups.html">Groups</a>
         <a href="analytics.html">Analytics</a>
-        <a class="active" href="evidence.html">Evidence</a>
-        <a href="challenges.html">Challenges</a>
+        <a class="active" href="/evidence">Evidence</a>
+        <a href="/challenges">Challenges</a>
         <a href="settings.html">Settings</a>
       </div>
 
       <div id="task-information-container">
         <div class="challenges-box">
-          <h1>MODERATORS ONLY</h1>
-          <p>This page is for our moderators use only</p>
+          <h1>Submit evidence</h1>
+          <p>Upload a photo to prove you completed a task.</p>
+          <form id="evidence-form">
+            <label for="taskTitle">Task title (optional)</label><br>
+            <input type="text" id="taskTitle" name="taskTitle" placeholder="e.g., Bike to campus"><br><br>
+            <label for="photo">Photo evidence</label><br>
+            <input type="file" id="photo" name="photo" accept="image/*" required><br><br>
+            <button type="submit">Submit evidence</button>
+          </form>
+          <p id="evidence-message"></p>
         </div>
       </div>
     </div>
+
+    <script>
+      const evidenceForm = document.getElementById("evidence-form");
+      const messageEl = document.getElementById("evidence-message");
+
+      evidenceForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        messageEl.textContent = "Submitting...";
+
+        const formData = new FormData(evidenceForm);
+
+        try {
+          const response = await fetch("/api/evidence", {
+            method: "POST",
+            body: formData,
+            credentials: "same-origin"
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            messageEl.textContent = errorText || "Upload failed.";
+            return;
+          }
+
+          messageEl.textContent = "Evidence submitted and pending review.";
+          evidenceForm.reset();
+        } catch (error) {
+          messageEl.textContent = "Network error. Please try again.";
+        }
+      });
+    </script>
 </body>
 </html>

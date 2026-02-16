@@ -1,7 +1,9 @@
 package com.carbon;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mock;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -41,7 +43,22 @@ public class TestLeaderboardIntegration {
 
         leaderboardEntry1 = new LeaderboardEntry(user1);
         leaderboardEntry2 = new LeaderboardEntry(user2);
+
+        leaderboardRepository.save(leaderboardEntry1);
+        leaderboardRepository.save(leaderboardEntry2);
     }
 
-    
+    @Test
+    public void TestIdAutoIncrement(){
+        LeaderboardEntry testEntry1 = leaderboardRepository.getReferenceById(leaderboardEntry1.getId());
+        LeaderboardEntry testEntry2 = leaderboardRepository.getReferenceById(leaderboardEntry2.getId());
+
+        assertEquals(1, testEntry1.getId());
+        assertEquals(2, testEntry2.getId());
+    }
+
+    @Test
+    public void TestOrderChanges(){
+        
+    }
 }
