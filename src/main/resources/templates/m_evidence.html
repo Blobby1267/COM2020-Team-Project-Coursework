@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <title> Carbon Challenge! </title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+
+<body>
+    <div id="top-bar">
+      <img src="Footprint.png" id="logo" alt="footprint" />
+      <h1>FOOTPRINT</h1>
+      <button onclick="location.href='login.html'" class="log-out">Log Out</button>
+    </div>
+
+    <!-- The sidebar -->
+    <div id="main-task-container">
+      <div class="sidebar">
+        <a href="tasks">Tasks</a>
+        <a href="profile">Profile</a>
+        <a href="leaderboard">Leaderboard</a>
+        <a href="groups">Groups</a>
+        <a href="analytics">Analytics</a>
+        <a class="active" href="evidence">Evidence</a>
+        <a href="challenges">Challenges</a>
+        <a href="settings">Settings</a>
+      </div>
+
+      <div id="task-information-container">
+        <div class="challenges-box">
+          <h1>Tasks to approve:</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Date</th>
+                <th>Task</th>
+                <th>Evidence</th>
+                <th colspan="2">Approval</th>
+              </tr>
+            </thead>
+            <tbody id="evidence-rows"></tbody>
+          </table>
+          <p id="moderator-message"></p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const rowsEl = document.getElementById("evidence-rows");
+      const messageEl = document.getElementById("moderator-message");
+
+      function formatDate(value) {
+        if (!value) {
+          return "";
+        }
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+          return value;
+        }
+        return date.toLocaleString();
+      }
+
+      function renderRow(item) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.username || ""}</td>
+          <td>${formatDate(item.submittedAt)}</td>
+          <td>${item.taskTitle || ""}</td>
+          <td><a href="/api/evidence/${item.id}/photo" target="_blank">View</a></td>
+          <td><button class="approve-button" data-id="${item.id}" data-status="ACCEPTED">Approve</button></td>
+          <td><button class="deny-button" data-id="${item.id}" data-status="REJECTED">Deny</button></td>
+        `;
+        return row;
+      }
+
+      async function loadEvidence() {
+        messageEl.textContent = "Loading...";
+        rowsEl.innerHTML = "";
+
+        try {
+          const response = await fetch("/api/moderator/evidence?status=PENDING", {
+            credentials: "same-origin"
+          });
+
+          if (!response.ok) {
+            messageEl.textContent = "Failed to load evidence.";
+            return;
+          }
+
+          const data = await response.json();
+          if (!Array.isArray(data) || data.length === 0) {
+            messageEl.textContent = "No pending evidence.";
+            return;
+          }
+
+          data.forEach((item) => rowsEl.appendChild(renderRow(item)));
+          messageEl.textContent = "";
+        } catch (error) {
+          messageEl.textContent = "Network error. Please try again.";
+        }
+      }
+
+      rowsEl.addEventListener("click", async (event) => {
+        const button = event.target;
+        if (!(button instanceof HTMLButtonElement)) {
+          return;
+        }
+        const id = button.getAttribute("data-id");
+        const status = button.getAttribute("data-status");
+        if (!id || !status) {
+          return;
+        }
+
+        button.disabled = true;
+        try {
+          const response = await fetch(`/api/moderator/evidence/${id}/status?status=${status}`, {
+            method: "POST",
+            credentials: "same-origin"
+          });
+          if (!response.ok) {
+            button.disabled = false;
+            return;
+          }
+          await loadEvidence();
+        } catch (error) {
+          button.disabled = false;
+        }
+      });
+
+      loadEvidence();
+    </script>
+</body>
+</html>

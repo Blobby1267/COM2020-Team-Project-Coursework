@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <title> Carbon Challenge! </title>
@@ -21,8 +23,8 @@
         <a href="leaderboard">Leaderboard</a>
         <a href="groups">Groups</a>
         <a href="analytics">Analytics</a>
-        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="evidence">Evidence</a>
-        <a class="active" sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
+        <a href="evidence">Evidence</a>
+        <a class="active" href="challenges">Challenges</a>
         <a href="settings">Settings</a>
       </div>
 

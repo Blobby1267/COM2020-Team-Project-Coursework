@@ -20,7 +20,7 @@ public class NavigationController {
         if (authentication == null) {
             return "redirect:/login";
         }
-        return hasModeratorRole(authentication) ? "redirect:/m_evidence.html" : "redirect:/u_evidence.html";
+        return hasModeratorRole(authentication) ? "m_evidence" : "redirect:/u_evidence.html";
     }
 
     @GetMapping("/challenges")
@@ -28,7 +28,7 @@ public class NavigationController {
         if (authentication == null) {
             return "redirect:/login";
         }
-        return hasModeratorRole(authentication) ? "redirect:/m_challenges.html" : "redirect:/u_challenges.html";
+        return hasModeratorRole(authentication) ? "m_challenges" : "redirect:/tasks";
     }
 
     private boolean hasModeratorRole(Authentication authentication) {
