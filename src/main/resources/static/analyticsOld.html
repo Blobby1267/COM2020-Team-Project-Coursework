@@ -19,25 +19,12 @@
         <a href="/tasks">Tasks</a>
         <a href="profile.html">Profile</a>
         <a href="/leaderboard">Leaderboard</a>
-        <a class="active" href="groups.html">Groups</a>
-        <a href="analytics.html">Analytics</a>
-        <a href="/evidence">Evidence</a>
-        <a href="/challenges">Challenges</a>
+        <a href="groups.html">Groups</a>
+        <a class="active" href="analytics.html">Analytics</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="evidence.html">Evidence</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges.html">Challenges</a>
         <a href="settings.html">Settings</a>
       </div>
-
-      <div id="task-information-container">
-        <div class="groups-box">
-          <h1>Groups:</h1>
-        </div>
-      </div>
-      <div id="task-information-container">
-        <div class="groups-box">
-          <h1>Join a group:</h1>
-        </div>
-        <div class="groups-box">
-          <h1>Create a groups:</h1>
-        </div>
     </div>
 </body>
 </html>

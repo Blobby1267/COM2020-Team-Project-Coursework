@@ -60,4 +60,16 @@ public class LoginController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "logout";
+    }
+
+    @GetMapping("/login.html")
+    public String redirectToLogin() {
+        return "redirect:/login";
+    }
+
+
 }

@@ -21,8 +21,8 @@
         <a href="/leaderboard">Leaderboard</a>
         <a href="groups.html">Groups</a>
         <a href="analytics.html">Analytics</a>
-        <a class="active" href="/evidence">Evidence</a>
-        <a href="/challenges">Challenges</a>
+        <a class="active" sec:authorize="hasRole('ROLE_MODERATOR')" href="evidence.html">Evidence</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges.html">Challenges</a>
         <a href="settings.html">Settings</a>
       </div>
 

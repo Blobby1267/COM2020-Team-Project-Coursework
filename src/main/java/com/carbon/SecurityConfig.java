@@ -17,8 +17,6 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/login", "/register", "/data/**", "/h2-console/**", "/**.png", "/**.css").permitAll()
-                .requestMatchers("/api/moderator/**").hasRole("MODERATOR")
-                .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/**"))
