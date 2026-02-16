@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Entity // Tells Java this maps to a database table
 @Table(name = "users")
@@ -17,7 +18,8 @@ public class User {
     private int points = 0;
     private String role;
     private String campus = "streatham";
-    private String year = "First Year";
+    @Column(name = "\"year\"") // year is a reserved keyword in SQL, so we need to escape it
+    private String year = "First_Year";
 
 
     // getters

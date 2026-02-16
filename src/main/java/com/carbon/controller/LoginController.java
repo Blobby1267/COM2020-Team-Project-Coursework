@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import
- com.carbon.model.User;
+import com.carbon.model.User;
 import com.carbon.repository.UserRepository;
 import java.util.logging.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletException;
 
 @Controller
 public class LoginController {
@@ -40,7 +41,7 @@ public class LoginController {
     }
     */ 
     @PostMapping("/register")
-    public String handleRegister(@RequestParam String username, @RequestParam String password, @RequestParam String campus, @RequestParam String year) {
+    public String handleRegister(@RequestParam String username, @RequestParam String password, @RequestParam String campus, @RequestParam String year, HttpServletRequest request) {
         if (userRepository.findByUsername(username) == null) {
             User newUser = new User();
             newUser.setUsername(username);
@@ -50,7 +51,22 @@ public class LoginController {
             newUser.setCampus(campus);
             newUser.setYear(year);
             registerUser(newUser);
-            LOGGER.info("User has been created.");
+            
+            // Logout any existing user session before logging in the new user
+            try {
+                request.logout();
+            } catch (ServletException e) {
+                LOGGER.warning("Logout before auto-login failed: " + e.getMessage());
+            }
+            
+            // Authenticate the user immediately after registration
+            try {
+                request.login(username, password);
+                LOGGER.info("User has been created and logged in.");
+            } catch (ServletException e) {
+                LOGGER.severe("Auto-login failed after registration: " + e.getMessage());
+            }
+            
             return "redirect:/tasks?registered=true";
         }
         LOGGER.info("User already exists.");
