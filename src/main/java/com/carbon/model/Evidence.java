@@ -27,6 +27,10 @@ public class Evidence {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "challenge_id")
+    private Challenge challenge;
+
     @Column(nullable = false)
     private String originalFilename;
 
@@ -57,6 +61,10 @@ public class Evidence {
         return user;
     }
 
+    public Challenge getChallenge() {
+        return challenge;
+    }
+
     public String getOriginalFilename() {
         return originalFilename;
     }
@@ -83,6 +91,10 @@ public class Evidence {
 
     public LocalDateTime getSubmittedAt() {
         return submittedAt;
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
     }
 
     public void setUser(User user) {

@@ -30,8 +30,11 @@
           <h1>Submit evidence</h1>
           <p>Upload a photo to prove you completed a task.</p>
           <form id="evidence-form">
-            <label for="taskTitle">Task title (optional)</label><br>
-            <input type="text" id="taskTitle" name="taskTitle" placeholder="e.g., Bike to campus"><br><br>
+            <input type="hidden" id="challengeId" name="challengeId">
+            <label for="taskTitle">Task title</label><br>
+            <input type="text" id="taskTitle" name="taskTitle" placeholder="Please select a task from the Tasks page" required readonly style="background-color: #f0f0f0;"><br><br>
+            <label for="points">Points</label><br>
+            <input type="number" id="points" name="points" placeholder="Points" readonly><br><br>
             <label for="photo">Photo evidence</label><br>
             <input type="file" id="photo" name="photo" accept="image/*" required><br><br>
             <button type="submit">Submit evidence</button>
@@ -44,6 +47,26 @@
     <script>
       const evidenceForm = document.getElementById("evidence-form");
       const messageEl = document.getElementById("evidence-message");
+      const taskTitleInput = document.getElementById("taskTitle");
+      const pointsInput = document.getElementById("points");
+      const challengeIdInput = document.getElementById("challengeId");
+
+      // Check if URL parameters exist and pre-fill the form
+      const urlParams = new URLSearchParams(window.location.search);
+      const challengeId = urlParams.get('challengeId');
+      const title = urlParams.get('title');
+      const points = urlParams.get('points');
+
+      if (challengeId && title && points) {
+        challengeIdInput.value = challengeId;
+        taskTitleInput.value = decodeURIComponent(title);
+        pointsInput.value = points;
+      } else {
+        // If no parameters, disable submit button until they come from tasks page
+        document.querySelector('button[type="submit"]').disabled = true;
+        messageEl.textContent = "Please select a task from the Tasks page to submit evidence.";
+        messageEl.style.color = "#007D69";
+      }
 
       evidenceForm.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -66,6 +89,11 @@
 
           messageEl.textContent = "Evidence submitted and pending review.";
           evidenceForm.reset();
+          
+          // Redirect back to tasks page after successful submission
+          setTimeout(() => {
+            window.location.href = '/tasks';
+          }, 2000);
         } catch (error) {
           messageEl.textContent = "Network error. Please try again.";
         }

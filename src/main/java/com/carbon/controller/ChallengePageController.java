@@ -3,6 +3,11 @@ package com.carbon.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 
 import com.carbon.repository.ChallengeRepository;
@@ -32,6 +37,24 @@ public class ChallengePageController {
         model.addAttribute("weeklyChallenges", challengeService.getChallengesByFrequency("Weekly"));
         model.addAttribute("monthlyChallenges", challengeService.getChallengesByFrequency("Monthly"));
         return "tasks";
+    }
+
+    @PostMapping("/api/challenges/complete")
+    @ResponseBody
+    public ResponseEntity<String> completeChallenge(
+        @RequestParam Long challengeId,
+        Authentication authentication
+    ) {
+        if (authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+        }
+
+        try {
+            challengeService.completeChallenge(authentication.getName(), challengeId);
+            return ResponseEntity.ok("Challenge completed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping("/tasks.html")

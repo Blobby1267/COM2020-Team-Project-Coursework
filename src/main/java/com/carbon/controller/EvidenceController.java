@@ -34,13 +34,14 @@ public class EvidenceController {
     public ResponseEntity<EvidenceSummary> submitEvidence(
         @RequestParam("photo") MultipartFile photo,
         @RequestParam(value = "taskTitle", required = false) String taskTitle,
+        @RequestParam(value = "challengeId", required = false) Long challengeId,
         Authentication authentication
     ) throws IOException {
         if (authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        Evidence evidence = evidenceService.submitEvidence(authentication.getName(), photo, taskTitle);
+        Evidence evidence = evidenceService.submitEvidence(authentication.getName(), photo, taskTitle, challengeId);
         return ResponseEntity.status(HttpStatus.CREATED).body(toSummary(evidence));
     }
 

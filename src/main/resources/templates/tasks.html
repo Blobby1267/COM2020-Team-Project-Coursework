@@ -42,7 +42,14 @@
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
-              <button class="complete-btn" type="submit">Complete</button>
+              <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
+                      th:data-challenge-id="${challenge.id}"
+                      onclick="completeChallenge(this)">Complete</button>
+              <button th:if="${challenge.requiresEvidence}" class="complete-btn" type="button" 
+                      th:data-challenge-id="${challenge.id}"
+                      th:data-title="${challenge.title}"
+                      th:data-points="${challenge.points}"
+                      onclick="addEvidenceFromData(this)">Add Evidence</button>
             </div>
           </div>
         </div>
@@ -58,7 +65,14 @@
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
-              <button class="complete-btn" type="submit">Complete</button>
+              <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
+                      th:data-challenge-id="${challenge.id}"
+                      onclick="completeChallenge(this)">Complete</button>
+              <button th:if="${challenge.requiresEvidence}" class="complete-btn" type="button" 
+                      th:data-challenge-id="${challenge.id}"
+                      th:data-title="${challenge.title}"
+                      th:data-points="${challenge.points}"
+                      onclick="addEvidenceFromData(this)">Add Evidence</button>
             </div>
           </div>
         </div>
@@ -74,7 +88,14 @@
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
-              <button class="complete-btn" type="submit">Complete</button>
+              <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
+                      th:data-challenge-id="${challenge.id}"
+                      onclick="completeChallenge(this)">Complete</button>
+              <button th:if="${challenge.requiresEvidence}" class="complete-btn" type="button" 
+                      th:data-challenge-id="${challenge.id}"
+                      th:data-title="${challenge.title}"
+                      th:data-points="${challenge.points}"
+                      onclick="addEvidenceFromData(this)">Add Evidence</button>
             </div>
           </div>
 
@@ -86,6 +107,51 @@
                 x[i].style.display="none";
               }
               document.getElementById(tab).style.display="block";
+            }
+
+            function addEvidenceFromData(button){
+              const challengeId = button.getAttribute('data-challenge-id');
+              const title = button.getAttribute('data-title');
+              const points = button.getAttribute('data-points');
+              const encodedTitle = encodeURIComponent(title);
+              window.location.href = `/evidence?challengeId=${challengeId}&title=${encodedTitle}&points=${points}`;
+            }
+
+            async function completeChallenge(button){
+              const challengeId = button.getAttribute('data-challenge-id');
+              button.disabled = true;
+              button.textContent = 'Completing...';
+
+              try {
+                const response = await fetch('/api/challenges/complete', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: `challengeId=${challengeId}`,
+                  credentials: 'same-origin'
+                });
+
+                if (response.ok) {
+                  button.textContent = 'Completed!';
+                  button.style.backgroundColor = '#04AA6D';
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 1000);
+                } else {
+                  button.textContent = 'Failed';
+                  button.disabled = false;
+                  setTimeout(() => {
+                    button.textContent = 'Complete';
+                  }, 2000);
+                }
+              } catch (error) {
+                button.textContent = 'Error';
+                button.disabled = false;
+                setTimeout(() => {
+                  button.textContent = 'Complete';
+                }, 2000);
+              }
             }
           </script>
         </div>

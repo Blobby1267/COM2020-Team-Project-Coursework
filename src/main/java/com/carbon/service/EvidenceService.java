@@ -11,20 +11,24 @@ import org.springframework.web.multipart.MultipartFile;
 import com.carbon.model.Evidence;
 import com.carbon.model.EvidenceStatus;
 import com.carbon.model.User;
+import com.carbon.model.Challenge;
 import com.carbon.repository.EvidenceRepository;
 import com.carbon.repository.UserRepository;
+import com.carbon.repository.ChallengeRepository;
 
 @Service
 public class EvidenceService {
     private final EvidenceRepository evidenceRepository;
     private final UserRepository userRepository;
+    private final ChallengeRepository challengeRepository;
 
-    public EvidenceService(EvidenceRepository evidenceRepository, UserRepository userRepository) {
+    public EvidenceService(EvidenceRepository evidenceRepository, UserRepository userRepository, ChallengeRepository challengeRepository) {
         this.evidenceRepository = evidenceRepository;
         this.userRepository = userRepository;
+        this.challengeRepository = challengeRepository;
     }
 
-    public Evidence submitEvidence(String username, MultipartFile photo, String taskTitle) throws IOException {
+    public Evidence submitEvidence(String username, MultipartFile photo, String taskTitle, Long challengeId) throws IOException {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
@@ -46,6 +50,13 @@ public class EvidenceService {
         evidence.setPhoto(photo.getBytes());
         evidence.setStatus(EvidenceStatus.PENDING);
         evidence.setSubmittedAt(LocalDateTime.now());
+
+        // Link evidence to challenge if challengeId is provided
+        if (challengeId != null) {
+            Challenge challenge = challengeRepository.findById(challengeId)
+                .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
+            evidence.setChallenge(challenge);
+        }
 
         return evidenceRepository.save(evidence);
     }

@@ -21,6 +21,7 @@ public class Challenge {
     private Date startDate;
     private Date endDate;
     private String scope;
+    private boolean requiresEvidence;
 
     //getters
     public Long getId() {
@@ -47,6 +48,9 @@ public class Challenge {
     public String getScope() {
         return scope;
     }
+    public boolean isRequiresEvidence() {
+        return requiresEvidence;
+    }
 
     //setters
     public void setTitle(String title) {
@@ -69,5 +73,8 @@ public class Challenge {
     }
     public void setScope(String scope) {
         this.scope = scope;
+    }
+    public void setRequiresEvidence(boolean requiresEvidence) {
+        this.requiresEvidence = requiresEvidence;
     }
 }
