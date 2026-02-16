@@ -1,12 +1,27 @@
 package com.carbon;
 
+import com.carbon.controller.ChallengePageController;
 import com.carbon.model.Challenge;
+import com.carbon.model.LeaderboardEntry;
 // import com.carbon.repository.ChallengeRepository;
+import com.carbon.repository.ChallengeRepository;
+import com.carbon.service.ChallengeService;
 
 // import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
+import java.util.*;
 // import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
 // import java.sql.Date;
@@ -14,11 +29,36 @@ import java.lang.reflect.Field;
 // import org.mockito.Mock;
 // import org.mockito.junit.jupiter.MockitoExtension;
 // import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 
-@DataJpaTest
+@ExtendWith(MockitoExtension.class)
 public class TestChallenge {
+    @Mock
+    ChallengeRepository challengeRepository;
+
+    @InjectMocks
+    ChallengeService challengeService;
+
+    @Test
+    void TestChallengeGetByFrequencyValid(){
+        List<Challenge> challenges = new ArrayList<>();
+        Challenge c1 = new Challenge();
+        Challenge c2 = new Challenge();
+
+
+        challenges.add(c1);
+        challenges.add(c2);
+
+        when(challengeRepository.findByFrequency("Daily")).thenReturn(challenges);
+
+        List<Challenge> checkChallenge = challengeService.getChallengesByFrequency("Daily");
+
+        verify(challengeRepository, times(1)).findByFrequency("Daily");
+
+        assertEquals(challenges, checkChallenge);
+    }
+
+
     @Test
     void TestGetId() throws IllegalAccessException, NoSuchFieldException {
         Challenge challenge = new Challenge();
@@ -28,6 +68,7 @@ public class TestChallenge {
         id.setAccessible(true); //Private field, so make sure we are able to access it
         id.set(challenge,(long)1); //Set name without using setUsername() method
         Assertions.assertEquals(1, challenge.getId());
+
     }
 
     @Test
