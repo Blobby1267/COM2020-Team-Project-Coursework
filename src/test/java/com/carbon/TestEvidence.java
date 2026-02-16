@@ -51,7 +51,7 @@ public class TestEvidence {
         when(mockPhoto.getContentType()).thenReturn("image/Test-Content");
 
         
-        assertDoesNotThrow(() -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle"));
+        assertDoesNotThrow(() -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L));
 
         ArgumentCaptor<Evidence> evidenceCaptor = ArgumentCaptor.forClass(Evidence.class);
         verify(evidenceRepositoryMock,times(1)).save(evidenceCaptor.capture());
@@ -65,7 +65,7 @@ public class TestEvidence {
         final MultipartFile mockPhoto = mock(MultipartFile.class);
         when(userRepositoryMock.findByUsername("testUser")).thenReturn(null);
 
-        Throwable exception = assertThrows(UsernameNotFoundException.class, () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle"));
+        Throwable exception = assertThrows(UsernameNotFoundException.class, () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L));
         verify(userRepositoryMock).findByUsername("testUser");
         assertEquals("User not found: testUser",exception.getMessage());
     }
@@ -75,7 +75,7 @@ public class TestEvidence {
         final MultipartFile mockPhoto = mock(MultipartFile.class);
         when(userRepositoryMock.findByUsername("testUser")).thenReturn(null);
 
-        Throwable exception = assertThrows(UsernameNotFoundException.class, () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle"));
+        Throwable exception = assertThrows(UsernameNotFoundException.class, () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L));
         verify(userRepositoryMock).findByUsername("testUser");
         assertEquals("User not found: testUser",exception.getMessage());
     }
