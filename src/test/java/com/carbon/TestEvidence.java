@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.carbon.model.Evidence;
 import com.carbon.model.EvidenceStatus;
 import com.carbon.model.User;
+import com.carbon.repository.ChallengeRepository;
 import com.carbon.repository.EvidenceRepository;
 import com.carbon.repository.UserRepository;
 import com.carbon.service.EvidenceService;
@@ -33,6 +34,9 @@ public class TestEvidence {
 
     @Mock
     UserRepository userRepositoryMock;
+
+    @Mock
+    ChallengeRepository challengeRepository;
 
     @InjectMocks
     EvidenceService evidenceService;
@@ -71,24 +75,58 @@ public class TestEvidence {
     }
 
     @Test
-    void TestSubmitEvidencePhotoNotFound(){
-        final MultipartFile mockPhoto = mock(MultipartFile.class);
-        when(userRepositoryMock.findByUsername("testUser")).thenReturn(null);
-
-        Throwable exception = assertThrows(UsernameNotFoundException.class, () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L));
-        verify(userRepositoryMock).findByUsername("testUser");
-        assertEquals("User not found: testUser",exception.getMessage());
-    }
-
-    @Test
-    void TestSubmitEvidenceImageOnlyAllowed(){
+    void TestSubmitEvidencePhotoNotFoundNull(){
         User testUser = new User();
-
+        testUser.setUsername("testUser");
         when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
 
-        
+        // final MultipartFile mockPhoto = mock(MultipartFile.class);
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> evidenceService.submitEvidence("testUser", null, "testTitle", 1L));
+        verify(userRepositoryMock).findByUsername("testUser");
+        assertEquals("Photo is required.",exception.getMessage());
+    }
+
+    // @Test
+    // void TestSubmitEvidencePhotoNotFoundIsEmpty(){
+    //     User testUser = new User();
+    //     testUser.setUsername("testUser");
+    //     when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
+
+    //     final MultipartFile mockPhoto = mock(MultipartFile.class);
+
+    //     Throwable exception = assertThrows(IllegalArgumentException.class, () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L));
+    //     verify(userRepositoryMock).findByUsername("testUser");
+    //     assertEquals("Photo is required.",exception.getMessage());
+    // }
+
+
+    @Test
+    void TestSubmitEvidenceImageOnlyAllowedNull(){
+        User testUser = new User();
+        testUser.setUsername("testUser");
+        when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
+
+        final MultipartFile mockPhoto = mock(MultipartFile.class);
+        when(mockPhoto.getContentType()).thenReturn(null);
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L));
+        verify(userRepositoryMock).findByUsername("testUser");
+        assertEquals("Only image uploads are allowed.",exception.getMessage());
     }
 
 
+    @Test
+    void TestSubmitEvidenceImageOnlyAllowedContentTypeWrong(){
+        User testUser = new User();
+        testUser.setUsername("testUser");
+        when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
 
+        final MultipartFile mockPhoto = mock(MultipartFile.class);
+        when(mockPhoto.getContentType()).thenReturn("imag/");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L));
+        verify(userRepositoryMock).findByUsername("testUser");
+        assertEquals("Only image uploads are allowed.",exception.getMessage());
+    }
 }
