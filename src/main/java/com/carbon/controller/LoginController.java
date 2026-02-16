@@ -47,7 +47,8 @@ public class LoginController {
             newUser.setPassword(password);
             newUser.setRole("USER");
             newUser.setPoints(0);
-            newUser.setCampus(campus);
+            newUser.setCampus
+            (campus);
             registerUser(newUser);
             LOGGER.info("User has been created.");
             return "redirect:/tasks.html?registered=true";

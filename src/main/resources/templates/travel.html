@@ -21,30 +21,32 @@
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
-        <a class="active" href="leaderboard">Leaderboard</a>
+        <a href="leaderboard">Leaderboard</a>
         <a href="groups">Groups</a>
         <a href="analytics">Analytics</a>
         <a href="evidence">Evidence</a>
-        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
         <a href="settings">Settings</a>
-        <a href="travel">Travel</a>
+        <a class="active" href="travel">Travel</a>
       </div>
 
       <div id="task-information-container">
         <div class="challenges-box">
-          <h1>Leaderboard</h1>
-          <table>
-            <tr>
-            <th>User</th>
-            <th>Points</th>
-            </tr>
-            <tr th:each="user : ${users}">
-            <td th:text="${user.username}"></td>
-            <td th:text="${user.points}"></td>
-            </tr>
-          </table>
+          <h1>Enter Travel Info</h1>
+          <form th:action="@{/api/travel/submit}" method="post" id="evidence-form">
+            <label for="travelType">Task title</label><br>
+            <select name="travelType" placeholder="Please select a travel method">
+              <option value="walk">Walk</option>
+              <option value="bike">Bike</option>
+            </select><br><br>
+            <label for="distance">Distance (km)</label><br>
+            <input type="number" id="distance" name="distance" placeholder="5"><br><br>
+            <input type ="hidden"
+              th:name="${_csrf.parameterName}"
+              th:value="${_csrf.token}"/>
+            <button type="submit">Enter Distance</button>
+          </form>
         </div>
-    </div>
+      </div>
     </div>
 </body>
 </html>

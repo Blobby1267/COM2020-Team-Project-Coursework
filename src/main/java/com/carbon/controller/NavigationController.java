@@ -51,6 +51,11 @@ public class NavigationController {
         return "settings";
     }
 
+    @GetMapping("/travel")
+    public String travel() {
+        return "travel";
+    }
+    
     private boolean hasModeratorRole(Authentication authentication) {
         User user = userRepository.findByUsername(authentication.getName());
         if (user == null || user.getRole() == null) {
