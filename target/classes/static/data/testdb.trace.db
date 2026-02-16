@@ -32,3 +32,75 @@ FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(ID) [42001-224]
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
 2026-02-16 12:30:30.732269Z jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 13:13:11.779561Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]GROUPS_USERS table\000d\000aCREATE TABLE GROUPS_USERS (\000d\000aUSER_ID BIGINT NOT NULL,\000d\000aGROUP_ID BIGINT NOT NULL,\000d\000aPRIMARY KEY (USER_ID, GROUP_ID),\000d\000aCONSTRAINT GROUPS_USERS_USER\000d\000aFOREIGN KEY (USER_ID) REFERENCES USERS(ID),\000d\000aCONSTRAINT GROUP_USERS_GROUP\000d\000aFOREIGN KEY (GROUP_ID) REFERENCES GROUPS(ID)\000d\000a)"; expected "GRANT"; SQL statement:
+GROUPS_USERS table
+CREATE TABLE GROUPS_USERS (
+USER_ID BIGINT NOT NULL,
+GROUP_ID BIGINT NOT NULL,
+PRIMARY KEY (USER_ID, GROUP_ID),
+CONSTRAINT GROUPS_USERS_USER
+FOREIGN KEY (USER_ID) REFERENCES USERS(ID),
+CONSTRAINT GROUP_USERS_GROUP
+FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(ID)
+) [42001-224]
+2026-02-16 13:14:11.498328Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]GROUPS_USERS table\000d\000aCREATE TABLE GROUPS_USERS (\000d\000aUSER_ID BIGINT NOT NULL,\000d\000aGROUP_ID BIGINT NOT NULL,\000d\000aPRIMARY KEY (USER_ID, GROUP_ID),\000d\000aCONSTRAINT GROUPS_USERS_USER\000d\000aFOREIGN KEY (USER_ID) REFERENCES USERS(ID),\000d\000aCONSTRAINT GROUP_USERS_GROUP\000d\000aFOREIGN KEY (GROUP_ID) REFERENCES GROUPS(ID)\000d\000a)"; expected "GRANT"; SQL statement:
+GROUPS_USERS table
+CREATE TABLE GROUPS_USERS (
+USER_ID BIGINT NOT NULL,
+GROUP_ID BIGINT NOT NULL,
+PRIMARY KEY (USER_ID, GROUP_ID),
+CONSTRAINT GROUPS_USERS_USER
+FOREIGN KEY (USER_ID) REFERENCES USERS(ID),
+CONSTRAINT GROUP_USERS_GROUP
+FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(ID)
+) [42001-224]
+2026-02-16 13:24:28.409804Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 13:24:55.930551Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 13:25:14.668130Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 13:35:22.847841Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 13:39:36.743250Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists users add column [*]year varchar(255)"; expected "identifier"; SQL statement:
+alter table if exists users add column year varchar(255) [42001-224]
+2026-02-16 13:39:55.197899Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists users add column [*]year varchar(255)"; expected "identifier"; SQL statement:
+alter table if exists users add column year varchar(255) [42001-224]
+2026-02-16 13:40:20.601730Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "select u1_0.id,u1_0.campus,u1_0.password,u1_0.points,u1_0.role,u1_0.username,u1_0.[*]year from users u1_0 where u1_0.username=?"; expected "identifier"; SQL statement:
+select u1_0.id,u1_0.campus,u1_0.password,u1_0.points,u1_0.role,u1_0.username,u1_0.year from users u1_0 where u1_0.username=? [42001-224]
+2026-02-16 13:40:31.762278Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "select u1_0.id,u1_0.campus,u1_0.password,u1_0.points,u1_0.role,u1_0.username,u1_0.[*]year from users u1_0 where u1_0.username=?"; expected "identifier"; SQL statement:
+select u1_0.id,u1_0.campus,u1_0.password,u1_0.points,u1_0.role,u1_0.username,u1_0.year from users u1_0 where u1_0.username=? [42001-224]
+2026-02-16 15:04:05.421233Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists users add column [*]year varchar(255)"; expected "identifier"; SQL statement:
+alter table if exists users add column year varchar(255) [42001-224]
+2026-02-16 15:04:49.938411Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "select u1_0.id,u1_0.campus,u1_0.password,u1_0.points,u1_0.role,u1_0.username,u1_0.[*]year from users u1_0 where u1_0.username=?"; expected "identifier"; SQL statement:
+select u1_0.id,u1_0.campus,u1_0.password,u1_0.points,u1_0.role,u1_0.username,u1_0.year from users u1_0 where u1_0.username=? [42001-224]
+2026-02-16 15:07:59.015471Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:08:12.468379Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:09:24.135487Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:09:42.440129Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:10:34.942288Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:10:57.407438Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:12:46.353034Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:18:35.865862Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:20:21.097028Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:20:58.773743Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-02-16 15:21:18.765938Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
