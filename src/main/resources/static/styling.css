@@ -140,10 +140,29 @@ label{
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+}
+
+#top-bar h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #logo {
     height: 100%;
+}
+
+.points-box {
+    background-color: #007D69;
+    padding: 20px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    position: absolute;
+    left: 75%;
+    transform: translateX(-50%);
 }
 
 
@@ -226,6 +245,43 @@ label{
     border-radius: 10px;
     height: auto;
     overflow: scroll;
+}
+
+.calculation-result {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #005a4d;
+    border-radius: 8px;
+    border: 2px solid #00a88f;
+}
+
+.calculation-result h2 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.calculation-details p {
+    color: white;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.calculation-details hr {
+    border: 1px solid #00a88f;
+    margin: 15px 0;
+}
+
+.calculation-formula {
+    background-color: #004439;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: monospace;
+}
+
+.points-earned {
+    font-size: 16px;
+    color: #7FFF00;
 }
 
 #task-information-container .groups-box{
@@ -336,6 +392,23 @@ tr:hover{background-color: #d2d3d3;}
     width: 95%;
     margin-bottom: 10px;
     border-radius: 4px;
+    font-size: 0.9em;
+    line-height: 1.3;
+}
+
+.containerTab h3 {
+    margin: 5px 0;
+    font-size: 1.1em;
+}
+
+.containerTab p {
+    margin: 4px 0;
+    font-size: 0.85em;
+    text-align: left;
+}
+
+.containerTab .complete-btn {
+    margin-top: 8px;
 }
 
 .row:after{

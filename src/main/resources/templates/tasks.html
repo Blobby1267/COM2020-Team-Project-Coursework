@@ -12,6 +12,10 @@
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <div sec:authorize="isAuthenticated()" class="points-box">
+        <span>Points: </span>
+        <span th:text="${userPoints}">0</span>
+      </div>
       <form th:action = "@{/logout}" th:object = "${user}"method="post">
         <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
         <button class="log-out" type="submit">Log Out</button>
@@ -46,6 +50,8 @@
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
+              <p>Carbon Saved: <span th:text="${challenge.carbonSaved}"></span> kg CO2</p>
+              <p>Taxonomy: <span th:text="${challenge.taxonomy}"></span></p>
               <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
                       th:data-challenge-id="${challenge.id}"
                       onclick="completeChallenge(this)">Complete</button>
@@ -69,6 +75,8 @@
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
+              <p>Carbon Saved: <span th:text="${challenge.carbonSaved}"></span> kg CO2</p>
+              <p>Taxonomy: <span th:text="${challenge.taxonomy}"></span></p>
               <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
                       th:data-challenge-id="${challenge.id}"
                       onclick="completeChallenge(this)">Complete</button>
@@ -92,6 +100,8 @@
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
+              <p>Carbon Saved: <span th:text="${challenge.carbonSaved}"></span> kg CO2</p>
+              <p>Taxonomy: <span th:text="${challenge.taxonomy}"></span></p>
               <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
                       th:data-challenge-id="${challenge.id}"
                       onclick="completeChallenge(this)">Complete</button>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import com.carbon.repository.ChallengeRepository;
@@ -18,6 +19,7 @@ import com.carbon.service.TravelService;
 import org.springframework.ui.Model;
 import java.util.logging.Logger;
 import org.springframework.security.core.Authentication;
+import java.util.Map;
 
 @Controller
 public class TravelController {
@@ -33,10 +35,12 @@ public class TravelController {
     @PostMapping("/api/travel/submit")
     public String completeChallenge(
         @RequestParam String travelType,
-        @RequestParam int distance,
-        Authentication authentication
+        @RequestParam double distance,
+        Authentication authentication,
+        RedirectAttributes redirectAttributes
     ) {
-        travelService.registerTravel(authentication.getName(), travelType, distance);
-        return "redirect:/travel?success";
+        Map<String, Object> result = travelService.registerTravel(authentication.getName(), travelType, distance);
+        redirectAttributes.addFlashAttribute("calculation", result);
+        return "redirect:/travel";
     }
 }

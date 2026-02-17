@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 
 
 import com.carbon.repository.ChallengeRepository;
+import com.carbon.repository.UserRepository;
 import com.carbon.service.ChallengeService;
+import com.carbon.model.User;
 
 import org.springframework.ui.Model;
 import java.util.logging.Logger;
@@ -31,11 +33,22 @@ public class ChallengePageController {
     @Autowired
     private ChallengeRepository challengeRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/tasks")
     public String challenge(Authentication auth, Model model) {
         model.addAttribute("dailyChallenges", challengeService.getChallengesByFrequency("Daily"));
         model.addAttribute("weeklyChallenges", challengeService.getChallengesByFrequency("Weekly"));
         model.addAttribute("monthlyChallenges", challengeService.getChallengesByFrequency("Monthly"));
+        
+        if (auth != null) {
+            User user = userRepository.findByUsername(auth.getName());
+            if (user != null) {
+                model.addAttribute("userPoints", user.getPoints());
+            }
+        }
+        
         return "tasks";
     }
 

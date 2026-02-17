@@ -21,7 +21,8 @@ public class LeaderboardController {
     public String showLeaderboard(Model model) {
         List<User> users = userRepository.findAll();
         users.sort((u1, u2) -> Integer.compare(u2.getPoints(), u1.getPoints()));
-        model.addAttribute("users", users);
+        List<User> top10Users = users.stream().limit(10).toList();
+        model.addAttribute("users", top10Users);
         LOGGER.info("Displaying the leaderboard.");
         return "leaderboard";
     }

@@ -22,6 +22,8 @@ public class Challenge {
     private Date endDate;
     private String scope;
     private boolean requiresEvidence;
+    private String taxonomy;
+    private Double carbonSaved;
 
     //getters
     public Long getId() {
@@ -51,6 +53,12 @@ public class Challenge {
     public boolean isRequiresEvidence() {
         return requiresEvidence;
     }
+    public String getTaxonomy() {
+        return taxonomy;
+    }
+    public Double getCarbonSaved() {
+        return carbonSaved;
+    }
 
     //setters
     public void setTitle(String title) {
@@ -76,5 +84,11 @@ public class Challenge {
     }
     public void setRequiresEvidence(boolean requiresEvidence) {
         this.requiresEvidence = requiresEvidence;
+    }
+    public void setTaxonomy(String taxonomy) {
+        this.taxonomy = taxonomy;
+    }
+    public void setCarbonSaved(Double carbonSaved) {
+        this.carbonSaved = carbonSaved;
     }
 }

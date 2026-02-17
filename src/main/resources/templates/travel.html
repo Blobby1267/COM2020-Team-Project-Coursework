@@ -33,20 +33,39 @@
         <div class="challenges-box">
           <h1>Enter Travel Info</h1>
           <form th:action="@{/api/travel/submit}" method="post" id="evidence-form">
-            <label for="travelType">Task title</label><br>
-            <select name="travelType" placeholder="Please select a travel method">
-              <option value="walk">Walk</option>
+            <label for="travelType">Travel Method</label><br>
+            <select id="travelType" name="travelType" required>
+              <option value="walk" selected>Walk</option>
               <option value="bike">Bike</option>
             </select><br><br>
             <label for="distance">Distance (km)</label><br>
-            <input type="number" id="distance" name="distance" placeholder="5"><br><br>
+            <input type="number" id="distance" name="distance" placeholder="5" min="1" step="0.1" required><br><br>
             <input type ="hidden"
               th:name="${_csrf.parameterName}"
               th:value="${_csrf.token}"/>
             <button type="submit">Enter Distance</button>
           </form>
+          
+          <div th:if="${calculation}" class="calculation-result">
+            <h2>Points Calculation</h2>
+            <div class="calculation-details">
+              <p><strong>Travel Type:</strong> <span th:text="${calculation.travelType}">Walk</span></p>
+              <p><strong>Distance:</strong> <span th:text="${calculation.distance}">0</span> km</p>
+              <p><strong>Points per km:</strong> <span th:text="${calculation.pointsPerKm}">5</span></p>
+              <hr>
+              <p class="calculation-formula">
+                <strong>Calculation:</strong> 
+                <span th:text="${calculation.distance}">0</span> km × 
+                <span th:text="${calculation.pointsPerKm}">5</span> points/km = 
+                <span th:text="${calculation.pointsEarned}">0</span> points
+              </p>
+              <p class="points-earned"><strong>Points Earned:</strong> <span th:text="${calculation.pointsEarned}">0</span></p>
+              <p><strong>Total Points:</strong> <span th:text="${calculation.totalPoints}">0</span></p>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
 </body>
 </html>
