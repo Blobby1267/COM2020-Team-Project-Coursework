@@ -67,6 +67,10 @@ public class LoginController {
     @PostMapping("/register")
     public String handleRegister(@RequestParam String username, @RequestParam String password, @RequestParam String campus, @RequestParam String year, HttpServletRequest request) {
         // Check if username is available
+        if(username.isEmpty() || password.isEmpty()) {
+            LOGGER.info("Username or password cannot be empty.");
+            return "redirect:/login?error=empty";
+        }
         if (userRepository.findByUsername(username) == null) {
             // Create new user with default settings
             User newUser = new User();
@@ -75,6 +79,7 @@ public class LoginController {
             newUser.setRole("USER"); // Default role for new registrations
             newUser.setPoints(0); // Start with zero points
             newUser.setCampus(campus);
+            newUser.setYear(year);
             registerUser(newUser); // Encrypts password and saves to database
             
             // Logout any existing user session before logging in the new user
