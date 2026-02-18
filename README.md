@@ -1,9 +1,9 @@
 # Table of Contents
 
-[Overview](https://github.com/Blobby1267/Team-Project?tab=readme-ov-file#overview)  
-[Installation and Usage](https://github.com/Blobby1267/Team-Project?tab=readme-ov-file#installation-and-usage)   
-[Projects/Issues](https://github.com/Blobby1267/Team-Project?tab=readme-ov-file#projects--issues)    
-[Content](https://github.com/Blobby1267/Team-Project?tab=readme-ov-file#content)   
+[Overview](#overview)  
+[Installation and Usage](#installation-and-usage)   
+[Projects/Issues](#projects--issues)    
+[Content](#content)   
 
 
 # Overview
