@@ -1,12 +1,24 @@
 # Table of Contents
 
 [Overview](#overview)  
+[Authors](#authors)
 [Installation and Usage](#installation-and-usage)   
 [Projects/Issues](#projects--issues)    
 [Content](#content)   
 
 
 # Overview
+
+# Authors
+
+Madeleine Walters - Project Lead
+Ben Hoskins - Technical Lead
+Marko Parkinson - Developer
+Phoebe Say - Developer
+Zarreen Peeroo - UX
+Davi Oppes - Testing
+Armin Golahmadi - Documentation
+Jai Thacker - Data Lead
 
 # Installation and Usage
 
