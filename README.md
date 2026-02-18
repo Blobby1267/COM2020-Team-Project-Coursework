@@ -25,6 +25,8 @@
 
 Footprint is not publically hosted, so you must install the source code and run the website locally.
 
+For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
+
 ## Pre-Requisites
 
 **!!!LIST PRE-REQUISITE INSTALLATION!!!**
@@ -35,9 +37,9 @@ Dependencies can also be found in the ```software_data_inventory.xlsx```
 
 **!!!GIVE CMMD/INSTRUCTIONS TO RUN LOCALLY!!!**
 
-Instructions can also be found in ```deployment_guide.pdf``` for hosting the website locally.
-
 # Projects / Issues
+
+For our 
 
 # Content
 
