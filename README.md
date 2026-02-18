@@ -1,9 +1,9 @@
 # Table of Contents
 
-[Overview](https://github.com/Blobby1267/Team-Project/edit/main/README.md#overview)  
-[Installation and Usage](https://github.com/Blobby1267/Team-Project/edit/main/README.md#installation-and-usage)  
-[Projects/Issues](https://github.com/Blobby1267/Team-Project/edit/main/README.md#projects--issues)  
-[Content](https://github.com/Blobby1267/Team-Project/edit/main/README.md#projects--issues)  
+[Overview](https://github.com/Blobby1267/Team-Project?tab=readme-ov-file#overview)  
+[Installation and Usage](https://github.com/Blobby1267/Team-Project?tab=readme-ov-file#installation-and-usage)   
+[Projects/Issues](https://github.com/Blobby1267/Team-Project?tab=readme-ov-file#projects--issues)    
+[Content](https://github.com/Blobby1267/Team-Project?tab=readme-ov-file#content)   
 
 
 # Overview
