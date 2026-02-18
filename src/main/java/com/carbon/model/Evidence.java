@@ -16,6 +16,11 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Entity class representing photo evidence submitted by users for challenges.
+ * Mapped to the "evidence" table in the database.
+ * Used by moderators for reviewing submissions and awarding points.
+ */
 @Entity
 @Table(name = "evidence")
 public class Evidence {
@@ -23,36 +28,41 @@ public class Evidence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Many evidence submissions belong to one user
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    // Evidence may optionally be linked to a specific challenge
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
 
     @Column(nullable = false)
-    private String originalFilename;
+    private String originalFilename; // Original filename of uploaded photo
 
     @Column(nullable = false)
-    private String contentType;
+    private String contentType; // photo type (e.g., "image/jpeg", "image/png")
 
-    private long sizeBytes;
+    private long sizeBytes; // File size in bytes
 
-    private String taskTitle;
+    private String taskTitle; // title for task
 
+    // Binary photo data
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(nullable = false)
     private byte[] photo;
 
+    // Current moderation status (PENDING, ACCEPTED, or REJECTED)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EvidenceStatus status = EvidenceStatus.PENDING;
 
     @Column(nullable = false)
-    private LocalDateTime submittedAt;
+    private LocalDateTime submittedAt; // Timestamp of submission
 
+    //Getters
     public Long getId() {
         return id;
     }
@@ -93,6 +103,8 @@ public class Evidence {
         return submittedAt;
     }
 
+    //Setters
+    
     public void setChallenge(Challenge challenge) {
         this.challenge = challenge;
     }

@@ -8,24 +8,31 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 
-@Entity // Tells Java this maps to a database table
+/**
+ * Entity class representing a sustainability challenge that users can complete.
+ * Mapped to the "challenges" table in the database.
+ * Used throughout the application for displaying available challenges and awarding points.
+ */
+@Entity // This class maps to a database table
 @Table(name = "challenges")
 public class Challenge {
     @Id  // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing ID
     private Long id;
-    private String title;
-    private String description;
-    private int points;
-    private String frequency;
-    private Date startDate;
-    private Date endDate;
-    private String scope;
-    private boolean requiresEvidence;
-    private String taxonomy;
-    private Double carbonSaved;
+    
+    private String title; // Display name of the challenge (e.g., "Walk to Campus")
+    private String description; // Detailed description of what user must do
+    private int points; // Points awarded when challenge is completed
+    private String frequency; // How often challenge resets: "Daily", "Weekly", or "Monthly"
+    private Date startDate; // When challenge becomes available
+    private Date endDate; // When challenge expires (null = no expiration)
+    private String scope; // Scope of challenge
+    private boolean requiresEvidence; // Whether photo evidence must be submitted
+    private String taxonomy; // Category of challenge
+    private Double carbonSaved; // Estimated CO2 reduction in kg
 
-    //getters
+    // Getters
+    
     public Long getId() {
         return id;
     }
@@ -60,7 +67,8 @@ public class Challenge {
         return carbonSaved;
     }
 
-    //setters
+    // setters
+    
     public void setTitle(String title) {
         this.title = title;
     }

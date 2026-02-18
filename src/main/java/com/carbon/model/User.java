@@ -7,22 +7,30 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
-@Entity // Tells Java this maps to a database table
+/**
+ * Entity class representing a user account in the system.
+ * Mapped to the "users" table in the database.
+ * Stores authentication credentials, points, role, and profile information.
+ * Central entity linked to Evidence, Challenges, and Leaderboard functionality.
+ */
+@Entity // Tells JPA this class maps to a database table
 @Table(name = "users")
 public class User {
     @Id  // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing ID
     private Long id; // Unique identifier
-    private String username;
-    private String password;
-    private int points = 0;
-    private String role;
-    private String campus = "streatham";
-    @Column(name = "\"year\"") // year is a reserved keyword in SQL, so we need to escape it
-    private String year = "First_Year";
+    
+    private String username; // Unique login name
+    private String password; // BCrypt-hashed password (never stored in plain text)
+    private int points = 0; // Total points earned from challenges and travel
+    private String role; // User role: "USER", "MODERATOR", or "ADMIN"
+    private String campus = "streatham"; // User's campus location (default: Streatham)
+    
+    @Column(name = "\"year\"") // "year" is a reserved SQL keyword, so we escape it
+    private String year = "First_Year"; // Academic year of the user
 
 
-    // getters
+    // === Getter Methods ===
     public Long getId() {
         return id;
     }
@@ -45,7 +53,8 @@ public class User {
         return year;
     }
 
-    // setters
+    // === Setter Methods ===
+    
     public void setUsername(String username) {
         this.username = username;
     }
