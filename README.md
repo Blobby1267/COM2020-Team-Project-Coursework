@@ -140,7 +140,7 @@ Primary source code and test code for the Spring Boot application.
             - `com/carbon` - Unit and integration tests for models, controllers, and flows.
 
 ## target
-Maven build output directory generated after compiling and packaging the src folder.
+Maven build directory generated after compiling and packaging the src folder.
 -`target`
     - `classes` - Compiled main classes and copied runtime resources.
         - `com/carbon` - Compiled `.class` files for application packages.
