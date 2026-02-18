@@ -19,7 +19,7 @@
 **Armin Golahmadi** - Documentation  
 **Jai Thacker** - Data Lead  
 
-# Installation
+# Installation and Usage
 Footprint is not publically hosted, so you must install the source code and run the website locally.
 
 ## Pre-Requisites
@@ -39,7 +39,7 @@ git --version
 
 Dependencies can be found in the ```software_data_inventory.xlsx```
 
-# Usage
+## Usage
 
 1. Open a terminal in the project root.
 2. Build the dependencies and run the app:
@@ -56,9 +56,6 @@ localhost:8080/login
 This takes you to the gateway to the rest of the website
 
 
-# Running tests
-For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
-
 ### Database notes
 
 - The project uses an H2 file database.
@@ -66,6 +63,9 @@ For guidance on running testing, please refer the to deployment guide which can 
 - JDBC URL: `jdbc:h2:file:./target/classes/static/data/testdb`
 - Username: `sa`
 - Password: *(leave blank)*
+
+# Running tests
+For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
 
 # Projects / Issues
 
