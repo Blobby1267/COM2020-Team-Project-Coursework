@@ -21,21 +21,53 @@
 **Armin Golahmadi** - Documentation  
 **Jai Thacker** - Data Lead  
 
-# Installation and Usage
-
+# Installation
 Footprint is not publically hosted, so you must install the source code and run the website locally.
-
-For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
 
 ## Pre-Requisites
 
-**!!!LIST PRE-REQUISITE INSTALLATION!!!**
+- Java Development Kit (JDK) **21**
+- Apache Maven **3.9+**
+- Git (to clone/pull the repository)
+- Docker Desktop, if you want to run via Docker instead of Maven
 
-Dependencies can also be found in the ```software_data_inventory.xlsx```
+You can verify your setup with:
 
-## Usage
+```bash
+java -version
+mvn -version
+git --version
+```
 
-**!!!GIVE CMMD/INSTRUCTIONS TO RUN LOCALLY!!!**
+Dependencies can be found in the ```software_data_inventory.xlsx```
+
+# Usage
+
+1. Open a terminal in the project root.
+2. Build the dependencies and run the app:
+
+```bash
+mvn compile
+mvn spring-boot:run
+```
+
+3. Open the website in your browser:
+```text
+localhost:8080/login
+```
+This takes you to the gateway to the rest of the website
+
+
+# Running tests
+For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
+
+### Database notes
+
+- The project uses an H2 file database.
+- H2 console (when app is running): `http://localhost:8080/h2-console`
+- JDBC URL: `jdbc:h2:file:./target/classes/static/data/testdb`
+- Username: `sa`
+- Password: *(leave blank)*
 
 # Projects / Issues
 
