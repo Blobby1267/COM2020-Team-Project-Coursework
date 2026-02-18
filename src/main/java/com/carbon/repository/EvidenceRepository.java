@@ -9,7 +9,6 @@ import com.carbon.model.EvidenceStatus;
 
 /**
  * Repository interface for Evidence entity database operations.
- * Extends JpaRepository which provides CRUD operations for Evidence entities.
  * Spring Data JPA automatically implements this interface at runtime.
  * Used by EvidenceService for persisting and retrieving photo evidence submissions.
  */

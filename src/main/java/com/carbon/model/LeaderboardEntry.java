@@ -27,7 +27,7 @@ public class LeaderboardEntry {
 
     // Constructors
     
-    /** Default constructor for JPA */
+    //Default constructor for JPA
     public LeaderboardEntry() {}
 
     /**
@@ -41,7 +41,7 @@ public class LeaderboardEntry {
         this.points = user.getPoints();
     }
 
-    // === Getter and Setter Methods ===
+    // Getter and Setter Methods
     
     public Long getId() {
         return id;

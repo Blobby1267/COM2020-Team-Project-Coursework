@@ -5,7 +5,6 @@ import com.carbon.model.User;
 
 /**
  * Repository interface for User entity database operations.
- * Extends JpaRepository which provides CRUD operations (save, findById, findAll, delete, etc.).
  * Spring Data JPA automatically implements this interface at runtime.
  * Central repository used across the application for authentication, points tracking, and user management.
  */

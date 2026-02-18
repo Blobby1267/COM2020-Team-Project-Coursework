@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * Spring Security configuration for the application.
  * Defines which URLs require authentication, authorization rules, and security features.
- * Configures form-based login, logout, CSRF protection, and password encoding.
+ * Configures form-based login, logout and password encoding.
  * Works with CustomUserDetailsService for loading user credentials during authentication.
  */
 @Configuration
@@ -31,8 +31,7 @@ public class SecurityConfig {
      * - All other URLs: require authentication
      * 
      * Security features:
-     * - CSRF disabled for /h2-console/** and /api/** (allows REST API calls and H2 console access)
-     * - Frame options disabled (allows H2 console to display in iframe)
+     * - Frame options disabled (allows H2 console to display in frame)
      * - Form login with custom login page at /login
      * - Successful login redirects to /tasks
      * - Logout enabled for all users
@@ -71,7 +70,6 @@ public class SecurityConfig {
      * Provides BCrypt password encoder bean for secure password hashing.
      * Used by LoginController to hash passwords before storing in database.
      * Used by Spring Security to verify passwords during authentication.
-     * BCrypt is a strong, adaptive hashing algorithm resistant to brute-force attacks.
      * @return PasswordEncoder instance (BCryptPasswordEncoder)
      */
     @Bean

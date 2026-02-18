@@ -9,7 +9,7 @@ import com.carbon.model.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
- * Custom implementation of Spring Security's UserDetailsService.
+ * Implementation of Spring Security's UserDetailsService.
  * Bridges our User entity with Spring Security's authentication system.
  * Loaded by Spring Security during login to validate credentials and load user roles.
  * Configured in SecurityConfig to be used for authentication.
@@ -19,8 +19,6 @@ public class CustomUserDetailsService implements UserDetailsService{
 
     // Repository for fetching user data from database
     private final UserRepository userRepository;
-    
-    // Constructor injection for UserRepository
     public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -31,12 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService{
      * @param username - The username submitted in login form
      * @return UserDetails object containing username, password, and roles
      * @throws UsernameNotFoundException if user doesn't exist
-     * 
-     * Process:
-     * 1. Fetches User entity from database by username
-     * 2. Throws exception if user not found (login fails)
-     * 3. Converts our User entity to Spring Security's UserDetails format
-     * 4. Spring Security then validates the password against stored hash
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

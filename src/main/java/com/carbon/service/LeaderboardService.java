@@ -32,20 +32,10 @@ public class LeaderboardService {
 
     /**
      * Rebuilds the leaderboard from current user data.
-     * @Transactional ensures all database operations complete or none do.
-     * 
-     * Process:
-     * 1. Fetches all users from database
-     * 2. Sorts users by points (descending - highest first)
-     * 3. Takes top 10 users
-     * 4. Clears existing leaderboard entries
-     * 5. Creates new leaderboard entries from top users
-     * 6. Saves all entries to leaderboard table
-     * 
+     * @Transactional ensures all database operations complete or none are done.
      * Use cases:
      * - Scheduled job to refresh leaderboard periodically
      * - Manual refresh after bulk point updates
-     * - Initial population of leaderboard table
      */
     @Transactional
     public void rebuildLeaderboard() {

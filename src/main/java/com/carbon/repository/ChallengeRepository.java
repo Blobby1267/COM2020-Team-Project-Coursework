@@ -5,8 +5,7 @@ import com.carbon.model.Challenge;
 import java.util.List;
 
 /**
- * Repository interface for Challenge entity database operations.
- * Extends JpaRepository which provides CRUD operations (save, findById, findAll, delete, etc.).
+ * Repository interface for Challenge entity database operations..
  * Spring Data JPA automatically implements this interface at runtime.
  * Custom query methods are auto-generated based on method name conventions.
  */

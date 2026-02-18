@@ -26,9 +26,9 @@ import com.carbon.repository.ChallengeRepository;
 public class EvidenceService {
     // Repository for persisting and retrieving evidence submissions
     private final EvidenceRepository evidenceRepository;
-    // Repository for user data (submitter information, points updates)
+    // Repository for user data 
     private final UserRepository userRepository;
-    // Repository for challenge data (linking evidence to challenges)
+    // Repository for challenge data 
     private final ChallengeRepository challengeRepository;
 
     // Constructor injection for all required repositories
@@ -41,19 +41,13 @@ public class EvidenceService {
     /**
      * Processes and stores a photo evidence submission from a user.
      * @param username - Username of the submitting user
-     * @param photo - Uploaded image file (MultipartFile from form)
-     * @param taskTitle - Optional custom title/description
-     * @param challengeId - Optional ID to link evidence to specific challenge
+     * @param photo - Uploaded image file
+     * @param taskTitle - Task title for the evidence
+     * @param challengeId - ID to link evidence to specific challenge
      * @return Saved Evidence entity with generated ID
      * @throws UsernameNotFoundException if user doesn't exist
      * @throws IllegalArgumentException if photo is invalid or challenge doesn't exist
      * @throws IOException if file reading fails
-     * 
-     * Validation steps:
-     * 1. Validates user exists
-     * 2. Validates photo is present and not empty
-     * 3. Validates photo is an image type (content-type starts with "image/")
-     * 4. If challengeId provided, validates challenge exists
      * 
      * Storage:
      * - Stores binary photo data as BLOB in database

@@ -45,15 +45,6 @@ public class ChallengeService {
      * @param challengeId - ID of the challenge being completed
      * @throws UsernameNotFoundException if user doesn't exist
      * @throws IllegalArgumentException if challenge doesn't exist
-     * 
-     * Process:
-     * 1. Validates user exists in database
-     * 2. Validates challenge exists in database
-     * 3. Adds challenge points to user's total points
-     * 4. Saves updated user back to database
-     * 
-     * Note: Does not check for duplicate completions - that validation
-     * should be handled by controller or additional business logic.
      */
     public void completeChallenge(String username, Long challengeId) {
         // Fetch and validate user exists

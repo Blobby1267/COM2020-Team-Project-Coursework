@@ -21,9 +21,9 @@ public class User {
     private Long id; // Unique identifier
     
     private String username; // Unique login name
-    private String password; // BCrypt-hashed password (never stored in plain text)
+    private String password; // BCrypt-hashed password
     private int points = 0; // Total points earned from challenges and travel
-    private String role; // User role: "USER", "MODERATOR", or "ADMIN"
+    private String role; // User role: "USER" or "MODERATOR"
     private String campus = "streatham"; // User's campus location (default: Streatham)
     
     @Column(name = "\"year\"") // "year" is a reserved SQL keyword, so we escape it
