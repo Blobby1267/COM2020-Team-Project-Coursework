@@ -386,3 +386,5 @@ ALTER TABLE challenges ADD COLUMN carbon_saved DOUBLE DEFAULT 0.0 [42121-224]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-02-18 13:49:19.288133Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
