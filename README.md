@@ -5,8 +5,6 @@
 [Projects/Issues](#projects--issues)    
 [Content](#content)  
 
-**@Author** Madeleine Walters
-
 
 # Overview
 
