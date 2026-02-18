@@ -119,8 +119,34 @@ For our
 **@Author** Zarreen Peeroo, Phoebe Say, Madeleine Walters  
 
 ## src
+Primary source code and test code for the Spring Boot application.  
 **@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Davi Oppes
+- `src`
+    - `main` - Main application source code and resources.
+        - `java` - Main Java source files.
+            - `com/carbon` - Root package for the application.
+                - `controller` - Controllers that handle routes and page requests.
+                - `model` - Domain model classes.
+                - `repository` - Data access layer interfaces for database operations.
+                - `service` - Perform logic calculations used by controllers and repositories.
+        - `resources` - Non-Java resources loaded at runtime.
+            - `application.properties` - App configuration properties.
+            - `static` - Static assets served directly (CSS, HTML, data files).
+                - `data` - File-based database used by the app.
+            - `templates` - Thymeleaf templates for server-rendered pages.
+
+    - `test` - Automated tests.
+        - `java` - Test source code.
+            - `com/carbon` - Unit and integration tests for models, controllers, and flows.
+
 ## target
-**@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Davi Oppes
-
-
+Maven build output directory generated after compiling and packaging the src folder.
+-`target`
+    - `classes` - Compiled main classes and copied runtime resources.
+        - `com/carbon` - Compiled `.class` files for application packages.
+        - `templates` - Processed/copied template files used at runtime.
+        - `static` - Copied static assets and data directory.
+        - `application.properties` - Copied runtime configuration.
+    - `generated-sources` - Build-time generated source files (including annotation-processor output).
+    - `maven-status/maven-compiler-plugin` - Maven compiler plugin metadata about compile/test-compile inputs and outputs.
+    - `test-classes/com/carbon` - Compiled test classes from `src/test/java`.
