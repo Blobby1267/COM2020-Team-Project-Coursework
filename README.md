@@ -7,6 +7,7 @@
 
 
 # Overview
+COM2020 Team Project, this is our solution for the Campus Carbon Challenge Game and Dashboard. Footprint is a Spring Boot web application that encourages sustainable behaviour through a challenge based game where users complete carbon friendly tasks and track their impact over time. The platform includes role-specific views for users and moderators, challenges, travel tracking,leaderboards, group features, and analytics dashboards.
 
 # Authors
 
@@ -118,8 +119,8 @@ For our
 **@Author** Zarreen Peeroo, Phoebe Say, Madeleine Walters  
 
 ## src
-
+**@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Davi Oppes
 ## target
-
+**@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Davi Oppes
 
 
