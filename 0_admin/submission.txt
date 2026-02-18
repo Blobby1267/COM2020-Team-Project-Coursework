@@ -1,5 +1,8 @@
-Group Number:
-GitHub Repository URL: https://github.com/Blobby1267/Team-Project
-Deployed Demo URL:
+Group Name: Stack Overflowed
+GitHub Repository URL: https://github.com/Blobby1267/COM2020-Team-Project-Coursework
+Deployed Demo URL: localhost:8080/login
 
 Demo/Test Account Credentials:
+User Demo Account:
+
+Moderator Demo Account:
