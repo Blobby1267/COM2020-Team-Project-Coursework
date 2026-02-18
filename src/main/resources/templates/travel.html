@@ -1,3 +1,4 @@
+<!-- Travel Page - Log eco-friendly travel (walking/biking) and calculate points earned -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,11 @@
 </head>
 
 <body>
+    <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <!-- Logout form with CSRF protection -->
       <form th:action = "@{/logout}" th:object = "${user}"method="post">
         <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
         <button class="log-out" type="submit">Log Out</button>
@@ -29,23 +32,29 @@
         <a class="active" href="travel">Travel</a>
       </div>
 
+      <!-- Main content area for travel logging -->
       <div id="task-information-container">
         <div class="challenges-box">
           <h1>Enter Travel Info</h1>
+          <!-- Form to submit travel distance and method -->
           <form th:action="@{/api/travel/submit}" method="post" id="evidence-form">
+            <!-- Travel method selection dropdown -->
             <label for="travelType">Travel Method</label><br>
             <select id="travelType" name="travelType" required>
               <option value="walk" selected>Walk</option>
               <option value="bike">Bike</option>
             </select><br><br>
+            <!-- Distance input field -->
             <label for="distance">Distance (km)</label><br>
             <input type="number" id="distance" name="distance" placeholder="5" min="1" step="0.1" required><br><br>
+            <!-- CSRF token for security -->
             <input type ="hidden"
               th:name="${_csrf.parameterName}"
               th:value="${_csrf.token}"/>
             <button type="submit">Enter Distance</button>
           </form>
           
+          <!-- Display points calculation result (only shown after submission) -->
           <div th:if="${calculation}" class="calculation-result">
             <h2>Points Calculation</h2>
             <div class="calculation-details">
@@ -53,6 +62,7 @@
               <p><strong>Distance:</strong> <span th:text="${calculation.distance}">0</span> km</p>
               <p><strong>Points per km:</strong> <span th:text="${calculation.pointsPerKm}">5</span></p>
               <hr>
+              <!-- Formula showing how points were calculated -->
               <p class="calculation-formula">
                 <strong>Calculation:</strong> 
                 <span th:text="${calculation.distance}">0</span> km × 

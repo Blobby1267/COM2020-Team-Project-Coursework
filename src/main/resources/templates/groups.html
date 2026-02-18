@@ -1,3 +1,4 @@
+<!-- Groups Page - Manage user groups, join existing groups, and create new groups -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,11 @@
 </head>
 
 <body>
+    <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <!-- Logout form with CSRF protection -->
       <form th:action = "@{/logout}" th:object = "${user}"method="post">
         <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
         <button class="log-out" type="submit">Log Out</button>
@@ -25,20 +28,25 @@
         <a class="active" href="groups">Groups</a>
         <a href="analytics">Analytics</a>
         <a href="evidence">Evidence</a>
+        <!-- Challenges link only visible to moderators using Spring Security authorization -->
         <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
         <a href="settings">Settings</a>
         <a href="travel">Travel</a>
       </div>
 
+      <!-- Main content area displaying groups information -->
       <div id="task-information-container">
+        <!-- Display existing groups -->
         <div class="groups-box">
           <h1>Groups:</h1>
         </div>
       </div>
       <div id="task-information-container">
+        <!-- Join existing group section -->
         <div class="groups-box">
           <h1>Join a group:</h1>
         </div>
+        <!-- Create new group section -->
         <div class="groups-box">
           <h1>Create a groups:</h1>
         </div>

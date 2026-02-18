@@ -1,3 +1,4 @@
+<!-- User Evidence Page - Submit photo evidence for completed tasks requiring proof -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,11 @@
 </head>
 
 <body>
+    <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <!-- Logout form with CSRF protection -->
       <form th:action = "@{/logout}" th:object = "${user}"method="post">
         <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
         <button class="log-out" type="submit">Log Out</button>
@@ -28,25 +31,33 @@
         <a href="settings">Settings</a>
       </div>
 
+      <!-- Main content area for evidence submission -->
       <div id="task-information-container">
         <div class="challenges-box">
           <h1>Submit evidence</h1>
           <p>Upload a photo to prove you completed a task.</p>
+          <!-- Evidence submission form with file upload -->
           <form id="evidence-form">
+            <!-- Hidden field for challenge ID -->
             <input type="hidden" id="challengeId" name="challengeId">
+            <!-- Task title field (readonly, populated from URL params) -->
             <label for="taskTitle">Task title</label><br>
             <input type="text" id="taskTitle" name="taskTitle" placeholder="Please select a task from the Tasks page" required readonly style="background-color: #f0f0f0;"><br><br>
+            <!-- Points field (readonly, populated from URL params) -->
             <label for="points">Points</label><br>
             <input type="number" id="points" name="points" placeholder="Points" readonly><br><br>
+            <!-- File upload for photo evidence -->
             <label for="photo">Photo evidence</label><br>
             <input type="file" id="photo" name="photo" accept="image/*" required><br><br>
             <button type="submit">Submit evidence</button>
           </form>
+          <!-- Status message for submission feedback -->
           <p id="evidence-message"></p>
         </div>
       </div>
     </div>
 
+    <!-- JavaScript for form handling and evidence submission -->
     <script>
       const evidenceForm = document.getElementById("evidence-form");
       const messageEl = document.getElementById("evidence-message");
@@ -71,6 +82,7 @@
         messageEl.style.color = "#007D69";
       }
 
+      // Handle evidence form submission
       evidenceForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         messageEl.textContent = "Submitting...";

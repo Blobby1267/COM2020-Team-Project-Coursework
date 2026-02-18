@@ -1,3 +1,4 @@
+<!-- Profile Page - Display user's completed tasks and activity history -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,11 @@
 </head>
 
 <body>
+    <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <!-- Logout form with CSRF protection -->
       <form th:action = "@{/logout}" th:object = "${user}"method="post">
         <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
         <button class="log-out" type="submit">Log Out</button>
@@ -29,9 +32,11 @@
         <a href="settings">Settings</a>
         <a href="travel">Travel</a>
       </div>
+      <!-- Main content area displaying completed tasks -->
       <div id="task-information-container">
         <div class="profile-box">
           <h1>Tasks Completed:</h1>
+          <!-- Table of completed tasks with example data -->
           <table>
             <tr>
             <th>Task name</th>

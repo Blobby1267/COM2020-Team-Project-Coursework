@@ -1,3 +1,4 @@
+<!-- Login/Registration Page - User authentication and account creation -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,12 +8,15 @@
 </head>
 
 <body>
+    <!-- Top navigation bar with logo -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
     </div>
+    <!-- Main container holding registration and login forms -->
     <div id="main-task-container">
         <div class="sidebar">
+            <!-- Registration form with user details -->
             <form th:action="@{/register}" th:object="${user}" method="post">
                     <p>
                         <input type = "text" name="username" placeholder="Username..." />
@@ -20,9 +24,11 @@
                     <p>
                         <input type = "password" name="password" placeholder="Password..."/>
                     </p>
+                    <!-- CSRF token for security -->
                     <input type ="hidden"
                         th:name="${_csrf.parameterName}"
                         th:value="${_csrf.token}"/>
+                    <!-- Year of study selection -->
                     <p>
                         <select name="year">
                             <option value="First_Year">First Year</option>
@@ -33,6 +39,7 @@
                             <option value="Staff">Staff</option>
                         </select>
                     </p>
+                    <!-- Campus location selection -->
                     <p>
                         <select name="campus">
                             <option value="Streatham">Streatham </option>
@@ -41,6 +48,7 @@
                             <option value="Truro">Truro</option>
                         </select>
                     </p>
+                    <!-- Data collection consent checkbox -->
                     <p>
                         <label class="checkbox" for="consent">
                             <input type="checkbox" id="consent" value="true">
@@ -52,6 +60,7 @@
                         <button type="submit">SIGN UP</button>
                     </p>
             </form>
+            <!-- Login form for existing users -->
             <form th:action="@{/login}" method="post">
                     <p>
                         <input type="text" name="username" placeholder="Username..." />
@@ -59,6 +68,7 @@
                     <p>
                         <input type="password" name="password" placeholder="Password..."/>
                     </p>
+                    <!-- CSRF token for security -->
                     <input type ="hidden"
                         th:name="${_csrf.parameterName}"
                         th:value="${_csrf.token}"/>
@@ -68,6 +78,7 @@
             </form>
 
         </div>
+        <!-- Information box explaining the application purpose -->
         <div class="login-box">
                 <h1 class="title">Our Purpose</h1>
                     <p>

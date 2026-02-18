@@ -1,3 +1,4 @@
+<!-- Analytics Page - Display user carbon footprint analytics and statistics -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,11 @@
 </head>
 
 <body>
+    <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <!-- Logout form with CSRF protection -->
       <form th:action = "@{/logout}" th:object = "${user}"method="post">
         <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
         <button class="log-out" type="submit">Log Out</button>
@@ -25,6 +28,7 @@
         <a href="groups">Groups</a>
         <a class="active" href="analytics">Analytics</a>
         <a href="evidence">Evidence</a>
+        <!-- Challenges link only visible to moderators using Spring Security authorization -->
         <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
         <a href="settings">Settings</a>
         <a href="travel">Travel</a>

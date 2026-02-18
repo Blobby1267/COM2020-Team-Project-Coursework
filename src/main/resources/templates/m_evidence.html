@@ -1,3 +1,4 @@
+<!-- Moderator Evidence Page - Review and approve/reject user-submitted evidence (moderator-only access) -->
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
@@ -9,9 +10,11 @@
 </head>
 
 <body>
+    <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <!-- Logout form with CSRF protection -->
       <form th:action = "@{/logout}" th:object = "${user}"method="post">
         <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
         <button class="log-out" type="submit">Log Out</button>
@@ -32,9 +35,11 @@
         <a href="travel">Travel</a>
       </div>
 
+      <!-- Main content area for evidence review -->
       <div id="task-information-container">
         <div class="challenges-box">
           <h1>Tasks to approve:</h1>
+          <!-- Evidence review table with user submissions -->
           <table>
             <thead>
               <tr>
@@ -45,17 +50,21 @@
                 <th colspan="2">Approval</th>
               </tr>
             </thead>
+            <!-- Table body populated dynamically by JavaScript -->
             <tbody id="evidence-rows"></tbody>
           </table>
+          <!-- Status message for moderator actions -->
           <p id="moderator-message"></p>
         </div>
       </div>
     </div>
 
+    <!-- JavaScript for dynamic evidence loading and approval/rejection -->
     <script>
       const rowsEl = document.getElementById("evidence-rows");
       const messageEl = document.getElementById("moderator-message");
 
+      // Format date value for display
       function formatDate(value) {
         if (!value) {
           return "";
@@ -67,6 +76,7 @@
         return date.toLocaleString();
       }
 
+      // Create table row for each evidence item
       function renderRow(item) {
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -80,6 +90,7 @@
         return row;
       }
 
+      // Load pending evidence submissions from API
       async function loadEvidence() {
         messageEl.textContent = "Loading...";
         rowsEl.innerHTML = "";
@@ -107,6 +118,7 @@
         }
       }
 
+      // Handle approve/deny button clicks
       rowsEl.addEventListener("click", async (event) => {
         const button = event.target;
         if (!(button instanceof HTMLButtonElement)) {
@@ -134,6 +146,7 @@
         }
       });
 
+      // Initialize by loading pending evidence
       loadEvidence();
     </script>
 </body>

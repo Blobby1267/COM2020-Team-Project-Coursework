@@ -1,3 +1,4 @@
+<!-- Moderator Challenges Page - Create and manage challenges (moderator-only access) -->
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
@@ -9,9 +10,11 @@
 </head>
 
 <body>
+    <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <!-- Logout form with CSRF protection -->
       <form th:action = "@{/logout}" th:object = "${user}"method="post">
         <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
         <button class="log-out" type="submit">Log Out</button>
@@ -32,9 +35,11 @@
         <a href="travel">Travel</a>
       </div>
 
+      <!-- Main content area for challenge creation -->
       <div id="task-information-container">
         <div class="settings-box">
           <h1>Create challenge</h1>
+            <!-- Challenge name input form -->
             <form action="submit" method="post">
               <p>
                 <label for="challenge-name">Challenge name: </label>
@@ -42,6 +47,7 @@
               </p>
             </form>
 
+            <!-- Challenge start date form -->
             <form action="submit" method="post">
               <p>
               <label for="start-date">Start date: </label>
@@ -49,6 +55,7 @@
               </p>
             </form>
 
+            <!-- Challenge end date form -->
             <form action="submit" method="post">
               <p>
               <label for="end-date">End date: </label>
@@ -56,6 +63,7 @@
               </p>
             </form>
 
+            <!-- Challenge points value form -->
             <form action="submit" method="post">
               <p>
               <label for="points">Points: </label>
@@ -63,6 +71,7 @@
               </p>
             </form>
 
+            <!-- Challenge taxonomy dropdown -->
             <p>
               <label for="taxonomy">Taxonomy: </label>
                 <select name="taxonomy">
@@ -71,6 +80,7 @@
                 </select>
             </p>
 
+            <!-- Challenge type dropdown -->
             <p>
               <label for="challenge-type">Challenge type: </label>
                 <select name="challenge-type">
