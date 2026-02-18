@@ -1,10 +1,11 @@
 # Table of Contents
-
 [Overview](#overview)  
-[Authors](#authors)
+[Authors](#authors)  
 [Installation and Usage](#installation-and-usage)   
 [Projects/Issues](#projects--issues)    
-[Content](#content)   
+[Content](#content)  
+
+**@Author** Madeleine Walters
 
 
 # Overview
