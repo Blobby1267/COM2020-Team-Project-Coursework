@@ -49,7 +49,7 @@ public class ChallengeService {
     public void completeChallenge(String username, Long challengeId) {
         // Fetch and validate user exists
         User user = userRepository.findByUsername(username);
-        if (user == null) {
+        if (user == null) { 
             throw new UsernameNotFoundException("User not found: " + username);
         }
 

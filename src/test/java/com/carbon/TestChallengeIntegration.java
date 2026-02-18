@@ -65,6 +65,7 @@ public class TestChallengeIntegration{
         Challenge testChallenge1 = challengeRepository.getReferenceById(challenge1.getId());
         Challenge testChallenge2 = challengeRepository.getReferenceById(challenge2.getId());
 
+        //Make sure IDs are different and consecutive
         assertNotNull(testChallenge1);
         assertNotNull(testChallenge2);
         assertEquals(1,testChallenge1.getId());

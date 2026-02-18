@@ -8,9 +8,9 @@ import org.junit.platform.suite.api.Suite;
         TestUser.class,
         TestChallenge.class,
         TestLeaderboard.class,
-        TestLoginIntegration.class,
         TestChallengeIntegration.class,
-        TestLeaderboardIntegration.class
+        TestLeaderboardIntegration.class,
+        TestEvidence.class
 })
 public class TestSuite {
 }

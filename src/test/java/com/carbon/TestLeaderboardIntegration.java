@@ -37,20 +37,25 @@ public class TestLeaderboardIntegration {
     */
     @BeforeEach
     public void setup(){
+        //Create new users
         user1 = new User();
         user2 = new User();
         user1.setUsername("user1");
         user2.setUsername("user2");
 
+        //Add them to the leaderboard
         leaderboardEntry1 = new LeaderboardEntry(user1);
         leaderboardEntry2 = new LeaderboardEntry(user2);
 
+        //save entries in repository
         leaderboardRepository.save(leaderboardEntry1);
         leaderboardRepository.save(leaderboardEntry2);
     }
 
     @Test
     public void TestIdAutoIncrement(){
+
+        //Test auto increment of the database/repository
         LeaderboardEntry testEntry1 = leaderboardRepository.getReferenceById(leaderboardEntry1.getId());
         LeaderboardEntry testEntry2 = leaderboardRepository.getReferenceById(leaderboardEntry2.getId());
 

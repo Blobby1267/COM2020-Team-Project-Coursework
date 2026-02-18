@@ -1,19 +1,19 @@
 package com.carbon;
 
-import com.carbon.controller.ChallengePageController;
 import com.carbon.model.Challenge;
-import com.carbon.model.LeaderboardEntry;
 // import com.carbon.repository.ChallengeRepository;
 import com.carbon.repository.ChallengeRepository;
 import com.carbon.service.ChallengeService;
 
+import org.junit.jupiter.api.AfterEach;
 // import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+
 import java.util.*;
 // import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,31 +32,50 @@ import java.lang.reflect.Field;
 
 
 @ExtendWith(MockitoExtension.class)
-public class TestChallenge {
+public class TestChallenge{
     @Mock
     ChallengeRepository challengeRepository;
 
     @InjectMocks
     ChallengeService challengeService;
+    
+    private Challenge testChallenge;
+
+    // Helper method to reduce boilerplate reflection code
+    private Object getPrivateField(String fieldName) throws NoSuchFieldException, IllegalAccessException {
+        Field field = testChallenge.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        return field.get(testChallenge);
+    }
+
+    @BeforeEach
+    void setUp() {
+        testChallenge = new Challenge();
+    }
 
     @Test
     void TestChallengeGetByFrequencyValid(){
+
+        //Create 2 challenges
         List<Challenge> challenges = new ArrayList<>();
         Challenge c1 = new Challenge();
         Challenge c2 = new Challenge();
 
-
+        //Add them to a list of challenges which is the same format that is returned from the method
         challenges.add(c1);
         challenges.add(c2);
 
         when(challengeRepository.findByFrequency("Daily")).thenReturn(challenges);
 
+        //Run the method
         List<Challenge> checkChallenge = challengeService.getChallengesByFrequency("Daily");
 
         verify(challengeRepository, times(1)).findByFrequency("Daily");
 
+        //Assert that the lists contain the same items.
         assertEquals(challenges, checkChallenge);
     }
+
 
 
     @Test
@@ -156,5 +175,73 @@ public class TestChallenge {
         Assertions.assertEquals("Group", challenge.getScope());
     }
 
+    @Test
+    void testSetTitle() throws NoSuchFieldException, IllegalAccessException{
+        testChallenge.setTitle("testTitle");
+        assertEquals("testTitle", getPrivateField("title"));
+    }
 
+    @Test
+    void testSetDescription() throws NoSuchFieldException, IllegalAccessException {
+        testChallenge.setDescription("testDescription");
+        Assertions.assertEquals("testDescription", getPrivateField("description"));
+    }
+
+    @Test
+    void testSetPoints() throws NoSuchFieldException, IllegalAccessException {
+        testChallenge.setPoints(500);
+        Assertions.assertEquals(500, getPrivateField("points"));
+    }
+
+    @Test
+    void testSetFrequency() throws NoSuchFieldException, IllegalAccessException {
+        testChallenge.setFrequency("Daily");
+        Assertions.assertEquals("Daily", getPrivateField("frequency"));
+    }
+
+    @Test
+    void testSetStartDate() throws NoSuchFieldException, IllegalAccessException {
+        long now = System.currentTimeMillis();
+        java.sql.Date testDate = new java.sql.Date(now);
+        testChallenge.setStartDate(testDate);
+        Assertions.assertEquals(testDate, getPrivateField("startDate"));
+    }
+
+    @Test
+    void testSetEndDate() throws NoSuchFieldException, IllegalAccessException {
+        long later = System.currentTimeMillis() + 1000000;
+        java.sql.Date testDate = new java.sql.Date(later);
+        testChallenge.setEndDate(testDate);
+        Assertions.assertEquals(testDate, getPrivateField("endDate"));
+    }
+
+    @Test
+    void testSetScope() throws NoSuchFieldException, IllegalAccessException {
+        testChallenge.setScope("testScope");
+        Assertions.assertEquals("testScope", getPrivateField("scope"));
+    }
+
+    @Test
+    void testSetRequiresEvidence() throws NoSuchFieldException, IllegalAccessException {
+        testChallenge.setRequiresEvidence(true);
+        Assertions.assertEquals(true, getPrivateField("requiresEvidence"));
+    }
+
+    @Test
+    void testSetTaxonomy() throws NoSuchFieldException, IllegalAccessException {
+        testChallenge.setTaxonomy("testTaxonomy");
+        Assertions.assertEquals("testTaxonomy", getPrivateField("taxonomy"));
+    }
+
+    @Test
+    void testSetCarbonSaved() throws NoSuchFieldException, IllegalAccessException {
+        Double carbonValue = 15.5;
+        testChallenge.setCarbonSaved(carbonValue);
+        Assertions.assertEquals(carbonValue, getPrivateField("carbonSaved"));
+    }
+
+    @AfterEach
+    void tearDown(){
+        testChallenge = null;
+    }
 }
