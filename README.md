@@ -5,10 +5,9 @@
 [Projects/Issues](#projects--issues)    
 [Content](#content)  
 
-**@Author** Madeleine Walters
-
 
 # Overview
+COM2020 Team Project, this is our solution for the Campus Carbon Challenge Game and Dashboard. Footprint is a Spring Boot web application that encourages sustainable behaviour through a challenge based game where users complete carbon friendly tasks and track their impact over time. The platform includes role-specific views for users and moderators, challenges, travel tracking,leaderboards, group features, and analytics dashboards.
 
 # Authors
 
@@ -22,20 +21,52 @@
 **Jai Thacker** - Data Lead  
 
 # Installation and Usage
-
 Footprint is not publically hosted, so you must install the source code and run the website locally.
-
-For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
 
 ## Pre-Requisites
 
-**!!!LIST PRE-REQUISITE INSTALLATION!!!**
+- Java Development Kit (JDK) **21**
+- Apache Maven **3.9+**
+- Git (to clone/pull the repository)
+- Docker Desktop, if you want to run via Docker instead of Maven
 
-Dependencies can also be found in the ```software_data_inventory.xlsx```
+You can verify your setup with:
+
+```bash
+java -version
+mvn -version
+git --version
+```
+
+Dependencies can be found in the ```software_data_inventory.xlsx```
 
 ## Usage
 
-**!!!GIVE CMMD/INSTRUCTIONS TO RUN LOCALLY!!!**
+1. Open a terminal in the project root.
+2. Build the dependencies and run the app:
+
+```bash
+mvn compile
+mvn spring-boot:run
+```
+
+3. Open the website in your browser:
+```text
+localhost:8080/login
+```
+This takes you to the gateway to the rest of the website
+
+
+### Database notes
+
+- The project uses an H2 file database.
+- H2 console (when app is running): `http://localhost:8080/h2-console`
+- JDBC URL: `jdbc:h2:file:./target/classes/static/data/testdb`
+- Username: `sa`
+- Password: *(leave blank)*
+
+# Running tests
+For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
 
 # Projects / Issues
 
@@ -88,8 +119,35 @@ For our
 **@Author** Zarreen Peeroo, Phoebe Say, Madeleine Walters  
 
 ## src
+Primary source code and test code for the Spring Boot application.  
+**@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Davi Oppes
+- `src`
+    - `main` - Main application source code and resources.
+        - `java` - Main Java source files.
+            - `com/carbon` - Root package for the application.
+                - `controller` - Controllers that handle routes and page requests.
+                - `model` - Domain model classes.
+                - `repository` - Data access layer interfaces for database operations.
+                - `service` - Perform logic calculations used by controllers and repositories.
+        - `resources` - Non-Java resources loaded at runtime.
+            - `application.properties` - App configuration properties.
+            - `static` - Static assets served directly (CSS, HTML, data files).
+                - `data` - File-based database used by the app.
+            - `templates` - Thymeleaf templates for server-rendered pages.
+
+    - `test` - Automated tests.
+        - `java` - Test source code.
+            - `com/carbon` - Unit and integration tests for models, controllers, and flows.
 
 ## target
+Maven build directory generated after compiling and packaging the src folder.
 
-
-
+- `target`
+    - `classes` - Compiled main classes and copied runtime resources.
+        - `com/carbon` - Compiled `.class` files for application packages.
+        - `templates` - Processed/copied template files used at runtime.
+        - `static` - Copied static assets and data directory.
+        - `application.properties` - Copied runtime configuration.
+    - `generated-sources` - Build-time generated source files (including annotation-processor output).
+    - `maven-status/maven-compiler-plugin` - Maven compiler plugin metadata about compile/test-compile inputs and outputs.
+    - `test-classes/com/carbon` - Compiled test classes from `src/test/java`.
