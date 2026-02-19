@@ -90,7 +90,7 @@ Contains all members of the team with their contact emails and student numbers.
 
 ```/cw1_prototype_report.pdf```  
 Report documenting an overview what we have built, and the process in order to achieve it, followed by an evaluation of our first Sprint.
-**@Author** Armin Golahmadi, Jai Thacker, Madeleine Walters, Davi Oppes  
+**@Author** Armin Golahmadi, Madeleine Walters, Davi Oppes, Ben Hoskins  
 
 ## ```/2_process```
 
