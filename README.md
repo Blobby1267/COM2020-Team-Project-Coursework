@@ -70,55 +70,77 @@ For guidance on running testing, please refer the to deployment guide which can 
 
 # Projects / Issues
 
-For our 
+Our [technical scrumboard](https://github.com/users/Blobby1267/projects/1) can be found in the Projects section, and contains issues for all the code aspects that needed to be implemented from our scrumboard.  
+
+To see the full scrumboard please see our sprint plan and scrumboards in ```02_process/scrumboard_export.pdf```.  
 
 # Content
 
-## 0_admin
+## ```/0_admin```
 
-```submission.txt```  
-**@Author** Madeleine Walters  
-```team_members.txt```  
-**@Author** Madeleine Walters  
-
-## 1_report
-
-```cw1_prototype_report.pdf```  
-**@Author** Armin Golahmadi, Jai Thacker  
-
-## 2_process
-
-```scrumboard_export.pdf```  
-**@Author** Madeleine Walters  
-```meeting_minutes.pdf```  
-**@Author** Madeleine Walters  
-```risk_register.pdf```  
+```/submission.txt```  
+Contains submission details for COM2020 Team Project, also see for demo/test account credentials.  
 **@Author** Madeleine Walters  
 
-## 3_ethics_and_licensing
+```/team_members.txt```  
+Contains all members of the team with their contact emails and student numbers.  
+**@Author** Madeleine Walters  
 
-```ethical_and_legal_considerations.pdf```  
+## ```/1_report```
+
+```/cw1_prototype_report.pdf```  
+Report documenting an overview what we have built, and the process in order to achieve it, followed by an evaluation of our first Sprint.
+**@Author** Armin Golahmadi, Jai Thacker, Madeleine Walters, Davi Oppes  
+
+## ```/2_process```
+
+```/scrumboard_export.pdf```  
+Contains our sprint one plan and our weekly scrum boards used to track our progress in the project.  
+**@Author** Madeleine Walters  
+
+```/meeting_minutes.pdf```  
+Log of all the meetings and notes taken, as well as a log of members contributions on specific dates.  
+**@Author** Madeleine Walters  
+
+```/risk_register.pdf```  
+List of the risks regarding the development of the project and mitigation actions taken, maintained by the Project Lead.  
+**@Author** Madeleine Walters  
+
+## ```/3_ethics_and_licensing```
+
+```/ethical_and_legal_considerations.pdf```  
+Documents the legal, ethical and accessibility considerations made and upheld in this project and how we have ensured to uphold them.  
 **@Author** Zarreen Peeroo  
-```license_decision.pdf```  
+
+```/license_decision.pdf```  
+Our license for this project and the justification of it.  
 **@Author** Zarreen Peeroo  
-```software_data_inventory.xlsx```  
+
+```/software_data_inventory.xlsx```  
+Dependencies required for the project.  
 **@Author**  
 
-## 4_technical
+## ```/4_technical```
 
-```source_code_snapshot.zip```  
+```/source_code_snapshot.zip```  
+ZIP of the source and testing code.  
 **@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Jai Thacker, Davi Oppes  
-```deployment_guide.pdf```  
-**@Author**  
-```testing_evidence.pdf```  
+
+```/deployment_guide.pdf```  
+Instructions of running the tests.  
+**@Author** Davi Oppes, Ben Hoskins  
+
+```/testing_evidence.pdf```  
+Report of the E2E testing scenarios.  
 **@Author** Davi Oppes  
 
-## 5_presentation
+## ```/5_presentation```
 
-```cw1_demo_slides.pdf```  
+```/cw1_demo_slides.pdf```  
+Slides used in the coursework presentation.  
 **@Author** Zarreen Peeroo, Phoebe Say, Madeleine Walters  
 
-## src
+## ```/src```
 Primary source code and test code for the Spring Boot application.  
 **@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Davi Oppes
 - `src`
@@ -139,7 +161,7 @@ Primary source code and test code for the Spring Boot application.
         - `java` - Test source code.
             - `com/carbon` - Unit and integration tests for models, controllers, and flows.
 
-## target
+## ```/target```
 Maven build directory generated after compiling and packaging the src folder.
 
 - `target`
