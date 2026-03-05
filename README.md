@@ -11,7 +11,7 @@ COM2020 Team Project, this is our solution for the Campus Carbon Challenge Game 
 
 # Authors
 
-**Madeleine Walters** - Project Lead - mw1104@exeter.ac.uk  
+**Madeleine Walters** - Project Lead / Scrum Master - mw1104@exeter.ac.uk  
 **Ben Hoskins** - Technical Lead - bh618@exeter.ac.uk  
 **Marko Parkinson** - Developer - mp983@exeter.ac.uk  
 **Phoebe Say** - Developer - ps724@exeter.ac.uk  
