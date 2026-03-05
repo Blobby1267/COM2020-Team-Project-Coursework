@@ -11,14 +11,14 @@ COM2020 Team Project, this is our solution for the Campus Carbon Challenge Game 
 
 # Authors
 
-**Madeleine Walters** - Project Lead  
-**Ben Hoskins** - Technical Lead  
-**Marko Parkinson** - Developer  
-**Phoebe Say** - Developer  
-**Zarreen Peeroo** - UX  
-**Davi Oppes** - Testing  
-**Armin Golahmadi** - Documentation  
-**Jai Thacker** - Data Lead  
+**Madeleine Walters** - Project Lead - mw1104@exeter.ac.uk  
+**Ben Hoskins** - Technical Lead - bh618@exeter.ac.uk  
+**Marko Parkinson** - Developer - mp983@exeter.ac.uk  
+**Phoebe Say** - Developer - ps724@exeter.ac.uk  
+**Zarreen Peeroo** - UX - zbp201@exeter.ac.uk  
+**Davi Oppes** - Testing - do352@exeter.ac.uk  
+**Armin Golahmadi** - Documentation - ag1096@exeter.ac.uk  
+**Jai Thacker** - Data Lead - jut201@exeter.ac.uk  
 
 # Installation and Usage
 Footprint is not publically hosted, so you must install the source code and run the website locally.
