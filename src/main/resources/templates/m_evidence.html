@@ -5,6 +5,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title> Carbon Challenge! </title>
     <link rel="stylesheet" href="styling.css">
 </head>
@@ -63,6 +65,15 @@
     <script>
       const rowsEl = document.getElementById("evidence-rows");
       const messageEl = document.getElementById("moderator-message");
+
+      function withCsrfHeaders(extraHeaders = {}) {
+        const token = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+        const headerName = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
+        if (token && headerName) {
+          return { ...extraHeaders, [headerName]: token };
+        }
+        return extraHeaders;
+      }
 
       // Format date value for display
       function formatDate(value) {
@@ -134,6 +145,7 @@
         try {
           const response = await fetch(`/api/moderator/evidence/${id}/status?status=${status}`, {
             method: "POST",
+            headers: withCsrfHeaders(),
             credentials: "same-origin"
           });
           if (!response.ok) {

@@ -5,6 +5,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title>Carbon Challenge!</title>
     <link rel="stylesheet" href="styling.css" />
   </head>
@@ -132,6 +134,15 @@
 
           <!-- JavaScript for task interaction functionality -->
           <script>
+            function withCsrfHeaders(extraHeaders = {}) {
+              const token = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+              const headerName = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
+              if (token && headerName) {
+                return { ...extraHeaders, [headerName]: token };
+              }
+              return extraHeaders;
+            }
+
             // Toggle challenge details visibility
             function openTab(tab){
               var i, x;
@@ -160,9 +171,9 @@
               try {
                 const response = await fetch('/api/challenges/complete', {
                   method: 'POST',
-                  headers: {
+                  headers: withCsrfHeaders({
                     'Content-Type': 'application/x-www-form-urlencoded',
-                  },
+                  }),
                   body: `challengeId=${challengeId}`,
                   credentials: 'same-origin'
                 });

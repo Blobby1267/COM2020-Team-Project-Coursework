@@ -10,11 +10,12 @@ CMD ["mvn", "test"]
 
 # --- BUILD STAGE ---
 FROM base AS build
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests \
+	&& find target -maxdepth 1 -type f -name "*.jar" ! -name "*-tests.jar" -exec cp {} app.jar \;
 
 # --- PRODUCTION STAGE ---
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /team-project
-COPY --from=build /team-project/target/*.jar app.jar
+COPY --from=build /team-project/app.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

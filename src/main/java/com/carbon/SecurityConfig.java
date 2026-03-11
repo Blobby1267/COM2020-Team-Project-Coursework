@@ -25,23 +25,24 @@ public class SecurityConfig {
      * @throws Exception if configuration fails
      * 
      * Authorization rules:
-     * - Public access (no login): /, /login, /register, /data/**, /h2-console/**, static files (*.png, *.css)
+     * - Public access (no login): /, /login, /register, static files
      * - MODERATOR only: /api/moderator/** (evidence approval, challenge management)
      * - Authenticated users: /api/** (all other API endpoints)
      * - All other URLs: require authentication
      * 
      * Security features:
-     * - Frame options disabled (allows H2 console to display in frame)
+     * - CSRF enabled for APIs; only H2 console is exempted
+     * - Frame options set to same-origin (allows local H2 console iframe)
      * - Form login with custom login page at /login
      * - Successful login redirects to /tasks
      * - Logout enabled for all users
      */
     @Bean
-    public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints (no authentication required)
-                .requestMatchers("/", "/login", "/register", "/data/**", "/h2-console/**", "/**.png", "/**.css").permitAll()
+                .requestMatchers("/", "/login", "/register", "/**.png", "/**.css", "/**.js", "/favicon.ico").permitAll()
                 // Moderator-only endpoints (evidence review, challenge management)
                 .requestMatchers("/api/moderator/**").hasRole("MODERATOR")
                 // Authenticated user endpoints (challenge completion, evidence submission)
@@ -49,10 +50,10 @@ public class SecurityConfig {
                 // All other requests require authentication
                 .anyRequest().authenticated()
             )
-            // Disable CSRF for H2 console and API endpoints
-            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/**"))
-            // Disable frame options to allow H2 console iframe
-            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+            // Keep CSRF enabled for API endpoints, while allowing local H2 console to function
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+            // Restrict iframe embedding to same origin (needed by H2 console)
+            .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
             // Configure form-based login
             .formLogin(form -> form
                 .loginPage("/login") // Custom login page
