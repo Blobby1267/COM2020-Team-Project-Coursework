@@ -108,6 +108,15 @@ public class LoginController {
      * Displays the login page.
      * @return the name of the login template to render
      */
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/login";
+    }
+
+    /**
+     * Displays the login page.
+     * @return the name of the login template to render
+     */
     @GetMapping("/login")
     public String login() {
         return "login";
