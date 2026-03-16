@@ -44,23 +44,11 @@
             <th>Points</th>
             <th>Approval</th>
             </tr>
-            <tr>
-            <td>example name</td>
-            <td>example date</td>
-            <td>example points</td>
-            <td>example approval</td>
-            </tr>
-            <tr>
-            <td>example name</td>
-            <td>example date</td>
-            <td>example points</td>
-            <td>example approval</td>
-            </tr>
-            <tr>
-            <td>example name</td>
-            <td>example date</td>
-            <td>example points</td>
-            <td>example approval</td>
+            <tr th:each="evidence, iterStat : ${evidence}">
+            <td th:text="${evidence.challenge.title}"></td>
+            <td th:text="${#temporals.format(evidence.SubmittedAt, 'dd/MM/yyy HH:mm')}"></td>
+            <td th:text="${evidence.challenge.points}"></td>
+            <td th:text="${evidence.status}"></td>
             </tr>
           </table>
       </div>

@@ -70,10 +70,7 @@ public class NavigationController {
     }
 
     /** Displays the user profile page. */
-    @GetMapping("/profile")
-    public String profile() {
-        return "profile";
-    }
+
 
     /** Displays the settings page. */
     @GetMapping("/settings")
