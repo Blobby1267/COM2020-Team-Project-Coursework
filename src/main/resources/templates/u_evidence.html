@@ -1,8 +1,10 @@
 <!-- User Evidence Page - Submit photo evidence for completed tasks requiring proof -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title> Carbon Challenge! </title>
     <link rel="stylesheet" href="styling.css">
 </head>
@@ -66,6 +68,15 @@
       const pointsInput = document.getElementById("points");
       const challengeIdInput = document.getElementById("challengeId");
 
+      function withCsrfHeaders(extraHeaders = {}) {
+        const token = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+        const headerName = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
+        if (token && headerName) {
+          return { ...extraHeaders, [headerName]: token };
+        }
+        return extraHeaders;
+      }
+
       // Check if URL parameters exist and pre-fill the form
       const urlParams = new URLSearchParams(window.location.search);
       const challengeId = urlParams.get('challengeId');
@@ -92,6 +103,7 @@
         try {
           const response = await fetch("/api/evidence", {
             method: "POST",
+            headers: withCsrfHeaders(),
             body: formData,
             credentials: "same-origin"
           });

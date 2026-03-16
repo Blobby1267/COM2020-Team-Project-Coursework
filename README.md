@@ -65,6 +65,58 @@ This takes you to the gateway to the rest of the website
 - Username: `sa`
 - Password: *(leave blank)*
 
+## Global deployment (Render + PostgreSQL)
+
+This project can be deployed globally using the included `Dockerfile`.
+
+### 1. Push code to GitHub
+
+Ensure the latest code is pushed to your repository branch.
+
+### 2. Create a PostgreSQL database
+
+Create a managed PostgreSQL instance (for example on Render) and note:
+
+- host
+- port
+- database name
+- username
+- password
+
+### 3. Create a Render Web Service from this repository
+
+- Choose Docker-based deployment.
+- Select this repository and branch.
+
+### 4. Configure environment variables
+
+Set these variables in Render:
+
+```text
+SPRING_PROFILES_ACTIVE=prod
+SPRING_DATASOURCE_URL=jdbc:postgresql://<host>:<port>/<database>
+SPRING_DATASOURCE_USERNAME=<username>
+SPRING_DATASOURCE_PASSWORD=<password>
+```
+
+### 5. Deploy
+
+Render will build and run the container and assign a public URL.
+
+Open:
+
+```text
+https://<your-service-name>.onrender.com/login
+```
+
+### 6. Create moderator account (optional)
+
+New users are registered as `USER` by default. To promote a user to moderator, run:
+
+```sql
+UPDATE users SET role='MODERATOR' WHERE username='your_username';
+```
+
 # Running tests
 For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
 
