@@ -132,7 +132,7 @@ label {
   display: block;
 }
 
-.dropdown-button{
+.dropdown-button {
   display: none;
 }
 
@@ -150,9 +150,9 @@ label {
 }
 
 #top-bar h1 {
-  position: absolute;
+  /* position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); */
 }
 
 #logo {
@@ -162,13 +162,10 @@ label {
 .points-box {
   background-color: #007d69;
   padding: 20px 20px;
-  border-radius: 8px;
+  border-radius: 0.5em;
   color: white;
   font-weight: bold;
-  font-size: 16px;
-  position: absolute;
-  left: 75%;
-  transform: translateX(-50%);
+  font-size: 1.75em;
 }
 
 /*TASK/MAIN PAGE*/
@@ -182,13 +179,13 @@ label {
 
 #task-information-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 80%;
   margin-block: 20px;
   margin-inline: 20px;
   flex: 1;
-}
+} 
 
 #task-information-container h1 {
   font-size: 20px;
@@ -219,13 +216,13 @@ label {
 
 #task-information-container .settings-box {
   padding: 10px;
-  margin-inline-start: 10px;
-  margin-inline-end: 10px;
+  /* margin-inline-start: 10px;
+  margin-inline-end: 10px; */
   background-color: #007d69;
-  width: 53%;
+  /* width: 53%; */
 
   border-radius: 10px;
-  height: auto;
+  height: fit-content;
 }
 
 #task-information-container .profile-box {
@@ -491,13 +488,23 @@ tr:hover {
 }
 
 @media screen and (max-width: 1000px) {
+  .login-box p {
+    color: #003c3c;
+    text-align: center;
+    font-size: 3em;
+  }
+
   #task-information-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 80%;
+    width: 90%;
     flex: 1;
+  }
+
+  #task-information-container h1 {
+    font-size: 2.5em;
   }
 
   #task-information-container .task-box {
@@ -514,6 +521,7 @@ tr:hover {
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
+    margin-top: 10em;
   }
 
   /* Login page */
@@ -533,7 +541,7 @@ tr:hover {
 
   select,
   input {
-    font-size: 1.5rem;
+    font-size: 2em;
     background-color: white;
     border-radius: 15px;
     padding-top: 0.75em;
@@ -549,18 +557,18 @@ tr:hover {
 
   button {
     background-color: #003c3c;
-    border-radius: 15px;
+    border-radius: 0.5em;
     padding: 10px;
     border: 2px solid #003c3c;
     width: 75vw;
     color: white;
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   /*TOP BAR*/
   #top-bar {
     background-color: #003c3c;
-    height: 5rem;
+    height: 10em;
     display: flex;
 
     flex-direction: row;
@@ -571,10 +579,11 @@ tr:hover {
   }
 
   #top-bar h1 {
-    position: relative;
-    left: 0%;
-    transform: none;
-    padding-right: 1em;
+    margin: 1em;
+  }
+
+  #top-bar p {
+    color: white;
   }
 
   button:hover {
@@ -585,11 +594,11 @@ tr:hover {
   .delete-button {
     background-color: rgb(231, 59, 59);
     border-radius: 15px;
-    padding: 10px;
+    padding: 30px;
     border: 2px solid rgb(231, 59, 59);
-    width: 250px;
+    width: fit-content  ;
     color: white;
-    font-size: 25px;
+    font-size: 2.5rem;
   }
 
   .delete-button:hover {
@@ -600,11 +609,13 @@ tr:hover {
   .log-out {
     background-color: #007d69;
     border: 2px solid #007d69;
-    width: 100px;
-    height: 80%;
+    width: fit-content;
+    height: 4em;
     color: white;
-    font-size: 15px;
+    font-size: 1.75em;
     padding-inline: 10px;
+    font-weight: bold;
+    margin-right: 1.5em;
   }
 
   .log-out:hover {
@@ -628,18 +639,30 @@ tr:hover {
 
     text-align: center;
     color: white;
-    font-size: 1rem;
+    font-size: 1.25em;
   }
 
-  .dropdown-button{
+  input[id="consent"] {
+    width: 0.5em;
+    height: 0.5em;
+  }
+
+  .title {
+    text-align: center;
+    color: #003c3c;
+    font-size: 4em;
+  }
+
+  .dropdown-button {
     display: block;
     width: 100%;
     border-radius: 0;
+    background-color: #007d69;
   }
 
   .sidebar {
     margin: 0;
-    padding: 1em;
+    padding: 0;
     background-color: #007d69;
     /* position: fixed; */
     height: auto;
@@ -648,10 +671,10 @@ tr:hover {
     color: white;
   }
 
-  .sidebar:not(.login){
+  .sidebar:not(.login) {
     display: none;
     margin: 0;
-    padding: 1em;
+    /* padding: 1em; */
     background-color: #007d69;
     /* position: fixed; */
     height: auto;
@@ -660,10 +683,11 @@ tr:hover {
     color: white;
   }
 
-  .sidebar.open{
+  .sidebar.open {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 
   .sidebar a {
@@ -674,6 +698,7 @@ tr:hover {
     border-radius: 1em;
     margin-block: 0.5em;
     width: fit-content;
+    font-size: 2em;
   }
 
   .sidebar a.active {
@@ -684,5 +709,30 @@ tr:hover {
   .sidebar > a:hover:not(.active) {
     background-color: #555;
     color: white;
+  }
+
+  .settings-box {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+  }
+
+  .settings-box input, .settings-box select{
+    font-size: 1.5em;
+    background-color: white;
+    border-radius: 15px;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    border: 2px solid #003c3c;
+    width: 75vw;
+  }
+
+  #task-information-container .settings-box span h2{
+    font-size: 2em;
+  }
+
+  .contacts p{
+    font-size: 2em;
   }
 }

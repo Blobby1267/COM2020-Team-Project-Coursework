@@ -54,5 +54,15 @@
         </div>
     </div>
     </div>
+
+    <script>
+      let dropdown = document.querySelector(".dropdown-button");
+      let dropdown_menu = document.querySelector(".sidebar");
+
+      dropdown.addEventListener("click", (e) => {
+        e.preventDefault();
+        dropdown_menu.classList.toggle("open");
+      });
+    </script>
 </body>
 </html>

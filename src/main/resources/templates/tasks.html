@@ -19,9 +19,13 @@
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
       <!-- Welcome message showing authenticated username -->
-      <div sec:authorize="isAuthenticated()">
+
+
+      <!-- <div sec:authorize="isAuthenticated()">
         <p>Welcome, <span th:text="${#authentication.name}">User</span>!</p>
-      </div>
+      </div> -->
+
+      
       <!-- Display user's current points (only visible when authenticated) -->
       <div sec:authorize="isAuthenticated()" class="points-box">
         <span>Points: </span>
