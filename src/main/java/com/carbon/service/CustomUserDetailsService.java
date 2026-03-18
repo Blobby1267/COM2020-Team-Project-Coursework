@@ -2,11 +2,13 @@ package com.carbon.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.carbon.repository.UserRepository;
 import com.carbon.model.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Implementation of Spring Security's UserDetailsService.
@@ -17,6 +19,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     // Repository for fetching user data from database
     private final UserRepository userRepository;
     public CustomUserDetailsService(UserRepository userRepository) {
@@ -47,5 +51,11 @@ public class CustomUserDetailsService implements UserDetailsService{
             .password(user.getPassword()) // Already BCrypt-hashed
             .roles(user.getRole()) // Sets authorities as ROLE_{role}
             .build();
+    }
+
+    public void updatePassword(String username, String oldPassword, String newPassword){
+        User user = userRepository.findByUsername(username);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }

@@ -39,16 +39,51 @@
         <!-- Display existing groups -->
         <div class="groups-box">
           <h1>Groups:</h1>
+          <div th:each="group, iterStat : ${groups}">
+            <div th:id="${iterStat.index}" class="containerTab">
+              <h3 th:text="${group.name}"></h3>
+              <p>Points: <span th:text="${group.totalPoints}"></span></p>
+              <p>Code: <span th:text="${group.inviteCode}"></span></p>
+              <div th:if="${group.owner.username == #authentication.name}">
+                <form th:action="@{/disband_group}" method="post">
+                  <input type="hidden" name="groupId" th:value="${group.id}"/>
+                  <button type="submit" class="deny-button">Disband</button>
+                </form>
+              </div>
+              <div th:if="${group.owner.username != #authentication.name}">
+                <form th:action="@{/leave_group}" method="post">
+                  <input type="hidden" name="groupId" th:value="${group.id}"/>
+                  <button type="submit" class="deny-button">Leave</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div id="task-information-container">
         <!-- Join existing group section -->
         <div class="groups-box">
           <h1>Join a group:</h1>
+          <form th:action="@{/join_group}" method ="post">
+            <p>
+              <input th:name="@{groupIdString}" placeholder="Group Code..."/>
+            </p>
+            <p>
+              <button type="submit">Join Group</button>
+            </p>
+          </form>
         </div>
         <!-- Create new group section -->
         <div class="groups-box">
           <h1>Create a groups:</h1>
+            <form th:action="@{/create_group}" method ="post">
+            <p>
+              <input name="groupName" placeholder="Group Name..."/>
+            </p>
+            <p>
+              <button type="submit">Create Group</button>
+            </p>
+          </form>
         </div>
     </div>
 </body>
