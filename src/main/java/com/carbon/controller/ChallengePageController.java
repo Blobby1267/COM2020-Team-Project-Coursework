@@ -93,24 +93,21 @@ public class ChallengePageController {
             // Delegate logic calculations to service
             challengeService.completeChallenge(authentication.getName(), challengeId);
             User user = userRepository.findByUsername(authentication.getName());
-            
             Evidence evidence = new Evidence();
             evidence.setUser(user);
             evidence.setOriginalFilename("");
             evidence.setContentType(""); 
-            evidence.setSizeBytes(0l);
+            evidence.setSizeBytes(0);
             Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));            
             evidence.setTaskTitle(challenge.getTitle());
-            InputStream stream = getClass().getResourceAsStream("src\\main\\resources\\static\\1pixel.png");
-            byte[] imageBytes = stream.readAllBytes();
-            evidence.setPhoto(imageBytes);
+            evidence.setPhoto(new byte[0]);
             evidence.setStatus(EvidenceStatus.AUTO_ACCEPTED);
             evidence.setSubmittedAt(LocalDateTime.now());
+            evidence.setChallenge(challenge);
             evidenceRepository.save(evidence);
             return ResponseEntity.ok("Challenge completed successfully");
         } catch (Exception e) {
             // Return error message if something goes wrong (e.g., challenge not found)
-            System.out.println("help");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
