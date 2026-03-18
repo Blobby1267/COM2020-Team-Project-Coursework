@@ -70,7 +70,6 @@ public class EvidenceService {
         if (contentType == null || !contentType.startsWith("image/")) {
             throw new IllegalArgumentException("Only image uploads are allowed.");
         }
-
         // Create and populate evidence entity
         Evidence evidence = new Evidence();
         evidence.setUser(user);

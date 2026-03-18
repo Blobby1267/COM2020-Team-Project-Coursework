@@ -263,6 +263,9 @@
             // Submit challenge completion via API
             async function completeChallenge(button) {
               const challengeId = button.getAttribute("data-challenge-id");
+              const title = button.getAttribute("data-title");
+              const points = button.getAttribute("data-points");
+              const encodedTitle = encodeURIComponent(title);
               button.disabled = true;
               button.textContent = "Completing...";
 

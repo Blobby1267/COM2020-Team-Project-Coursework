@@ -49,6 +49,7 @@ public class EvidenceController {
         @RequestParam("photo") MultipartFile photo,
         @RequestParam(value = "taskTitle", required = false) String taskTitle,
         @RequestParam(value = "challengeId", required = false) Long challengeId,
+        @RequestParam(value = "status", required = false) EvidenceStatus status,
         Authentication authentication
     ) throws IOException {
         // Check user is logged in
