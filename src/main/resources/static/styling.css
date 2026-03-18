@@ -179,7 +179,7 @@ label {
 
 #task-information-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   width: 80%;
   margin-block: 20px;
@@ -774,15 +774,24 @@ canvas{
     background-color: white;
 }
 
-.badge-container{
-    display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: #003C3C;
+.badges-container{
+    display: block;
+    background-color: #007d69;
     padding: 1em;
+    height: 80%;
+    margin: 1em;
+    width: 100%;
+    overflow: scroll;
 }
 
-.badge-container div{
+.badges-grid{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.badges-grid div{
     background-color: white;
-    border: 0.5em solid #003C3C;
+    border: 0.5em solid #007d69;
     padding: 0.5em;
+    margin: 0.5em;
 }
