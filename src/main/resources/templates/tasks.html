@@ -1,8 +1,10 @@
 <!-- Tasks Page - View and complete daily, weekly, and monthly challenges -->
 <!doctype html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="_csrf" th:content="${_csrf.token}" />
@@ -16,23 +18,32 @@
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
+      <!-- Welcome message showing authenticated username -->
+
+
+      <!-- <div sec:authorize="isAuthenticated()">
+        <p>Welcome, <span th:text="${#authentication.name}">User</span>!</p>
+      </div> -->
+
+      
       <!-- Display user's current points (only visible when authenticated) -->
       <div sec:authorize="isAuthenticated()" class="points-box">
         <span>Points: </span>
         <span th:text="${userPoints}">0</span>
       </div>
       <!-- Logout form with CSRF protection -->
-      <form th:action = "@{/logout}" th:object = "${user}"method="post">
-        <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
+      <form th:action="@{/logout}" th:object="${user}" method="post">
+        <input
+          type="hidden"
+          th:name="${_csrf.parameterName}"
+          th:value="${_csrf.token}"
+        />
         <button class="log-out" type="submit">Log Out</button>
       </form>
     </div>
-    <!-- Welcome message showing authenticated username -->
-    <div sec:authorize="isAuthenticated()">
-      <p>Welcome, <span th:text="${#authentication.name}">User</span>!</p>
-    </div>
     <!-- Main container with sidebar navigation -->
     <div id="main-task-container">
+      <button class="dropdown-button">Tabs:</button>
       <div class="sidebar">
         <a class="active" href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -41,7 +52,9 @@
         <a href="analytics">Analytics</a>
         <a href="evidence">Evidence</a>
         <!-- Challenges link only visible to moderators using Spring Security authorization -->
-        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges"
+          >Challenges</a
+        >
         <a href="settings">Settings</a>
         <a href="travel">Travel</a>
       </div>
@@ -54,25 +67,52 @@
           <!-- Iterate through daily challenges using Thymeleaf -->
           <div th:each="challenge, iterStat : ${dailyChallenges}">
             <div class="row">
-              <div class="column" th:onclick="'openTab(\'d' + ${iterStat.index} + '\');'" th:text="${challenge.title}"></div>
+              <div
+                class="column"
+                th:onclick="'openTab(\'d' + ${iterStat.index} + '\');'"
+                th:text="${challenge.title}"
+              ></div>
             </div>
 
             <!-- Expandable tab showing challenge details (initially hidden) -->
-            <div th:id="'d' + ${iterStat.index}" class="containerTab" style="display:none">
-              <span onclick="this.parentElement.style.display='none'" class="closebtn">x</span>
+            <div
+              th:id="'d' + ${iterStat.index}"
+              class="containerTab"
+              style="display: none"
+            >
+              <span
+                onclick="this.parentElement.style.display = 'none'"
+                class="closebtn"
+                >x</span
+              >
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
-              <p>Carbon Saved: <span th:text="${challenge.carbonSaved}"></span> kg CO2</p>
+              <p>
+                Carbon Saved:
+                <span th:text="${challenge.carbonSaved}"></span> kg CO2
+              </p>
               <p>Taxonomy: <span th:text="${challenge.taxonomy}"></span></p>
-              <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
-                      th:data-challenge-id="${challenge.id}"
-                      onclick="completeChallenge(this)">Complete</button>
-              <button th:if="${challenge.requiresEvidence}" class="complete-btn" type="button" 
-                      th:data-challenge-id="${challenge.id}"
-                      th:data-title="${challenge.title}"
-                      th:data-points="${challenge.points}"
-                      onclick="addEvidenceFromData(this)">Add Evidence</button>
+              <button
+                th:if="${!challenge.requiresEvidence}"
+                class="complete-btn"
+                type="button"
+                th:data-challenge-id="${challenge.id}"
+                onclick="completeChallenge(this)"
+              >
+                Complete
+              </button>
+              <button
+                th:if="${challenge.requiresEvidence}"
+                class="complete-btn"
+                type="button"
+                th:data-challenge-id="${challenge.id}"
+                th:data-title="${challenge.title}"
+                th:data-points="${challenge.points}"
+                onclick="addEvidenceFromData(this)"
+              >
+                Add Evidence
+              </button>
             </div>
           </div>
         </div>
@@ -82,25 +122,52 @@
           <!-- Iterate through weekly challenges using Thymeleaf -->
           <div th:each="challenge, iterStat : ${weeklyChallenges}">
             <div class="row">
-              <div class="column" th:onclick="'openTab(\'w' + ${iterStat.index} + '\');'" th:text="${challenge.title}"></div>
+              <div
+                class="column"
+                th:onclick="'openTab(\'w' + ${iterStat.index} + '\');'"
+                th:text="${challenge.title}"
+              ></div>
             </div>
 
             <!-- Expandable tab showing challenge details (initially hidden) -->
-            <div th:id="'w' + ${iterStat.index}" class="containerTab" style="display:none">
-              <span onclick="this.parentElement.style.display='none'" class="closebtn">x</span>
+            <div
+              th:id="'w' + ${iterStat.index}"
+              class="containerTab"
+              style="display: none"
+            >
+              <span
+                onclick="this.parentElement.style.display = 'none'"
+                class="closebtn"
+                >x</span
+              >
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
-              <p>Carbon Saved: <span th:text="${challenge.carbonSaved}"></span> kg CO2</p>
+              <p>
+                Carbon Saved:
+                <span th:text="${challenge.carbonSaved}"></span> kg CO2
+              </p>
               <p>Taxonomy: <span th:text="${challenge.taxonomy}"></span></p>
-              <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
-                      th:data-challenge-id="${challenge.id}"
-                      onclick="completeChallenge(this)">Complete</button>
-              <button th:if="${challenge.requiresEvidence}" class="complete-btn" type="button" 
-                      th:data-challenge-id="${challenge.id}"
-                      th:data-title="${challenge.title}"
-                      th:data-points="${challenge.points}"
-                      onclick="addEvidenceFromData(this)">Add Evidence</button>
+              <button
+                th:if="${!challenge.requiresEvidence}"
+                class="complete-btn"
+                type="button"
+                th:data-challenge-id="${challenge.id}"
+                onclick="completeChallenge(this)"
+              >
+                Complete
+              </button>
+              <button
+                th:if="${challenge.requiresEvidence}"
+                class="complete-btn"
+                type="button"
+                th:data-challenge-id="${challenge.id}"
+                th:data-title="${challenge.title}"
+                th:data-points="${challenge.points}"
+                onclick="addEvidenceFromData(this)"
+              >
+                Add Evidence
+              </button>
             </div>
           </div>
         </div>
@@ -110,33 +177,64 @@
           <!-- Iterate through monthly challenges using Thymeleaf -->
           <div th:each="challenge, iterStat : ${monthlyChallenges}">
             <div class="row">
-              <div class="column" th:onclick="'openTab(\'m' + ${iterStat.index} + '\');'" th:text="${challenge.title}"></div>
+              <div
+                class="column"
+                th:onclick="'openTab(\'m' + ${iterStat.index} + '\');'"
+                th:text="${challenge.title}"
+              ></div>
             </div>
 
             <!-- Expandable tab showing challenge details (initially hidden) -->
-            <div th:id="'m' + ${iterStat.index}" class="containerTab" style="display:none">
-              <span onclick="this.parentElement.style.display='none'" class="closebtn">x</span>
+            <div
+              th:id="'m' + ${iterStat.index}"
+              class="containerTab"
+              style="display: none"
+            >
+              <span
+                onclick="this.parentElement.style.display = 'none'"
+                class="closebtn"
+                >x</span
+              >
               <h3 th:text="${challenge.title}"></h3>
               <p th:text="${challenge.description}"></p>
               <p>Points: <span th:text="${challenge.points}"></span></p>
-              <p>Carbon Saved: <span th:text="${challenge.carbonSaved}"></span> kg CO2</p>
+              <p>
+                Carbon Saved:
+                <span th:text="${challenge.carbonSaved}"></span> kg CO2
+              </p>
               <p>Taxonomy: <span th:text="${challenge.taxonomy}"></span></p>
-              <button th:if="${!challenge.requiresEvidence}" class="complete-btn" type="button" 
-                      th:data-challenge-id="${challenge.id}"
-                      onclick="completeChallenge(this)">Complete</button>
-              <button th:if="${challenge.requiresEvidence}" class="complete-btn" type="button" 
-                      th:data-challenge-id="${challenge.id}"
-                      th:data-title="${challenge.title}"
-                      th:data-points="${challenge.points}"
-                      onclick="addEvidenceFromData(this)">Add Evidence</button>
+              <button
+                th:if="${!challenge.requiresEvidence}"
+                class="complete-btn"
+                type="button"
+                th:data-challenge-id="${challenge.id}"
+                onclick="completeChallenge(this)"
+              >
+                Complete
+              </button>
+              <button
+                th:if="${challenge.requiresEvidence}"
+                class="complete-btn"
+                type="button"
+                th:data-challenge-id="${challenge.id}"
+                th:data-title="${challenge.title}"
+                th:data-points="${challenge.points}"
+                onclick="addEvidenceFromData(this)"
+              >
+                Add Evidence
+              </button>
             </div>
           </div>
 
           <!-- JavaScript for task interaction functionality -->
           <script>
             function withCsrfHeaders(extraHeaders = {}) {
-              const token = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
-              const headerName = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
+              const token = document
+                .querySelector('meta[name="_csrf"]')
+                ?.getAttribute("content");
+              const headerName = document
+                .querySelector('meta[name="_csrf_header"]')
+                ?.getAttribute("content");
               if (token && headerName) {
                 return { ...extraHeaders, [headerName]: token };
               }
@@ -144,61 +242,70 @@
             }
 
             // Toggle challenge details visibility
-            function openTab(tab){
+            function openTab(tab) {
               var i, x;
               x = document.getElementsByClassName("containerTab");
-              for (i=0; i<x.length;i++){
-                x[i].style.display="none";
+              for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
               }
-              document.getElementById(tab).style.display="block";
+              document.getElementById(tab).style.display = "block";
             }
 
             // Navigate to evidence page with pre-filled challenge data
-            function addEvidenceFromData(button){
-              const challengeId = button.getAttribute('data-challenge-id');
-              const title = button.getAttribute('data-title');
-              const points = button.getAttribute('data-points');
+            function addEvidenceFromData(button) {
+              const challengeId = button.getAttribute("data-challenge-id");
+              const title = button.getAttribute("data-title");
+              const points = button.getAttribute("data-points");
               const encodedTitle = encodeURIComponent(title);
               window.location.href = `/evidence?challengeId=${challengeId}&title=${encodedTitle}&points=${points}`;
             }
 
             // Submit challenge completion via API
-            async function completeChallenge(button){
-              const challengeId = button.getAttribute('data-challenge-id');
+            async function completeChallenge(button) {
+              const challengeId = button.getAttribute("data-challenge-id");
               button.disabled = true;
-              button.textContent = 'Completing...';
+              button.textContent = "Completing...";
 
               try {
-                const response = await fetch('/api/challenges/complete', {
-                  method: 'POST',
+                const response = await fetch("/api/challenges/complete", {
+                  method: "POST",
                   headers: withCsrfHeaders({
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    "Content-Type": "application/x-www-form-urlencoded",
                   }),
                   body: `challengeId=${challengeId}`,
-                  credentials: 'same-origin'
+                  credentials: "same-origin",
                 });
 
                 if (response.ok) {
-                  button.textContent = 'Completed!';
-                  button.style.backgroundColor = '#04AA6D';
+                  button.textContent = "Completed!";
+                  button.style.backgroundColor = "#04AA6D";
                   setTimeout(() => {
                     window.location.reload();
                   }, 1000);
                 } else {
-                  button.textContent = 'Failed';
+                  button.textContent = "Failed";
                   button.disabled = false;
                   setTimeout(() => {
-                    button.textContent = 'Complete';
+                    button.textContent = "Complete";
                   }, 2000);
                 }
               } catch (error) {
-                button.textContent = 'Error';
+                button.textContent = "Error";
                 button.disabled = false;
                 setTimeout(() => {
-                  button.textContent = 'Complete';
+                  button.textContent = "Complete";
                 }, 2000);
               }
             }
+
+            let dropdown = document.querySelector(".dropdown-button");
+            let dropdown_menu = document.querySelector(".sidebar");
+
+            dropdown.addEventListener("click", (e) => {
+              e.preventDefault();
+              dropdown_menu.classList.toggle("open");
+            })
+
           </script>
         </div>
       </div>

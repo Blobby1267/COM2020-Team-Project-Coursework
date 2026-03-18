@@ -1,27 +1,32 @@
 <!-- Analytics Page - Display user carbon footprint analytics and statistics -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title> Carbon Challenge! </title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styling.css">
 </head>
 
-<body>
+  <body>
     <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
       <!-- Logout form with CSRF protection -->
-      <form th:action = "@{/logout}" th:object = "${user}"method="post">
-        <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
+      <form th:action="@{/logout}" th:object="${user}" method="post">
+        <input
+          type="hidden"
+          th:name="${_csrf.parameterName}"
+          th:value="${_csrf.token}"
+        />
         <button class="log-out" type="submit">Log Out</button>
       </form>
     </div>
 
     <!-- The sidebar -->
     <div id="main-task-container">
+      <button class="dropdown-button">Tabs:</button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -30,147 +35,12 @@
         <a class="active" href="analytics">Analytics</a>
         <a href="evidence">Evidence</a>
         <!-- Challenges link only visible to moderators using Spring Security authorization -->
-        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges"
+          >Challenges</a
+        >
         <a href="settings">Settings</a>
         <a href="travel">Travel</a>
       </div>
-
-      <div id="analytics-tab-wrapper">
-      <div class="tab">
-        <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'Weekly')">Weekly</button>
-        <button class="tablinks" onclick="openTab(event, 'Monthly')">Monthly</button>
-        <button class="tablinks" onclick="openTab(event, 'Total')">Total</button>
-        <button class="tablinks" onclick="openTab(event, 'ActionBreakdown')">Action Breakdown</button>
-      </div>
-      
-          
-        <div id="Weekly" class="tab-content">
-          <h1>Weekly Stats</h1>
- 
-            <div class="chart-container">
-              <canvas id="piechart"></canvas>
-               <canvas id="myLineChart"></canvas>
-            </div>
-          </div>
-
-        <div id="Monthly" class="tab-content">
-          <h1>Monthly Stats</h1>
-          There will be a pie chart
-        </div>
-
-        <div id="Total" class="tab-content">
-          <h1>Total Stats</h1>
-          There will be a pie chart
-        </div>
-
-        <div id="ActionBreakdown" class="tab-content">
-          <h1>Action Stats</h1>
-          There will be a pie chart
-        </div>
-      </div>
-      </div>
-
-    <script>
-      function openTab(event, tabName){
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++){
-          tabcontent[i].style.display = "none";
-        }
-
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++){
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        document.getElementById(tabName).style.display = "block";
-        event.currentTarget.className += " active";
-      }
-
-      window.onload = function(){
-        document.getElementById("defaultOpen").click();
-      };
-
-      let labels = ['Jan', 'Feb', 'Mar','Apr', 'May'];
-      let dataset1 = [10,20,30,35,40];
-      let dataset2 = [15,30,45,60,76];
-
-      let ctx = document.getElementById('myLineChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels, 
-          datasets: [{
-          label: 'Yours',
-          data: dataset1,
-          borderColor: '#026440',
-          borderWidth: 2,
-          fill: false,
-        },
-      {
-        label: 'Average',
-        data: dataset2,
-        borderColor: '#33e9a6',
-        borderWidth: 2,
-        fill: false,
-      }]
-    },
-      options:{
-        responsive: true,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Months',
-              font:{
-                padding: 4,
-                size: 10,
-                weight: 'bold',
-                family: 'Arial'
-              }, 
-              color: '#026440'
-            }
-          },
-          y:{
-            title:{
-              display: true,
-              text: 'Values',
-              font: {
-                size: 10,
-                weight: 'bold',
-                family: 'Arial'
-              },
-              color: '#026440'
-            },
-            beginAtZero: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Values',
-            }
-          }
-        }
-      }
-      });
-
-      const pieCtx = document.getElementById('piechart').getContext('2d');
-      new Chart(pieCtx,{
-        type: 'pie',
-        data: {
-          labels: ['Waste', 'Food', 'Energy'],
-          datasets: [{
-            label: 'Votes',
-            data: [12,19,3],
-            backgroundColor: ['#33e9a6','#013220','#026440'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'top' }
-          }
-        }
-      });
-    </script>
-    </body>
+    </div>
+</body>
 </html>

@@ -23,6 +23,7 @@
 
     <!-- The sidebar -->
     <div id="main-task-container">
+      <button class="dropdown-button">Tabs:</button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -124,6 +125,14 @@
         } catch (error) {
           messageEl.textContent = "Network error. Please try again.";
         }
+      });
+
+      let dropdown = document.querySelector(".dropdown-button");
+      let dropdown_menu = document.querySelector(".sidebar");
+
+      dropdown.addEventListener("click", (e) => {
+        e.preventDefault();
+        dropdown_menu.classList.toggle("open");
       });
     </script>
 </body>

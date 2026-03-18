@@ -1,13 +1,13 @@
 <!-- Login/Registration Page - User authentication and account creation -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title> Carbon Challenge! </title>
-    <link rel="stylesheet" href="styling.css">
-</head>
+    <title>Carbon Challenge!</title>
+    <link rel="stylesheet" href="styling.css" />
+  </head>
 
-<body>
+  <body>
     <!-- Top navigation bar with logo -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
@@ -15,85 +15,96 @@
     </div>
     <!-- Main container holding registration and login forms -->
     <div id="main-task-container">
-        <div class="sidebar">
-            <!-- Registration form with user details -->
-            <form th:action="@{/register}" th:object="${user}" method="post">
-                    <p>
-                        <input type = "text" name="username" placeholder="Username..." />
-                    </p>
-                    <p>
-                        <input type = "password" name="password" placeholder="Password..."/>
-                    </p>
-                    <!-- CSRF token for security -->
-                    <input type ="hidden"
-                        th:name="${_csrf.parameterName}"
-                        th:value="${_csrf.token}"/>
-                    <!-- Year of study selection -->
-                    <p>
-                        <select name="year">
-                            <option value="First_Year">First Year</option>
-                            <option value="Second_Year">Second Year</option>
-                            <option value="Third_Year">Third Year</option>
-                            <option value="Fourth_Year">Fourth Year</option>
-                            <option value="PostGraduate">PostGraduate</option>
-                            <option value="Staff">Staff</option>
-                        </select>
-                    </p>
-                    <!-- Campus location selection -->
-                    <p>
-                        <select name="campus">
-                            <option value="Streatham">Streatham </option>
-                            <option value="St Lukes">St Lukes</option>
-                            <option value="Penryn">Penryn </option>
-                            <option value="Truro">Truro</option>
-                        </select>
-                    </p>
-                    <!-- Data collection consent checkbox -->
-                    <p>
-                        <label class="checkbox" for="consent">
-                            <input type="checkbox" id="consent" value="true">
-                            <span class="checkmark"></span>
-                            I consent to data collection following guidelines outlined in legal documents
-                        </label>
-                    </p>
-                    <p>
-                        <button type="submit">SIGN UP</button>
-                    </p>
-            </form>
-            <!-- Login form for existing users -->
-            <form th:action="@{/login}" method="post">
-                    <p>
-                        <input type="text" name="username" placeholder="Username..." />
-                    </p>
-                    <p>
-                        <input type="password" name="password" placeholder="Password..."/>
-                    </p>
-                    <!-- CSRF token for security -->
-                    <input type ="hidden"
-                        th:name="${_csrf.parameterName}"
-                        th:value="${_csrf.token}"/>
-                    <p>
-                        <button type="submit">LOG IN</button>
-                    </p>
-            </form>
-
-        </div>
+      <div class="sidebar login">
+        <!-- Registration form with user details -->
+        <form th:action="@{/register}" th:object="${user}" method="post">
+          <p>
+            <input type="text" name="username" placeholder="Username..." />
+          </p>
+          <p>
+            <input type="password" name="password" placeholder="Password..." />
+          </p>
+          <!-- CSRF token for security -->
+          <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+          />
+          <!-- Year of study selection -->
+          <p>
+            <select name="year">
+              <option value="First_Year">First Year</option>
+              <option value="Second_Year">Second Year</option>
+              <option value="Third_Year">Third Year</option>
+              <option value="Fourth_Year">Fourth Year</option>
+              <option value="PostGraduate">PostGraduate</option>
+              <option value="Staff">Staff</option>
+            </select>
+          </p>
+          <!-- Campus location selection -->
+          <p>
+            <select name="campus">
+              <option value="Streatham">Streatham</option>
+              <option value="St Lukes">St Lukes</option>
+              <option value="Penryn">Penryn</option>
+              <option value="Truro">Truro</option>
+            </select>
+          </p>
+          <!-- Data collection consent checkbox -->
+          <p>
+            <label class="checkbox" for="consent">
+              <input type="checkbox" id="consent" value="true" />
+              <span class="checkmark"></span>
+              I consent to data collection following guidelines outlined in
+              legal documents
+            </label>
+          </p>
+          <p>
+            <button type="submit">SIGN UP</button>
+          </p>
+        </form>
+        <!-- Login form for existing users -->
+        <form th:action="@{/login}" method="post">
+          <p>
+            <input type="text" name="username" placeholder="Username..." />
+          </p>
+          <p>
+            <input type="password" name="password" placeholder="Password..." />
+          </p>
+          <!-- CSRF token for security -->
+          <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+          />
+          <p>
+            <button type="submit">LOG IN</button>
+          </p>
+        </form>
+      </div>
+      <!-- <div id="task-information-container"> -->
         <!-- Information box explaining the application purpose -->
         <div class="login-box">
-                <h1 class="title">Our Purpose</h1>
-                    <p>
-                        CO2 is the biggest contributor to global warming. it is now or never for us to take actions to reduce our carbon footprint.
-                        We want to help sensitise our students and staff about how their daily actions contribute to this issue and how individually
-                        they can take steps to reduce their emissions. Each of us matters! Every gram saved by a person adds up when everyone is 
-                        conscious and doing their best. We hope that this website will help you understand your emissions and motivate you to take
-                        these steps for the betterment of all.
-                    </p>
-                    <p>
-                        There is a list of tasks that can be completed daily and challenges, for those that want to go the extra mile, will be 
-                        released monthly. You can also participate in groups and compete with each other. A leaderboard will show who is the most 
-                        green among us and special prizes await them. May the best eco person win!
-                    </p>
-        </div>
+          <h1 class="title">Our Purpose</h1>
+          <p>
+            CO2 is the biggest contributor to global warming. it is now or never
+            for us to take actions to reduce our carbon footprint. We want to
+            help sensitise our students and staff about how their daily actions
+            contribute to this issue and how individually they can take steps to
+            reduce their emissions. Each of us matters! Every gram saved by a
+            person adds up when everyone is conscious and doing their best. We
+            hope that this website will help you understand your emissions and
+            motivate you to take these steps for the betterment of all.
+          </p>
+          <p>
+            There is a list of tasks that can be completed daily and challenges,
+            for those that want to go the extra mile, will be released monthly.
+            You can also participate in groups and compete with each other. A
+            leaderboard will show who is the most green among us and special
+            prizes await them. May the best eco person win!
+          </p>
+        <!-- </div> -->
+      </div>
     </div>
-</body>
+  </body>
 </html>
