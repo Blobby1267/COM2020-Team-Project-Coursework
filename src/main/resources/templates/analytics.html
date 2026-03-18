@@ -56,19 +56,27 @@
           <h1>Weekly Stats</h1>
  
             <div class="chart-container">
-              <canvas id="piechart"></canvas>
-               <canvas id="myLineChart"></canvas>
+              <canvas id="weeklyPieChart"></canvas>
+              <canvas id="weeklyLineChart"></canvas>
             </div>
           </div>
 
         <div id="Monthly" class="tab-content">
           <h1>Monthly Stats</h1>
-          There will be a pie chart
+
+            <div class="chart-container">
+              <canvas id="monthlyPieChart"></canvas>
+              <canvas id="monthlyLineChart"></canvas>
+            </div>
         </div>
 
         <div id="Total" class="tab-content">
           <h1>Total Stats</h1>
-          There will be a pie chart
+
+            <div class="chart-container">
+              <canvas id="totalPieChart"></canvas>
+              <canvas id="totalLineChart"></canvas>
+            </div>
         </div>
 
         <div id="ActionBreakdown" class="tab-content">
@@ -78,7 +86,7 @@
       </div>
       </div>
 
-    <script>
+    <script th:inline="javascript">
       function openTab(event, tabName){
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tab-content");
@@ -99,29 +107,157 @@
         document.getElementById("defaultOpen").click();
       };
 
-      let labels = ['Jan', 'Feb', 'Mar','Apr', 'May'];
-      let dataset1 = [10,20,30,35,40];
-      let dataset2 = [15,30,45,60,76];
+      let labelsWeek = /*[[${weekLabels}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
+      let datasetWeek = /*[[${weekPoints}]]*/[10,20,30,35,40];
+      let labelsMonth = /*[[${monthLabels}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
+      let datasetMonth = /*[[${monthPoints}]]*/[10,20,30,35,40];
+      let labelsTotal = /*[[${allLabels}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
+      let datasetTotal = /*[[${allPointsByMonth}]]*/[10,20,30,35,40];
 
-      let ctx = document.getElementById('myLineChart').getContext('2d');
-      new Chart(ctx, {
+      let labelsPieWeek = /*[[${weekTaxPie}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
+      let datasetPieWeek = /*[[${weekPointsPie}]]*/[10,20,30,35,40];
+      let labelsPieMonth = /*[[${monthTaxPie}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
+      let datasetPieMonth = /*[[${monthPointsPie}]]*/[10,20,30,35,40];
+      let labelsPieTotal = /*[[${allTaxPie}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
+      let datasetPieTotal = /*[[${allPointsPie}]]*/[10,20,30,35,40];
+      //let dataset2 = [15,30,45,60,76];
+
+      let weeklyLineChart = document.getElementById('weeklyLineChart').getContext('2d');
+      new Chart(weeklyLineChart, {
         type: 'line',
         data: {
-          labels: labels, 
+          labels: labelsWeek, 
           datasets: [{
           label: 'Yours',
-          data: dataset1,
+          data: datasetWeek,
           borderColor: '#026440',
           borderWidth: 2,
           fill: false,
-        },
-      {
-        label: 'Average',
-        data: dataset2,
-        borderColor: '#33e9a6',
-        borderWidth: 2,
-        fill: false,
-      }]
+        }
+      // {
+      //   label: 'Average',
+      //   data: dataset2,
+      //   borderColor: '#33e9a6',
+      //   borderWidth: 2,
+      //   fill: false,
+      // }
+    ]
+    },
+      options:{
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Days',
+              font:{
+                padding: 4,
+                size: 10,
+                weight: 'bold',
+                family: 'Arial'
+              }, 
+              color: '#026440'
+            }
+          },
+          y:{
+            title:{
+              display: true,
+              text: 'Values',
+              font: {
+                size: 10,
+                weight: 'bold',
+                family: 'Arial'
+              },
+              color: '#026440'
+            },
+            beginAtZero: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Values',
+            }
+          }
+        }
+      }
+      });
+
+      let monthlyLineChart = document.getElementById('monthlyLineChart').getContext('2d');
+      new Chart(monthlyLineChart, {
+        type: 'line',
+        data: {
+          labels: labelsMonth, 
+          datasets: [{
+          label: 'Yours',
+          data: datasetMonth,
+          borderColor: '#026440',
+          borderWidth: 2,
+          fill: false,
+        }
+      // {
+      //   label: 'Average',
+      //   data: dataset2,
+      //   borderColor: '#33e9a6',
+      //   borderWidth: 2,
+      //   fill: false,
+      // }
+    ]
+    },
+      options:{
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Dates',
+              font:{
+                padding: 4,
+                size: 10,
+                weight: 'bold',
+                family: 'Arial'
+              }, 
+              color: '#026440'
+            }
+          },
+          y:{
+            title:{
+              display: true,
+              text: 'Values',
+              font: {
+                size: 10,
+                weight: 'bold',
+                family: 'Arial'
+              },
+              color: '#026440'
+            },
+            beginAtZero: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Values',
+            }
+          }
+        }
+      }
+      });
+
+      let totalLineChart = document.getElementById('totalLineChart').getContext('2d');
+      new Chart(totalLineChart, {
+        type: 'line',
+        data: {
+          labels: labelsTotal, 
+          datasets: [{
+          label: 'Yours',
+          data: datasetTotal,
+          borderColor: '#026440',
+          borderWidth: 2,
+          fill: false,
+        }
+      // {
+      //   label: 'Average',
+      //   data: dataset2,
+      //   borderColor: '#33e9a6',
+      //   borderWidth: 2,
+      //   fill: false,
+      // }
+    ]
     },
       options:{
         responsive: true,
@@ -160,14 +296,54 @@
       }
       });
 
-      const pieCtx = document.getElementById('piechart').getContext('2d');
-      new Chart(pieCtx,{
+      const weeklyPieChart = document.getElementById('weeklyPieChart').getContext('2d');
+      new Chart(weeklyPieChart,{
         type: 'pie',
         data: {
-          labels: ['Waste', 'Food', 'Energy'],
+          labels: labelsPieWeek,
           datasets: [{
-            label: 'Votes',
-            data: [12,19,3],
+            label: 'Points',
+            data: datasetPieWeek,
+            backgroundColor: ['#33e9a6','#013220','#026440'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top' }
+          }
+        }
+      });
+
+      const monthlyPieChart = document.getElementById('monthlyPieChart').getContext('2d');
+      new Chart(monthlyPieChart,{
+        type: 'pie',
+        data: {
+          labels: labelsPieMonth,
+          datasets: [{
+            label: 'Points',
+            data: datasetPieMonth,
+            backgroundColor: ['#33e9a6','#013220','#026440'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top' }
+          }
+        }
+      });
+
+      const totalPieChart = document.getElementById('totalPieChart').getContext('2d');
+      new Chart(totalPieChart,{
+        type: 'pie',
+        data: {
+          labels: labelsPieTotal,
+          datasets: [{
+            label: 'Points',
+            data: datasetPieTotal,
             backgroundColor: ['#33e9a6','#013220','#026440'],
             borderWidth: 1
           }]

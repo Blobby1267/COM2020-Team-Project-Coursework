@@ -58,10 +58,6 @@ public class NavigationController {
     }
 
     /** Displays the analytics page. */
-    @GetMapping("/analytics")
-    public String analytics() {
-        return "analytics";
-    }
 
     /** Displays the user profile page. */
 

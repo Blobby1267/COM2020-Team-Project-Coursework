@@ -5,12 +5,14 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 
 import com.carbon.model.Challenge;
 import com.carbon.model.Evidence;
 import com.carbon.model.EvidenceStatus;
-
+import com.carbon.model.DataForAnalytics;
 /**
  * Repository interface for Evidence entity database operations.
  * Spring Data JPA automatically implements this interface at runtime.
@@ -29,6 +31,9 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
     List<Evidence> findByStatus(EvidenceStatus status);
 
     Collection<DataForProfile> findByUserId(long USER_ID);
+
+    @Query("SELECT e.challenge.points as points, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id = :userId AND e.status IN (com.carbon.model.EvidenceStatus.ACCEPTED, com.carbon.model.EvidenceStatus.AUTO_ACCEPTED)")
+    List<DataForAnalytics> findAcceptedEvidenceByUserId(@Param("userId") long userId);
 }
 
 interface DataForProfile{
@@ -36,5 +41,4 @@ interface DataForProfile{
     EvidenceStatus getStatus();
     LocalDateTime getSubmittedAt();
 } 
-
     
