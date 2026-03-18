@@ -77,6 +77,11 @@ public class NavigationController {
     public String travel() {
         return "travel";
     }
+
+    @GetMapping("/badges")
+    public String badges(){
+        return "badges";
+    }
     
     /**
      * Helper method to check if authenticated user has moderator or admin privileges.
