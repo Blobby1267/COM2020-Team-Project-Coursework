@@ -63,12 +63,6 @@ public class NavigationController {
         return "analytics";
     }
 
-    /** Displays the groups page. */
-    @GetMapping("/groups")
-    public String groups() {
-        return "groups";
-    }
-
     /** Displays the user profile page. */
 
 

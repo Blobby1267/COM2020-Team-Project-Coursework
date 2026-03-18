@@ -29,7 +29,8 @@ public class LoginController {
     private UserRepository userRepository;
 
     /**
-     * Helper method to register a new user with encrypted password.
+  
+  * Helper method to register a new user with encrypted password.
      * @param user - User object with plain-text password
      */
     public void registerUser(User user){

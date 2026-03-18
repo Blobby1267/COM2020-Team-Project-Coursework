@@ -2,9 +2,14 @@ package com.carbon.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 
 /**
@@ -29,6 +34,8 @@ public class User {
     @Column(name = "\"year\"") // "year" is a reserved SQL keyword, so we escape it
     private String year = "First_Year"; // Academic year of the user
 
+    @ManyToMany(mappedBy = "members")
+    private Set<Group> groups = new HashSet<>();
 
     // === Getter Methods ===
     public Long getId() {

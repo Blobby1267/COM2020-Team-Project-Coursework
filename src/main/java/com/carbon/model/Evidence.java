@@ -54,6 +54,7 @@ public class Evidence {
     @Column(nullable = false)
     private byte[] photo;
 
+    
     // Current moderation status (PENDING, ACCEPTED, or REJECTED)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

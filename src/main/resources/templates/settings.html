@@ -42,12 +42,12 @@
           <span>
           <h2>Update username:</h2>
           <!-- Form to change username -->
-          <form action="/update_username" method="post">
+          <form th:action="@{/update_username}" method="post">
               <p>
-                  <input name="old-username" placeholder="Old username..." />
+                  <input name="oldUsername" placeholder="Old username..." />
               </p>
               <p>
-                  <input name="new-username" placeholder="New username..."/>
+                  <input name="newUsername" placeholder="New username..."/>
               </p>
               <p>
                 <button type="submit">Submit</button>
@@ -57,12 +57,12 @@
 
           <h2>Update password:</h2>
           <!-- Form to change password -->
-          <form action="/update_password" method="post">
+          <form th:action="@{/update_password}" method="post">
               <p>
-                  <input name="old-password" placeholder="Old password..." />
+                  <input name="oldPassword" placeholder="Old password..." />
               </p>
               <p>
-                  <input name="new-password" placeholder="New password..."/>
+                  <input name="newPassword" placeholder="New password..."/>
               </p>
               <p>
                 <button type="submit">Submit</button>
@@ -70,17 +70,17 @@
           </form>
           </span>
           <span>
-          <h2>Update role:</h2>
+          <h2>Update year:</h2>
           <!-- Form to update year of study/role -->
-          <form action="/update_role" method="post">
+          <form th:action="@{/update_year}" method="post">
               <p>
-                <select name="roles">
-                    <option value="1st">First Year</option>
-                    <option value="2nd">Second Year</option>
-                    <option value="3rd">Third Year</option>
-                    <option value="4th">Fourth Year</option>
-                    <option value="postgrad">PostGraduate</option>
-                    <option value="staff">Staff</option>
+                <select name="year">
+                    <option value="First_Year">First Year</option>
+                    <option value="Second_Year">Second Year</option>
+                    <option value="Third_Year">Third Year</option>
+                    <option value="Fourth_Year">Fourth Year</option>
+                    <option value="PostGraduate">PostGraduate</option>
+                    <option value="Staff">Staff</option>
                 </select>
               </p>
               <p>
@@ -92,13 +92,13 @@
           </div>
           <h2>Update campus:</h2>
           <!-- Form to update campus location -->
-          <form action="/update_campus" method="post">
+          <form th:action="@{/update_campus}" method="post">
               <p>
                 <select name="campus">
-                    <option value="streatham">Streatham </option>
-                    <option value="Stlukes">St Lukes</option>
-                    <option value="penryn">Penryn </option>
-                    <option value="truro">Truro</option>
+                    <option value="Streatham">Streatham </option>
+                    <option value="St Lukes">St Lukes</option>
+                    <option value="Penryn">Penryn </option>
+                    <option value="Truro">Truro</option>
                 </select>
               </p>
               <p>
@@ -117,7 +117,25 @@
           </span> 
           <span>
             <!-- Account deletion button -->
-            <button class="delete-button">Delete Account</button>
+            <button onclick="document.getElementById('deleteModal').showModal()" class="delete-button">Delete Account</button>
+
+            <dialog id="deleteModal">
+              <h2>Delete Account</h2>
+              <p>Warning this is perminant and can not be undone. Please enter your details to confirm</p>
+              <form method="post" th:action="@{/delete_account}">
+                <p>
+                  <input type="text" name="username" placeholder="Username...">
+                </p>
+                <p>
+                  <input type="password" name="password" placeholder="Password...">
+                </p>
+                <p th:if="${deleteError}" th:text="${deleteError}"></p>
+                <p>
+                  <button type="button" onclick="document.getElementById('deleteModal').close()">Cancel</button>
+                  <button type="submit">Delete Account</button>
+                </p>
+              </form>
+            </dialog>
           </span>     
         </div>
     </div>
