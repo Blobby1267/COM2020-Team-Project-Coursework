@@ -773,3 +773,16 @@ canvas{
     height: 100px;
     background-color: white;
 }
+
+.badge-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #003C3C;
+    padding: 1em;
+}
+
+.badge-container div{
+    background-color: white;
+    border: 0.5em solid #003C3C;
+    padding: 0.5em;
+}
