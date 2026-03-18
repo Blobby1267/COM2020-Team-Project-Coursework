@@ -100,7 +100,6 @@
         messageEl.textContent = "Submitting...";
 
         const formData = new FormData(evidenceForm);
-
         try {
           const response = await fetch("/api/evidence", {
             method: "POST",

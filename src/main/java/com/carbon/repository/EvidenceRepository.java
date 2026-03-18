@@ -1,9 +1,13 @@
 package com.carbon.repository;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.Repository;
 
+import com.carbon.model.Challenge;
 import com.carbon.model.Evidence;
 import com.carbon.model.EvidenceStatus;
 
@@ -23,4 +27,14 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
      * Equivalent SQL: SELECT * FROM evidence WHERE status = ?
      */
     List<Evidence> findByStatus(EvidenceStatus status);
+
+    Collection<DataForProfile> findByUserId(long USER_ID);
 }
+
+interface DataForProfile{
+    Challenge getChallenge();
+    EvidenceStatus getStatus();
+    LocalDateTime getSubmittedAt();
+} 
+
+    
