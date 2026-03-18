@@ -693,46 +693,84 @@ tr:hover {
   .sidebar a {
     color: white;
     text-align: center;
-    padding: 1em;
-    text-decoration: none;
-    border-radius: 1em;
-    margin-block: 0.5em;
-    width: fit-content;
-    font-size: 2em;
+    color: #003C3C;
+    font-size: 50px;
+  }
   }
 
-  .sidebar a.active {
-    background-color: #04aa6d;
-    color: white;
-  }
+.tab{
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    border: 1px solid #1c5c5c;
+    background-color: #1c5c5c;
+    gap: 10px;
+    width: 100%;
+}
 
-  .sidebar > a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-  }
-
-  .settings-box {
+#analytics-tab-wrapper{
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: fit-content;
+}
+
+.tab button{
+    background-color: inherit;
+    border-color: inherit;
+    float: left;
+    height: 5em;
+    cursor: pointer;
+    padding: 1em;
+    transition: 0.3s;
+    font-size: 15px;
+    color: white;
+    width: 100%;
+    display: block;
+    border-radius: 0px;
+    text-align: center;
+}
+
+.tab button:hover{
+    background-color: #027878;
+}
+
+.tab button:active{
+    background-color: #027878;
+}
+
+.tab-content{
+    display: none;
+    flex-direction: row;
+    padding: 6px 12px;
+    border: 1px solid #007D69;
+    border-top: none;
     width: 90%;
-    align-items: center;
-  }
+    height: 90%;
+    background-color: #007D69;
+    border-radius: 10px;
+    margin-left: 2em;
+    margin-bottom: 2em;
+    margin-top: 1em;
+}
 
-  .settings-box input, .settings-box select{
-    font-size: 1.5em;
+.chart-container{
+    flex-wrap: wrap;
+    display: flex;
+    gap: 30px;
+    height: 300px;
+}
+
+/* .a{background: #04AA6D;}
+.b{background: #026440;}
+.c{background: #013220;}
+.d{background: #33e9a6;} */
+
+
+canvas{
+    border: 2px solid #003C3C;
+    width: 100px;
+    height: 100px;
     background-color: white;
-    border-radius: 15px;
-    padding-top: 0.75em;
-    padding-bottom: 0.75em;
-    border: 2px solid #003c3c;
-    width: 75vw;
-  }
-
-  #task-information-container .settings-box span h2{
-    font-size: 2em;
-  }
-
-  .contacts p{
-    font-size: 2em;
-  }
+}
 }

@@ -3,9 +3,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Carbon Challenge!</title>
-    <link rel="stylesheet" href="styling.css" />
-  </head>
+    <title> Carbon Challenge! </title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styling.css">
+</head>
 
   <body>
     <!-- Top navigation bar with logo and logout functionality -->
@@ -41,15 +42,5 @@
         <a href="travel">Travel</a>
       </div>
     </div>
-
-    <script>
-      let dropdown = document.querySelector(".dropdown-button");
-      let dropdown_menu = document.querySelector(".sidebar");
-
-      dropdown.addEventListener("click", (e) => {
-        e.preventDefault();
-        dropdown_menu.classList.toggle("open");
-      });
-    </script>
-  </body>
+</body>
 </html>
