@@ -1,28 +1,18 @@
 package com.carbon.controller;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import com.carbon.model.User;
-import com.carbon.repository.UserRepository;
 
 /**
  * Controller for managing navigation between different views.
  * Routes users to appropriate pages based on their role.
  * For example, moderators see moderation interface, users see submission interface.
- * Works with UserRepository to check user roles from database.
+ * Uses the authenticated user's authorities so page routing matches API authorization.
  */
 @Controller
 public class NavigationController {
-    // Repository for fetching user details from database
-    private final UserRepository userRepository;
-
-    // Constructor injection for UserRepository
-    public NavigationController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     /**
      * Routes users to appropriate evidence page based on role.
      * @param authentication - Spring Security authentication context
@@ -85,12 +75,12 @@ public class NavigationController {
      * @return true if user has moderator/admin role, false otherwise
      */
     private boolean hasModeratorRole(Authentication authentication) {
-        // Fetch user from database to check their role
-        User user = userRepository.findByUsername(authentication.getName());
-        if (user == null || user.getRole() == null) {
+        if (authentication == null || authentication.getAuthorities() == null) {
             return false;
         }
-        return isModeratorRole(user.getRole());
+        return authentication.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .anyMatch(this::isModeratorRole);
     }
 
     /**

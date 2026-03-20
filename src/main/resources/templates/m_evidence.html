@@ -113,8 +113,24 @@
             credentials: "same-origin"
           });
 
+          if (response.status === 401 || response.redirected) {
+            messageEl.textContent = "Your session is no longer authorized for moderator evidence. Log out and sign back in.";
+            return;
+          }
+
+          if (response.status === 403) {
+            messageEl.textContent = "Moderator access is required to review evidence. Log out and sign back in after your role is updated.";
+            return;
+          }
+
           if (!response.ok) {
             messageEl.textContent = "Failed to load evidence.";
+            return;
+          }
+
+          const contentType = response.headers.get("content-type") || "";
+          if (!contentType.includes("application/json")) {
+            messageEl.textContent = "The evidence feed returned an unexpected response. Log out and sign back in, then try again.";
             return;
           }
 
