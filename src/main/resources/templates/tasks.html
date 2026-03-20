@@ -31,6 +31,10 @@
         <span>Points: </span>
         <span th:text="${userPoints}">0</span>
       </div>
+      <div sec:authorize="isAuthenticated()" class="points-box">
+        <span>Streak: </span>
+        <span th:text="${streak}">0</span>
+      </div>
       <!-- Logout form with CSRF protection -->
       <form th:action="@{/logout}" th:object="${user}" method="post">
         <input
