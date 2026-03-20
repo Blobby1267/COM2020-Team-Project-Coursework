@@ -59,3 +59,86 @@ INSERT INTO users (username, password, points, role, campus, "year") VALUES ('ke
 INSERT INTO users (username, password, points, role, campus, "year") VALUES ('george', '$2a$10$OQ.8a5NV3mVgkJjOxdj4d.HAbXPJaUq.nDu9GzbWxQZhloRuDsysy', 140, 'USER', 'truro', 'Second_Year');
 INSERT INTO users (username, password, points, role, campus, "year") VALUES ('daniel', '$2a$10$FIxvXBdOVJuJp0BlJuZR8uXJbEpVS05qauBAwfWH/HJlLxbyyi.ey', 150, 'USER', 'streatham', 'First_Year');
 INSERT INTO users (username, password, points, role, campus, "year") VALUES ('emily', '$2a$10$Oy4/psxBHZ6PpdQP7x6VNOw8p5jchFdqMCop/rp6fiRGabXmhY2qS', 100, 'USER', 'st lukes', 'Third_Year');
+
+-- seeding data into GROUPS table
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (1, 'G1AB12', 'EcoSquad', (SELECT id FROM users WHERE username='ben'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (2, 'H2CD34', 'GreenGang', (SELECT id FROM users WHERE username='madi'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (3, 'I3EF56', 'PlanetPals', (SELECT id FROM users WHERE username='marko'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (4, 'J4GH78', 'CarbonCrew', (SELECT id FROM users WHERE username='phoebe'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (5, 'K5IJ90', 'LeafLeague', (SELECT id FROM users WHERE username='davi'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (6, 'L6KL12', 'RecycleRangers', (SELECT id FROM users WHERE username='zarreen'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (7, 'M7MN34', 'SustainableStars', (SELECT id FROM users WHERE username='armin'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (8, 'N8OP56', 'EcoChampions', (SELECT id FROM users WHERE username='jai'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (9, 'O9QR78', 'GreenHeroes', (SELECT id FROM users WHERE username='oliver'));
+INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (10, 'P0ST90', 'ClimateCrew', (SELECT id FROM users WHERE username='emma'));
+
+-- seeding data into GROUP_MEMBERS table (join table for groups and users)
+INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='ben'));
+INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='madi'));
+INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='marko'));
+INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='phoebe'));
+INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='davi'));
+INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='zarreen'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='armin'));
+INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='jai'));
+INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='oliver'));
+INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='emma'));
+INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='sophie'));
+INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='liam'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='ava'));
+INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='noah'));
+INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='isabella'));
+INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='ethan'));
+INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='lily'));
+INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='lucas'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='mia'));
+INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='jack'));
+INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='charlotte'));
+INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='harold'));
+INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='amelia'));
+INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='olivia'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='james'));
+INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='ella'));
+INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='william'));
+INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='sophia'));
+INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='benjamin'));
+INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='marc'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='zoe'));
+INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='leo'));
+INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='grace'));
+INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='jackson'));
+INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='lilya'));
+INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='mason'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='eva'));
+INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='logan'));
+INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='mario'));
+INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='jaden'));
+INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='chloe'));
+INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='lewis'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='max'));
+INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='steve'));
+INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='toby'));
+INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='simon'));
+INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='harry'));
+INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='carlos'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='percy'));
+INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='charlie'));
+INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='francis'));
+INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='charles'));
+INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='sofia'));
+INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='alex'));
+
+INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='lucaa'));
+INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='michael'));
+INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='ken'));
+INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='george'));
+INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='daniel'));
+INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='emily'));
