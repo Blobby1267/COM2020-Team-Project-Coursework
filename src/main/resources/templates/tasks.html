@@ -73,7 +73,7 @@
           <div th:each="challenge, iterStat : ${dailyChallenges}">
             <div class="row">
               <div
-                class="column"
+                th:class="${completedToday != null and completedToday.contains(challenge.title)} ? 'column task-completed-today' : 'column'"
                 th:onclick="'openTab(\'d' + ${iterStat.index} + '\');'"
                 th:text="${challenge.title}"
               ></div>
@@ -128,7 +128,7 @@
           <div th:each="challenge, iterStat : ${weeklyChallenges}">
             <div class="row">
               <div
-                class="column"
+                th:class="${completedToday != null and completedToday.contains(challenge.title)} ? 'column task-completed-today' : 'column'"
                 th:onclick="'openTab(\'w' + ${iterStat.index} + '\');'"
                 th:text="${challenge.title}"
               ></div>
@@ -183,7 +183,7 @@
           <div th:each="challenge, iterStat : ${monthlyChallenges}">
             <div class="row">
               <div
-                class="column"
+                th:class="${completedToday != null and completedToday.contains(challenge.title)} ? 'column task-completed-today' : 'column'"
                 th:onclick="'openTab(\'m' + ${iterStat.index} + '\');'"
                 th:text="${challenge.title}"
               ></div>

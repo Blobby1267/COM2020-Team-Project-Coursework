@@ -1,6 +1,7 @@
 package com.carbon.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -62,6 +63,13 @@ public class EvidenceService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
+        // Prevent submitting evidence for the same task more than once per day
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfNextDay = startOfDay.plusDays(1);
+        if (evidenceRepository.hasEvidenceTodayForTask(user.getId(), taskTitle, startOfDay, startOfNextDay)) {
+            throw new IllegalStateException("You have already submitted evidence for this task today. Try again tomorrow.");
+        }
+
         // Validate photo is provided
         if (photo == null || photo.isEmpty()) {
             throw new IllegalArgumentException("Photo is required.");

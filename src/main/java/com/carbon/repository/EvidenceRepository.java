@@ -34,6 +34,16 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
     @Query("SELECT e.challenge.points as points, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
     List<DataForAnalytics> findAcceptedEvidenceByUserId(@Param("userId") long userId);
+
+    /**
+     * Checks whether a user has already submitted evidence for a task with the given title
+     * within the specified time window (used to enforce one-completion-per-day).
+     */
+    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN TRUE ELSE FALSE END FROM Evidence e WHERE e.user.id = :userId AND e.taskTitle = :taskTitle AND e.submittedAt >= :start AND e.submittedAt < :end")
+    boolean hasEvidenceTodayForTask(@Param("userId") Long userId, @Param("taskTitle") String taskTitle, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query("SELECT DISTINCT e.taskTitle FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end")
+    List<String> findTodayCompletedTaskTitles(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }
 
 interface DataForProfile{

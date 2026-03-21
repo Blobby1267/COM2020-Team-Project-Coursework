@@ -54,6 +54,7 @@ public class ChallengePageController {
             User user = userRepository.findByUsername(auth.getName());
             if (user != null) {
                 model.addAttribute("userPoints", user.getPoints()); // Add user's current points to the model
+                model.addAttribute("completedToday", challengeService.getCompletedTaskTitlesToday(auth.getName()));
             }
         }
         

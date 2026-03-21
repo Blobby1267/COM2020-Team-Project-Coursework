@@ -1,6 +1,10 @@
 package com.carbon.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,7 +15,6 @@ import com.carbon.model.Challenge;
 import com.carbon.model.Evidence;
 import com.carbon.model.EvidenceStatus;
 import com.carbon.model.User;
-import java.util.List;
 
 /**
  * Service layer for challenge-related business logic.
@@ -48,6 +51,18 @@ public class ChallengeService {
     }
 
     /**
+     * Returns the set of task titles the user has already completed today (local time).
+     * Used to highlight completed tasks on the tasks page.
+     */
+    public Set<String> getCompletedTaskTitlesToday(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) return Set.of();
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfNextDay = startOfDay.plusDays(1);
+        return new HashSet<>(evidenceRepository.findTodayCompletedTaskTitles(user.getId(), startOfDay, startOfNextDay));
+    }
+
+    /**
      * Marks a challenge as completed for a user and awards points.
      * @param username - Username of the user completing the challenge
      * @param challengeId - ID of the challenge being completed
@@ -66,6 +81,13 @@ public class ChallengeService {
         // Fetch and validate challenge exists
         Challenge challenge = challengeRepository.findById(challengeId)
             .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
+
+        // Prevent completing the same task more than once per day
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfNextDay = startOfDay.plusDays(1);
+        if (evidenceRepository.hasEvidenceTodayForTask(user.getId(), challenge.getTitle(), startOfDay, startOfNextDay)) {
+            throw new IllegalStateException("You have already completed this task today. Try again tomorrow.");
+        }
 
         Evidence evidence = new Evidence();
         evidence.setUser(user);
