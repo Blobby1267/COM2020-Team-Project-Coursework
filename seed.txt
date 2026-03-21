@@ -205,3 +205,18 @@ INSERT INTO leaderboard (id, userId, username, points) VALUES
 (58, 17, 'lily', 50),
 (59, 19, 'mia', 40),
 (60, 45, 'toby', 30);
+
+-- seeding data into CHALLENGES table
+INSERT INTO challenges (id, title, description, points, frequency, startDate, endDate, scope, requiresEvidence, taxonomy, carbonSaved) VALUES
+(1, 'Eat a vegetarian meal', 'Eat a vegetarian or vegan meal to reduce carbon footprint', 10, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Diet', 0.64103),
+(2, 'Walk to campus', 'Walk to campus instead of using a petrol car', 10, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Transport', 0.17),
+(3, 'Use a reusable coffee cup', 'Use a reusable coffee cup instead of disposable cups', 5, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.026),
+(4, 'Use a reusable water bottle', 'Use a reusable water bottle throughout the day', 5, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.47123),
+(5, 'Recycle', 'Recycle all materials for the day', 15, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Waste', 1.9),
+(6, 'Shop second-hand clothes', 'Purchase second-hand clothing to reduce carbon footprint', 20, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
+(7, 'Shop local (Farmer''s market)', 'Buy local produce from farmers'' markets', 10, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Food', NULL),
+(8, 'Line dry clothes', 'Line dry clothes instead of using a tumble dryer', 10, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Energy', 1.8),
+(9, 'Borrow a library book', 'Borrow books instead of buying new ones', 5, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Resources', 0.7),
+(10, 'Donate an item', 'Donate clothes or other items instead of discarding', 15, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
+(11, 'Repair an item', 'Repair an item instead of buying new', 20, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Consumption', 32.9),
+(12, 'Purchase 2good2go', 'Save food using the 2good2go app', 10, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Food', 2.7);
