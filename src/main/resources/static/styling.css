@@ -389,12 +389,12 @@ tr:hover {
 }
 
 .column.task-completed-today {
-  background-color: #c8f0e0;
+  background-color: #1dce70;
   color: #005a45;
 }
 
 .column.task-completed-today:hover {
-  background-color: #68cd74;
+  background-color: #7bcf9f;
 }
 
 .containerTab {
