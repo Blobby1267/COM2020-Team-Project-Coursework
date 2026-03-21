@@ -75,7 +75,7 @@ public class ChallengeService {
         evidence.setSizeBytes(0);
         evidence.setTaskTitle(challenge.getTitle());
         evidence.setPhoto(new byte[0]);
-        evidence.setStatus(EvidenceStatus.AUTO_ACCEPTED);
+        evidence.setStatus(EvidenceStatus.ACCEPTED);
         evidence.setSubmittedAt(LocalDateTime.now());
         evidenceRepository.save(evidence);
 
