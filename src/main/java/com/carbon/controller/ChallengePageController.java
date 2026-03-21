@@ -2,25 +2,18 @@ package com.carbon.controller;
 
 import org.springframework.stereotype.Controller;
 
-import java.io.InputStream;
-import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-import com.carbon.repository.ChallengeRepository;
-import com.carbon.repository.EvidenceRepository;
 import com.carbon.repository.UserRepository;
 import com.carbon.service.ChallengeService;
-import com.carbon.model.Challenge;
-import com.carbon.model.Evidence;
-import com.carbon.model.EvidenceStatus;
 import com.carbon.model.User;
 
 import org.springframework.ui.Model;
@@ -43,10 +36,6 @@ public class ChallengePageController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private EvidenceRepository evidenceRepository;
-
-    @Autowired ChallengeRepository challengeRepository;
     /**
      * Displays the tasks page with all available challenges.
      * @param auth - Spring Security Authentication object containing the logged-in user's details
@@ -80,35 +69,27 @@ public class ChallengePageController {
      */
     @PostMapping("/api/challenges/complete")
     @ResponseBody
-    public ResponseEntity<String> completeChallenge(
+    public ResponseEntity<Map<String, Object>> completeChallenge(
         @RequestParam Long challengeId,
         Authentication authentication
     ) {
         // check if user is logged in
         if (authentication == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "User not authenticated"));
         }
 
         try { 
             // Delegate logic calculations to service
-            challengeService.completeChallenge(authentication.getName(), challengeId);
-            User user = userRepository.findByUsername(authentication.getName());
-            Evidence evidence = new Evidence();
-            evidence.setUser(user);
-            evidence.setOriginalFilename("");
-            evidence.setContentType(""); 
-            evidence.setSizeBytes(0);
-            Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));            
-            evidence.setTaskTitle(challenge.getTitle());
-            evidence.setPhoto(new byte[0]);
-            evidence.setStatus(EvidenceStatus.AUTO_ACCEPTED);
-            evidence.setSubmittedAt(LocalDateTime.now());
-            evidence.setChallenge(challenge);
-            evidenceRepository.save(evidence);
-            return ResponseEntity.ok("Challenge completed successfully");
+            int updatedPoints = challengeService.completeChallenge(authentication.getName(), challengeId);
+            return ResponseEntity.ok(Map.of(
+                "message", "Challenge completed successfully",
+                "updatedPoints", updatedPoints
+            ));
         } catch (Exception e) {
             // Return error message if something goes wrong (e.g., challenge not found)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", e.getMessage()));
         }
     }
 
