@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.carbon.model.Evidence;
@@ -88,7 +89,7 @@ public class EvidenceService {
             evidence.setChallenge(challenge);
         }
 
-        return evidenceRepository.save(evidence);
+        return initializeSummaryFields(evidenceRepository.save(evidence));
     }
 
     /**
@@ -97,8 +98,11 @@ public class EvidenceService {
      * @param status - EvidenceStatus to filter by (PENDING, ACCEPTED, or REJECTED)
      * @return List of evidence submissions matching the status
      */
+    @Transactional(readOnly = true)
     public List<Evidence> getEvidenceByStatus(EvidenceStatus status) {
-        return evidenceRepository.findByStatus(status);
+        return evidenceRepository.findByStatus(status).stream()
+            .map(this::initializeSummaryFields)
+            .toList();
     }
 
     /**
@@ -116,6 +120,7 @@ public class EvidenceService {
      * - If status = REJECTED or no challenge linked:
      *   → No points awarded
      */
+    @Transactional
     public Evidence updateEvidenceStatus(Long evidenceId, EvidenceStatus status) {
         // Fetch and validate evidence exists
         Evidence evidence = evidenceRepository.findById(evidenceId)
@@ -132,7 +137,7 @@ public class EvidenceService {
             userRepository.save(user); // Update user's total points
         }
         
-        return evidenceRepository.save(evidence);
+        return initializeSummaryFields(evidenceRepository.save(evidence));
     }
 
     /**
@@ -145,5 +150,12 @@ public class EvidenceService {
     public Evidence getEvidence(Long evidenceId) {
         return evidenceRepository.findById(evidenceId)
             .orElseThrow(() -> new IllegalArgumentException("Evidence not found: " + evidenceId));
+    }
+
+    private Evidence initializeSummaryFields(Evidence evidence) {
+        if (evidence.getUser() != null) {
+            evidence.getUser().getUsername();
+        }
+        return evidence;
     }
 }
