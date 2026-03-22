@@ -304,7 +304,7 @@ label {
   width: 50%;
 
   border-radius: 10px;
-  height: auto;
+  height: 50%;
   overflow: scroll;
 }
 
@@ -420,8 +420,8 @@ tr:hover {
 }
 
 .column.task-completed-today {
-  background-color: #1dce70;
-  color: #005a45;
+  background-color: #04aa6d;
+  color: white;
 }
 
 .column.task-completed-today:hover {
