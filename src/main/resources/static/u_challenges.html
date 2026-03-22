@@ -1,30 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title> Carbon Challenge! </title>
-    <link rel="stylesheet" href="styling.css">
-</head>
+    <title>Carbon Challenge!</title>
+    <link rel="stylesheet" href="styling.css" />
+  </head>
 
-<body>
+  <body>
     <!-- Top navigation bar with logo and logout button -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
       <h1>FOOTPRINT</h1>
-      <button onclick="location.href='login.html'" class="log-out">Log Out</button>
+      <button onclick="location.href = 'login.html'" class="log-out">
+        Log Out
+      </button>
     </div>
 
     <!-- The sidebar -->
     <div id="main-task-container">
       <!-- Sidebar navigation menu -->
+      <button class="dropdown-button">Menu</button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
         <a href="leaderboard">Leaderboard</a>
         <a href="groups">Groups</a>
         <a href="analytics">Analytics</a>
-        <a href="evidence">Evidence</a>
+        <a class="active" href="evidence">Evidence</a>
         <a href="settings">Settings</a>
+        <a href="travel">Travel</a>
+        <a href="badges">Badges</a>
       </div>
 
       <!-- Main content area -->
@@ -35,5 +40,5 @@
         </div>
       </div>
     </div>
-</body>
+  </body>
 </html>

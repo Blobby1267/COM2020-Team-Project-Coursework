@@ -15,6 +15,10 @@ p {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+form {
+  margin: 0;
+}
+
 html,
 body {
   display: flex;
@@ -74,12 +78,12 @@ button:hover {
 
 .log-out {
   background-color: #007d69;
-  border: 2px solid #007d69;
-  width: 100px;
-  height: 80%;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 0.5em;
   color: white;
-  font-size: 15px;
-  padding-inline: 10px;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
 .log-out:hover {
@@ -161,11 +165,17 @@ label {
 
 .points-box {
   background-color: #007d69;
-  padding: 20px 20px;
+  padding: 10px;
+  margin: 10px;
   border-radius: 0.5em;
   color: white;
   font-weight: bold;
-  font-size: 1.75em;
+  font-size: 1.5em;
+}
+
+#points-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 
 /*TASK/MAIN PAGE*/
@@ -185,7 +195,7 @@ label {
   margin-block: 20px;
   margin-inline: 20px;
   flex: 1;
-} 
+}
 
 #task-information-container h1 {
   font-size: 20px;
@@ -388,12 +398,32 @@ tr:hover {
   background-color: #d2d3d3;
 }
 
+/* GROUP PAGE */
+
+#group-wrapper {
+  width: 100%;
+}
+
+#group-wrapper .section {
+  margin: 10px;
+}
+
+#group-settings-box {
+  display: flex;
+  flex-direction: row;
+}
+
+#group-display-box {
+  display: flex;
+  justify-content: center;
+}
+
 .containerTab {
   padding: 10px;
   background-color: white;
   color: #007d69;
-  width: 95%;
-  margin-bottom: 10px;
+  /* width: 95%; */
+  /* margin-bottom: 10px; */
   border-radius: 4px;
   font-size: 0.9em;
   line-height: 1.3;
@@ -465,7 +495,7 @@ tr:hover {
   border-radius: 15px;
   padding: 10px;
   border: 2px solid rgb(231, 59, 59);
-  width: 95%;
+  width: 100%;
   color: white;
 }
 
@@ -485,6 +515,104 @@ tr:hover {
   text-align: center;
   color: #003c3c;
   font-size: 50px;
+}
+
+.tab {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  border: 1px solid #1c5c5c;
+  background-color: #1c5c5c;
+  gap: 10px;
+  width: 100%;
+  height: fit-content;
+}
+
+#analytics-tab-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+}
+
+.tab button {
+  background-color: inherit;
+  border-color: inherit;
+  float: left;
+  height: 5em;
+  cursor: pointer;
+  padding: 1em;
+  transition: 0.3s;
+  font-size: 15px;
+  color: white;
+  width: 100%;
+  display: block;
+  border-radius: 0px;
+  text-align: center;
+}
+
+.tab button:hover {
+  background-color: #027878;
+}
+
+.tab button:active {
+  background-color: #027878;
+}
+
+.tab-content {
+  display: none;
+  flex-direction: row;
+  padding: 6px 12px;
+  border: 1px solid #007d69;
+  border-top: none;
+  width: 90%;
+  height: 90%;
+  background-color: #007d69;
+  border-radius: 10px;
+  margin-left: 2em;
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
+
+.chart-container {
+  flex-wrap: wrap;
+  display: flex;
+  gap: 30px;
+  height: 300px;
+}
+
+/* .a{background: #04AA6D;}
+.b{background: #026440;}
+.c{background: #013220;}
+.d{background: #33e9a6;} */
+
+canvas {
+  border: 2px solid #003c3c;
+  width: 100px;
+  height: 100px;
+  background-color: white;
+}
+
+.badges-container {
+  display: block;
+  background-color: #007d69;
+  padding: 1em;
+  height: 80%;
+  margin: 1em;
+  width: 100%;
+  overflow: scroll;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.badges-grid div {
+  background-color: white;
+  border: 0.5em solid #007d69;
+  padding: 0.5em;
+  margin: 0.5em;
 }
 
 @media screen and (max-width: 1000px) {
@@ -541,13 +669,13 @@ tr:hover {
 
   select,
   input {
-    font-size: 2em;
+    font-size: 2rem;
     background-color: white;
     border-radius: 15px;
     padding-top: 0.75em;
     padding-bottom: 0.75em;
     border: 2px solid #003c3c;
-    width: 75vw;
+    width: 100%;
   }
 
   select:hover,
@@ -560,9 +688,9 @@ tr:hover {
     border-radius: 0.5em;
     padding: 10px;
     border: 2px solid #003c3c;
-    width: 75vw;
+    width: 100%;
     color: white;
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
 
   /*TOP BAR*/
@@ -596,7 +724,7 @@ tr:hover {
     border-radius: 15px;
     padding: 30px;
     border: 2px solid rgb(231, 59, 59);
-    width: fit-content  ;
+    width: fit-content;
     color: white;
     font-size: 2.5rem;
   }
@@ -612,7 +740,7 @@ tr:hover {
     width: fit-content;
     height: 4em;
     color: white;
-    font-size: 1.75em;
+    font-size: 1.5em;
     padding-inline: 10px;
     font-weight: bold;
     margin-right: 1.5em;
@@ -626,7 +754,7 @@ tr:hover {
   .contacts p {
     color: white;
     text-align: left;
-    font-size: 15px;
+    font-size: 2rem;
   }
 
   label.checkbox {
@@ -693,105 +821,173 @@ tr:hover {
   .sidebar a {
     color: white;
     text-align: center;
-    color: #003C3C;
     font-size: 50px;
   }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 90%;
   }
 
-.tab{
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
-    border: 1px solid #1c5c5c;
-    background-color: #1c5c5c;
-    gap: 10px;
-    width: 100%;
-}
+  /* GROUP PAGE */
 
-#analytics-tab-wrapper{
+  #group-wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: fit-content;
-}
+    justify-content: center;
+    align-items: center;
+  }
 
-.tab button{
-    background-color: inherit;
-    border-color: inherit;
-    float: left;
-    height: 5em;
-    cursor: pointer;
-    padding: 1em;
-    transition: 0.3s;
-    font-size: 15px;
-    color: white;
+  .section {
     width: 100%;
-    display: block;
-    border-radius: 0px;
-    text-align: center;
-}
+  }
 
-.tab button:hover{
-    background-color: #027878;
-}
+  #group-settings-box {
+    flex-direction: column;
+    align-items: center;
+  }
 
-.tab button:active{
-    background-color: #027878;
-}
+  #group-wrapper .groups-box {
+    background-color: #007d69;
+    width: 90%;
+    border-radius: 10px;
+    height: auto;
+    overflow: scroll;
+    margin: 20px;
+  }
 
-.tab-content{
+  .containerTab {
+    padding: 10px;
+    background-color: white;
+    color: #007d69;
+    border-radius: 4px;
+    width: auto;
+    font-size: 0.9em;
+    line-height: 1.3;
+  }
+
+  .containerTab p {
+    font-size: 2em;
+  }
+
+  .deny-button {
+    background-color: rgb(231, 59, 59);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid rgb(231, 59, 59);
+    color: white;
+    width: fit-content;
+    margin-block: 10px;
+  }
+
+  /* ALL PAGES */
+  #task-information-container h1 {
+    font-size: 3em;
+    color: white;
+  }
+
+  #task-information-container h2 {
+    font-size: 3em;
+    color: white;
+  }
+
+  #task-information-container h3 {
+    font-size: 3em;
+    color: #007d69;
+  }
+
+  .sidebar.login input,
+  .sidebar.login select,
+  .sidebar.login button {
+    width: 80%;
+  }
+
+  .tab button {
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  .tab-content {
     display: none;
     flex-direction: row;
-    padding: 6px 12px;
-    border: 1px solid #007D69;
+    padding: 20px;
+    border: 1px solid #007d69;
     border-top: none;
     width: 90%;
-    height: 90%;
-    background-color: #007D69;
-    border-radius: 10px;
-    margin-left: 2em;
-    margin-bottom: 2em;
-    margin-top: 1em;
-}
-
-.chart-container{
-    flex-wrap: wrap;
-    display: flex;
-    gap: 30px;
-    height: 300px;
-}
-
-/* .a{background: #04AA6D;}
-.b{background: #026440;}
-.c{background: #013220;}
-.d{background: #33e9a6;} */
-
-
-canvas{
-    border: 2px solid #003C3C;
-    width: 100px;
-    height: 100px;
-    background-color: white;
-}
-
-.badges-container{
-    display: block;
+    height: 100%;
     background-color: #007d69;
-    padding: 1em;
-    height: 80%;
-    margin: 1em;
+    border-radius: 10px;
+    /* margin-inline: auto; */
+    margin-left: 0;
+    margin-bottom: 0;
+    margin-top: 1em;
+  }
+
+  #analytics-tab-wrapper {
+    align-items: center;
+  }
+
+  th {
+    font-size: 3em;
+  }
+
+  td {
+    font-size: 2.5em;
+  }
+
+  .chart-container {
+    display: block;
+    height: fit-content;
+  }
+
+  canvas {
+    margin: 10px;
+  }
+
+  .tab {
+    overflow: visible;
+  }
+
+  /* EVIDENCE */
+  #task-information-container .challenges-box {
+    padding: 10px;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    background-color: #007d69;
     width: 100%;
+
+    border-radius: 10px;
+    height: auto;
     overflow: scroll;
-}
+  }
 
-.badges-grid{
-    display: grid;
-    grid-template-columns: auto auto auto;
-}
+  .challenges-box p{
+    font-size: 2em;
+    color: white;
+  }
 
-.badges-grid div{
-    background-color: white;
-    border: 0.5em solid #007d69;
-    padding: 0.5em;
-    margin: 0.5em;
+  .challenges-box label{
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  .profile-box th{
+    font-size: 2em;
+  }
+
+  .badges-container{
+    width: 90%;
+    border-radius: 1em;
+  }
+
+  .badges-grid div{
+    font-size: 2.5em;
+  }
+
+  .badges-container h1{
+    margin-left: 20px;
+  }
 }

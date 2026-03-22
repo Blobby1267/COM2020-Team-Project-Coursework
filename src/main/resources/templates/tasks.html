@@ -20,20 +20,20 @@
       <h1>FOOTPRINT</h1>
       <!-- Welcome message showing authenticated username -->
 
-
       <!-- <div sec:authorize="isAuthenticated()">
         <p>Welcome, <span th:text="${#authentication.name}">User</span>!</p>
       </div> -->
 
-      
       <!-- Display user's current points (only visible when authenticated) -->
-      <div sec:authorize="isAuthenticated()" class="points-box">
-        <span>Points: </span>
-        <span th:text="${userPoints}">0</span>
-      </div>
-      <div sec:authorize="isAuthenticated()" class="points-box">
-        <span>Streak: </span>
-        <span th:text="${streak}">0</span>
+      <div id="points-wrapper">
+        <div sec:authorize="isAuthenticated()" class="points-box">
+          <span>Points: </span>
+          <span th:text="${userPoints}">0</span>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="points-box">
+          <span>Streak: </span>
+          <span th:text="${streak}">0</span>
+        </div>
       </div>
       <!-- Logout form with CSRF protection -->
       <form th:action="@{/logout}" th:object="${user}" method="post">
@@ -47,7 +47,7 @@
     </div>
     <!-- Main container with sidebar navigation -->
     <div id="main-task-container">
-      <button class="dropdown-button">Tabs:</button>
+      <button class="dropdown-button">Menu</button>
       <div class="sidebar">
         <a class="active" href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -312,8 +312,7 @@
             dropdown.addEventListener("click", (e) => {
               e.preventDefault();
               dropdown_menu.classList.toggle("open");
-            })
-
+            });
           </script>
         </div>
       </div>
