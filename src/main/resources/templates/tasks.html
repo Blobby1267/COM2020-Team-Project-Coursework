@@ -28,7 +28,7 @@
       <div id="points-wrapper">
         <div sec:authorize="isAuthenticated()" class="points-box">
           <span>Points: </span>
-          <span th:text="${userPoints}">0</span>
+          <span id="user-points" th:text="${userPoints}">0</span>
         </div>
         <div sec:authorize="isAuthenticated()" class="points-box">
           <span>Streak: </span>
@@ -73,7 +73,7 @@
           <div th:each="challenge, iterStat : ${dailyChallenges}">
             <div class="row">
               <div
-                class="column"
+                th:class="${completedToday != null and completedToday.contains(challenge.title)} ? 'column task-completed-today' : 'column'"
                 th:onclick="'openTab(\'d' + ${iterStat.index} + '\');'"
                 th:text="${challenge.title}"
               ></div>
@@ -128,7 +128,7 @@
           <div th:each="challenge, iterStat : ${weeklyChallenges}">
             <div class="row">
               <div
-                class="column"
+                th:class="${completedToday != null and completedToday.contains(challenge.title)} ? 'column task-completed-today' : 'column'"
                 th:onclick="'openTab(\'w' + ${iterStat.index} + '\');'"
                 th:text="${challenge.title}"
               ></div>
@@ -183,7 +183,7 @@
           <div th:each="challenge, iterStat : ${monthlyChallenges}">
             <div class="row">
               <div
-                class="column"
+                th:class="${completedToday != null and completedToday.contains(challenge.title)} ? 'column task-completed-today' : 'column'"
                 th:onclick="'openTab(\'m' + ${iterStat.index} + '\');'"
                 th:text="${challenge.title}"
               ></div>
@@ -268,9 +268,6 @@
             // Submit challenge completion via API
             async function completeChallenge(button) {
               const challengeId = button.getAttribute("data-challenge-id");
-              const title = button.getAttribute("data-title");
-              const points = button.getAttribute("data-points");
-              const encodedTitle = encodeURIComponent(title);
               button.disabled = true;
               button.textContent = "Completing...";
 
@@ -284,7 +281,13 @@
                   credentials: "same-origin",
                 });
 
+                const payload = await response.json();
+
                 if (response.ok) {
+                  const pointsLabel = document.getElementById("user-points");
+                  if (pointsLabel && typeof payload.updatedPoints === "number") {
+                    pointsLabel.textContent = payload.updatedPoints;
+                  }
                   button.textContent = "Completed!";
                   button.style.backgroundColor = "#04AA6D";
                   setTimeout(() => {

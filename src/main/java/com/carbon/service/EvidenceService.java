@@ -1,11 +1,15 @@
 package com.carbon.service;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.carbon.model.Evidence;
@@ -24,6 +28,8 @@ import com.carbon.repository.ChallengeRepository;
  */
 @Service
 public class EvidenceService {
+
+    private record TimeWindow(LocalDateTime start, LocalDateTime end) {}
     // Repository for persisting and retrieving evidence submissions
     private final EvidenceRepository evidenceRepository;
     // Repository for user data 
@@ -61,6 +67,19 @@ public class EvidenceService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
+        Challenge linkedChallenge = null;
+        if (challengeId != null) {
+            linkedChallenge = challengeRepository.findById(challengeId)
+                .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
+        }
+
+        String resolvedTitle = linkedChallenge != null ? linkedChallenge.getTitle() : taskTitle;
+        String frequency = linkedChallenge != null ? linkedChallenge.getFrequency() : "Daily";
+        TimeWindow window = getCompletionWindow(frequency);
+        if (evidenceRepository.hasEvidenceForTaskInWindow(user.getId(), resolvedTitle, window.start(), window.end())) {
+            throw new IllegalStateException(getRepeatMessage(frequency));
+        }
+
         // Validate photo is provided
         if (photo == null || photo.isEmpty()) {
             throw new IllegalArgumentException("Photo is required.");
@@ -76,19 +95,44 @@ public class EvidenceService {
         evidence.setOriginalFilename(photo.getOriginalFilename());
         evidence.setContentType(contentType);
         evidence.setSizeBytes(photo.getSize());
-        evidence.setTaskTitle(taskTitle);
+        evidence.setTaskTitle(resolvedTitle);
         evidence.setPhoto(photo.getBytes()); // Store binary image data
         evidence.setStatus(EvidenceStatus.PENDING); // Sets status
         evidence.setSubmittedAt(LocalDateTime.now());
 
         // Link evidence to challenge if challengeId is provided
         if (challengeId != null) {
-            Challenge challenge = challengeRepository.findById(challengeId)
-                .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
-            evidence.setChallenge(challenge);
+            evidence.setChallenge(linkedChallenge);
         }
 
-        return evidenceRepository.save(evidence);
+        return initializeSummaryFields(evidenceRepository.save(evidence));
+    }
+
+    private TimeWindow getCompletionWindow(String frequency) {
+        LocalDate today = LocalDate.now();
+
+        if ("Weekly".equalsIgnoreCase(frequency)) {
+            LocalDate weekStart = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            return new TimeWindow(weekStart.atStartOfDay(), weekStart.plusWeeks(1).atStartOfDay());
+        }
+
+        if ("Monthly".equalsIgnoreCase(frequency)) {
+            LocalDate monthStart = today.withDayOfMonth(1);
+            return new TimeWindow(monthStart.atStartOfDay(), monthStart.plusMonths(1).atStartOfDay());
+        }
+
+        LocalDateTime dayStart = today.atStartOfDay();
+        return new TimeWindow(dayStart, dayStart.plusDays(1));
+    }
+
+    private String getRepeatMessage(String frequency) {
+        if ("Weekly".equalsIgnoreCase(frequency)) {
+            return "You have already completed this weekly task this week. Try again next week.";
+        }
+        if ("Monthly".equalsIgnoreCase(frequency)) {
+            return "You have already completed this monthly task this month. Try again next month.";
+        }
+        return "You have already completed this daily task today. Try again tomorrow.";
     }
 
     /**
@@ -97,8 +141,11 @@ public class EvidenceService {
      * @param status - EvidenceStatus to filter by (PENDING, ACCEPTED, or REJECTED)
      * @return List of evidence submissions matching the status
      */
+    @Transactional(readOnly = true)
     public List<Evidence> getEvidenceByStatus(EvidenceStatus status) {
-        return evidenceRepository.findByStatus(status);
+        return evidenceRepository.findByStatus(status).stream()
+            .map(this::initializeSummaryFields)
+            .toList();
     }
 
     /**
@@ -116,6 +163,7 @@ public class EvidenceService {
      * - If status = REJECTED or no challenge linked:
      *   → No points awarded
      */
+    @Transactional
     public Evidence updateEvidenceStatus(Long evidenceId, EvidenceStatus status) {
         // Fetch and validate evidence exists
         Evidence evidence = evidenceRepository.findById(evidenceId)
@@ -132,7 +180,7 @@ public class EvidenceService {
             userRepository.save(user); // Update user's total points
         }
         
-        return evidenceRepository.save(evidence);
+        return initializeSummaryFields(evidenceRepository.save(evidence));
     }
 
     /**
@@ -145,5 +193,12 @@ public class EvidenceService {
     public Evidence getEvidence(Long evidenceId) {
         return evidenceRepository.findById(evidenceId)
             .orElseThrow(() -> new IllegalArgumentException("Evidence not found: " + evidenceId));
+    }
+
+    private Evidence initializeSummaryFields(Evidence evidence) {
+        if (evidence.getUser() != null) {
+            evidence.getUser().getUsername();
+        }
+        return evidence;
     }
 }

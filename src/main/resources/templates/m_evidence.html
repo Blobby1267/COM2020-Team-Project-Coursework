@@ -124,13 +124,13 @@
           }
 
           if (!response.ok) {
-            messageEl.textContent = "Failed to load evidence.";
+            messageEl.textContent = `Failed to load evidence (HTTP ${response.status}).`;
             return;
           }
 
           const contentType = response.headers.get("content-type") || "";
           if (!contentType.includes("application/json")) {
-            messageEl.textContent = "The evidence feed returned an unexpected response. Log out and sign back in, then try again.";
+            messageEl.textContent = `The evidence feed returned an unexpected response type: ${contentType || "unknown"}. Log out and sign back in, then try again.`;
             return;
           }
 

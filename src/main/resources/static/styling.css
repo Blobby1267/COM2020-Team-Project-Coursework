@@ -418,6 +418,15 @@ tr:hover {
   justify-content: center;
 }
 
+.column.task-completed-today {
+  background-color: #1dce70;
+  color: #005a45;
+}
+
+.column.task-completed-today:hover {
+  background-color: #7bcf9f;
+}
+
 .containerTab {
   padding: 10px;
   background-color: white;

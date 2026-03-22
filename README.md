@@ -21,7 +21,15 @@ COM2020 Team Project, this is our solution for the Campus Carbon Challenge Game 
 **Jai Thacker** - Data Lead - jut201@exeter.ac.uk  
 
 # Installation and Usage
-Footprint is not publically hosted, so you must install the source code and run the website locally.
+Footprint is publicly hosted on Render and accessible at:
+
+```text
+https://com2020-team-project-coursework.onrender.com/
+```
+
+> **Note:** The app is on Render's free tier. If it has not received traffic recently it may take up to 60 seconds to wake from a cold start before the login page loads.
+
+Alternatively you can install the source code and run the website locally using the instructions below.
 
 ## Pre-Requisites
 
@@ -40,30 +48,6 @@ git --version
 
 Dependencies can be found in the ```software_data_inventory.xlsx```
 
-## Usage
-
-1. Open a terminal in the project root.
-2. Build the dependencies and run the app:
-
-```bash
-mvn compile
-mvn spring-boot:run
-```
-
-3. Open the website in your browser:
-```text
-localhost:8080/login
-```
-This takes you to the gateway to the rest of the website
-
-
-### Database notes
-
-- The project uses an H2 file database.
-- H2 console (when app is running): `http://localhost:8080/h2-console`
-- JDBC URL: `jdbc:h2:file:./target/classes/static/data/testdb`
-- Username: `sa`
-- Password: *(leave blank)*
 
 ## Global deployment (Render + PostgreSQL)
 
@@ -71,7 +55,7 @@ This project can be deployed globally using the included `Dockerfile`.
 
 ### 1. Push code to GitHub
 
-Ensure the latest code is pushed to your repository branch.
+Ensure the latest code is pushed to the main branch.
 
 ### 2. Create a PostgreSQL database
 
@@ -106,16 +90,53 @@ Render will build and run the container and assign a public URL.
 Open:
 
 ```text
-https://<your-service-name>.onrender.com/login
+https://com2020-team-project-coursework.onrender.com/
 ```
 
-### 6. Create moderator account (optional)
+### 6. Accessing the production database
+
+Connection credentials are shown in the Render dashboard under **your PostgreSQL instance → Connect**. Use the **External Database URL** when connecting from a local machine.
+
+Install `psql` if you don't already have it (included with [PostgreSQL](https://www.postgresql.org/download/)), then connect using the values from the dashboard:
+
+```bash
+psql -h <external-host> -U <username> <database-name>
+```
+
+You will be prompted for the password.
+
+### 7. Create moderator account
 
 New users are registered as `USER` by default. To promote a user to moderator, run:
 
 ```sql
 UPDATE users SET role='MODERATOR' WHERE username='your_username';
 ```
+
+## Locally Hosting
+
+1. Open a terminal in the project root.
+2. Build the dependencies and run the app:
+
+```bash
+mvn compile
+mvn spring-boot:run
+```
+
+3. Open the website in your browser:
+```text
+localhost:8080/login
+```
+This takes you to the gateway to the rest of the website
+
+
+### Database notes
+
+- The project uses an H2 file database.
+- H2 console (when app is running): `http://localhost:8080/h2-console`
+- JDBC URL: `jdbc:h2:file:./target/classes/static/data/testdb`
+- Username: `sa`
+- Password: *(leave blank)*
 
 # Running tests
 For guidance on running testing, please refer the to deployment guide which can be found at ```4_technical/deployment_guide.pdf```
