@@ -128,10 +128,8 @@ public class BadgeService {
     }
 
     public Set<String> getCompletedBadgeNames(Long userId) {
-        return badgeRepository.findByUserId(userId)
-            .stream()
-            .map(Badge::getName)
-            .collect(Collectors.toSet());
+        // Uses a name-only projection to avoid loading the PostgreSQL image LOB column.
+        return badgeRepository.findNamesByUserId(userId);
     }
 
     private void awardIfEligible(Long userId, String badgeName, boolean eligible) {
@@ -147,6 +145,10 @@ public class BadgeService {
         Badge badge = new Badge();
         badge.setUserId(userId);
         badge.setName(badgeName);
+        badge.setImageFilename("");
+        badge.setContentType("application/octet-stream");
+        badge.setSizeBytes(0);
+        badge.setImage(new byte[0]);
         badgeRepository.save(badge);
     }
 }

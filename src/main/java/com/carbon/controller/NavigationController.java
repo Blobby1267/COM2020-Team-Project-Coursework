@@ -89,10 +89,11 @@ public class NavigationController {
         if (user == null) {
             return "redirect:/login";
         }
-        // Build a set of badge names this user has completed (lowercased for easy comparison)
-        Set<String> completedBadgeNames = badgeRepository.findByUserId(user.getId())
+        // Build a set of badge names this user has completed (lowercased for easy comparison).
+        // Uses a name-only projection to avoid loading the PostgreSQL image LOB column.
+        Set<String> completedBadgeNames = badgeRepository.findNamesByUserId(user.getId())
             .stream()
-            .map(b -> b.getName().trim().toLowerCase())
+            .map(name -> name.trim().toLowerCase())
             .collect(Collectors.toSet());
         model.addAttribute("completedBadgeNames", completedBadgeNames);
         return "badges";

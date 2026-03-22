@@ -1,8 +1,11 @@
 package com.carbon.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.carbon.model.Badge;
 
@@ -14,6 +17,13 @@ public interface BadgeRepository extends JpaRepository<Badge, Long> {
 
     /** Returns all badge completions for a given user. */
     List<Badge> findByUserId(Long userId);
+
+    /**
+     * Returns only the badge names for a user — avoids loading the image LOB column.
+     * Use this whenever you only need to check which badges a user has earned.
+     */
+    @Query("SELECT b.name FROM Badge b WHERE b.userId = :userId")
+    Set<String> findNamesByUserId(@Param("userId") Long userId);
 
     /** Returns true if the user has already been awarded the named badge. */
     boolean existsByUserIdAndName(Long userId, String name);
