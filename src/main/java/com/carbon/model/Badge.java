@@ -10,10 +10,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
-/** 
- * Entity class representing the badges that the users can earn
- * Maps to the "badges" table in the database
-*/
+/**
+ * Entity class representing a badge earned by a user.
+ * Maps to the "badges" table in the database.
+ * Each row records one badge completion for one user.
+ */
 
 @Entity
 @Table(name = "badges")
@@ -21,26 +22,31 @@ public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
- 
-    @Column(nullable = false, unique = true)
+
+    // The user who earned this badge (references users.id)
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String imageFilename;
 
-    @Column(nullable = false)
     private String contentType;
 
     private long sizeBytes;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(nullable = false)
     private byte[] image;
 
     // Getters
     public Long getId() {
         return id;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     public String getName() {
@@ -64,6 +70,10 @@ public class Badge {
     }
 
     // Setters
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

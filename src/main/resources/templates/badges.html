@@ -38,85 +38,92 @@
       <div class="badges-container">
         <h1>Badges</h1>
         <div class="badges-grid">
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_amateur_ecologist.png}" src="/team_project_badges_bw/bw_amateur_ecologist.png" alt="Amateur Ecologist badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Amateur Ecologist" data-desc="Have 5 evidences approved.">
+              <img th:src="${completedBadgeNames.contains('amateur_ecologist') ? '/team_project_badges/amateur_ecologist.png' : '/team_project_badges_bw/bw_amateur_ecologist.png'}" src="/team_project_badges_bw/bw_amateur_ecologist.png" alt="Amateur Ecologist badge" loading="lazy" />
               <p>Amateur Ecologist</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_certified_ecologist.png}" src="/team_project_badges_bw/bw_certified_ecologist.png" alt="Certified Ecologist badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Certified Ecologist" data-desc="Have 25 evidences approved.">
+              <img th:src="${completedBadgeNames.contains('certified_ecologist') ? '/team_project_badges/certified_ecologist.png' : '/team_project_badges_bw/bw_certified_ecologist.png'}" src="/team_project_badges_bw/bw_certified_ecologist.png" alt="Certified Ecologist badge" loading="lazy" />
               <p>Certified Ecologist</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_eco_cadet.png}" src="/team_project_badges_bw/bw_eco_cadet.png" alt="Eco Cadet badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Eco Cadet" data-desc="Reach 100 points.">
+              <img th:src="${completedBadgeNames.contains('eco_cadet') ? '/team_project_badges/eco_cadet.png' : '/team_project_badges_bw/bw_eco_cadet.png'}" src="/team_project_badges_bw/bw_eco_cadet.png" alt="Eco Cadet badge" loading="lazy" />
               <p>Eco Cadet</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_eco_captain.png}" src="/team_project_badges_bw/bw_eco_captain.png" alt="Eco Captain badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Eco Captain" data-desc="Reach 1,000 points.">
+              <img th:src="${completedBadgeNames.contains('eco_captain') ? '/team_project_badges/eco_captain.png' : '/team_project_badges_bw/bw_eco_captain.png'}" src="/team_project_badges_bw/bw_eco_captain.png" alt="Eco Captain badge" loading="lazy" />
               <p>Eco Captain</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_eco_soldier.png}" src="/team_project_badges_bw/bw_eco_soldier.png" alt="Eco Soldier badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Eco Soldier" data-desc="Reach 500 points.">
+              <img th:src="${completedBadgeNames.contains('eco_soldier') ? '/team_project_badges/eco_soldier.png' : '/team_project_badges_bw/bw_eco_soldier.png'}" src="/team_project_badges_bw/bw_eco_soldier.png" alt="Eco Soldier badge" loading="lazy" />
               <p>Eco Soldier</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_field_ecologist.png}" src="/team_project_badges_bw/bw_field_ecologist.png" alt="Field Ecologist badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Field Ecologist" data-desc="Have 10 evidences approved.">
+              <img th:src="${completedBadgeNames.contains('field_ecologist') ? '/team_project_badges/field_ecologist.png' : '/team_project_badges_bw/bw_field_ecologist.png'}" src="/team_project_badges_bw/bw_field_ecologist.png" alt="Field Ecologist badge" loading="lazy" />
               <p>Field Ecologist</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_footprint_master.png}" src="/team_project_badges_bw/bw_footprint_master.png" alt="Footprint Master badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Footprint Master" data-desc="Collect all other badges.">
+              <img th:src="${completedBadgeNames.contains('footprint_master') ? '/team_project_badges/footprint_master.png' : '/team_project_badges_bw/bw_footprint_master.png'}" src="/team_project_badges_bw/bw_footprint_master.png" alt="Footprint Master badge" loading="lazy" />
               <p>Footprint Master</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_growing_leaf.png}" src="/team_project_badges_bw/bw_growing_leaf.png" alt="Growing Leaf badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Growing Leaf" data-desc="Complete 50 daily tasks.">
+              <img th:src="${completedBadgeNames.contains('growing_leaf') ? '/team_project_badges/growing_leaf.png' : '/team_project_badges_bw/bw_growing_leaf.png'}" src="/team_project_badges_bw/bw_growing_leaf.png" alt="Growing Leaf badge" loading="lazy" />
               <p>Growing Leaf</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_hiker.png}" src="/team_project_badges_bw/bw_hiker.png" alt="Hiker badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Hiker" data-desc="Reach a 50 day streak.">
+              <img th:src="${completedBadgeNames.contains('hiker') ? '/team_project_badges/hiker.png' : '/team_project_badges_bw/bw_hiker.png'}" src="/team_project_badges_bw/bw_hiker.png" alt="Hiker badge" loading="lazy" />
               <p>Hiker</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_new_leaf.png}" src="/team_project_badges_bw/bw_new_leaf.png" alt="New Leaf badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="New Leaf" data-desc="Complete 10 daily tasks.">
+              <img th:src="${completedBadgeNames.contains('new_leaf') ? '/team_project_badges/new_leaf.png' : '/team_project_badges_bw/bw_new_leaf.png'}" src="/team_project_badges_bw/bw_new_leaf.png" alt="New Leaf badge" loading="lazy" />
               <p>New Leaf</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_pathfinder.png}" src="/team_project_badges_bw/bw_pathfinder.png" alt="Pathfinder badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Pathfinder" data-desc="Reach a 100 day streak.">
+              <img th:src="${completedBadgeNames.contains('pathfinder') ? '/team_project_badges/pathfinder.png' : '/team_project_badges_bw/bw_pathfinder.png'}" src="/team_project_badges_bw/bw_pathfinder.png" alt="Pathfinder badge" loading="lazy" />
               <p>Pathfinder</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_queen_social_bee.png}" src="/team_project_badges_bw/bw_queen_social_bee.png" alt="Queen Social Bee badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Queen Social Bee" data-desc="Be a member of 10 groups.">
+              <img th:src="${completedBadgeNames.contains('queen_social_bee') ? '/team_project_badges/queen_social_bee.png' : '/team_project_badges_bw/bw_queen_social_bee.png'}" src="/team_project_badges_bw/bw_queen_social_bee.png" alt="Queen Social Bee badge" loading="lazy" />
               <p>Queen Social Bee</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_social_bee.png}" src="/team_project_badges_bw/bw_social_bee.png" alt="Social Bee badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Social Bee" data-desc="Be a member of 3 groups.">
+              <img th:src="${completedBadgeNames.contains('social_bee') ? '/team_project_badges/social_bee.png' : '/team_project_badges_bw/bw_social_bee.png'}" src="/team_project_badges_bw/bw_social_bee.png" alt="Social Bee badge" loading="lazy" />
               <p>Social Bee</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_thriving_leaf.png}" src="/team_project_badges_bw/bw_thriving_leaf.png" alt="Thriving Leaf badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Thriving Leaf" data-desc="Complete 100 daily tasks.">
+              <img th:src="${completedBadgeNames.contains('thriving_leaf') ? '/team_project_badges/thriving_leaf.png' : '/team_project_badges_bw/bw_thriving_leaf.png'}" src="/team_project_badges_bw/bw_thriving_leaf.png" alt="Thriving Leaf badge" loading="lazy" />
               <p>Thriving Leaf</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_trailwalker.png}" src="/team_project_badges_bw/bw_trailwalker.png" alt="Trailwalker badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Trailwalker" data-desc="Reach a 7 day streak.">
+              <img th:src="${completedBadgeNames.contains('trailwalker') ? '/team_project_badges/trailwalker.png' : '/team_project_badges_bw/bw_trailwalker.png'}" src="/team_project_badges_bw/bw_trailwalker.png" alt="Trailwalker badge" loading="lazy" />
               <p>Trailwalker</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_tree_gardener.png}" src="/team_project_badges_bw/bw_tree_gardener.png" alt="Tree Gardener badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Tree Gardener" data-desc="Complete 50 weekly tasks.">
+              <img th:src="${completedBadgeNames.contains('tree_gardener') ? '/team_project_badges/tree_gardener.png' : '/team_project_badges_bw/bw_tree_gardener.png'}" src="/team_project_badges_bw/bw_tree_gardener.png" alt="Tree Gardener badge" loading="lazy" />
               <p>Tree Gardener</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_tree_planter.png}" src="/team_project_badges_bw/bw_tree_planter.png" alt="Tree Planter badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Tree Planter" data-desc="Complete 25 weekly tasks.">
+              <img th:src="${completedBadgeNames.contains('tree_planter') ? '/team_project_badges/tree_planter.png' : '/team_project_badges_bw/bw_tree_planter.png'}" src="/team_project_badges_bw/bw_tree_planter.png" alt="Tree Planter badge" loading="lazy" />
               <p>Tree Planter</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_tree_tender.png}" src="/team_project_badges_bw/bw_tree_tender.png" alt="Tree Tender badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Tree Tender" data-desc="Complete 5 weekly tasks.">
+              <img th:src="${completedBadgeNames.contains('tree_tender') ? '/team_project_badges/tree_tender.png' : '/team_project_badges_bw/bw_tree_tender.png'}" src="/team_project_badges_bw/bw_tree_tender.png" alt="Tree Tender badge" loading="lazy" />
               <p>Tree Tender</p>
             </div>
-            <div class="badge-card">
-              <img th:src="@{/team_project_badges_bw/bw_versatile_achiever.png}" src="/team_project_badges_bw/bw_versatile_achiever.png" alt="Versatile Achiever badge" loading="lazy" />
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Versatile Achiever" data-desc="Complete a task of each taxonomy.">
+              <img th:src="${completedBadgeNames.contains('versatile_achiever') ? '/team_project_badges/versatile_achiever.png' : '/team_project_badges_bw/bw_versatile_achiever.png'}" src="/team_project_badges_bw/bw_versatile_achiever.png" alt="Versatile Achiever badge" loading="lazy" />
               <p>Versatile Achiever</p>
             </div>
         </div>
       </div>
 
+    </div>
+
+    <div class="badge-modal-overlay" id="badgeModalOverlay" onclick="closeBadgeModal(event)">
+      <div class="badge-modal">
+        <h2 id="badgeModalTitle"></h2>
+        <p id="badgeModalDesc"></p>
+      </div>
     </div>
 
     <script>
@@ -127,6 +134,18 @@
             e.preventDefault();
             dropdown_menu.classList.toggle("open");
         });
+
+        function openBadgeModal(card) {
+            document.getElementById('badgeModalTitle').textContent = card.dataset.title;
+            document.getElementById('badgeModalDesc').textContent = card.dataset.desc;
+            document.getElementById('badgeModalOverlay').classList.add('active');
+        }
+
+        function closeBadgeModal(e) {
+            if (!e || e.target === document.getElementById('badgeModalOverlay')) {
+                document.getElementById('badgeModalOverlay').classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>

@@ -1,9 +1,18 @@
 package com.carbon.controller;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.carbon.model.User;
+import com.carbon.repository.BadgeRepository;
+import com.carbon.repository.UserRepository;
 
 /**
  * Controller for managing navigation between different views.
@@ -21,6 +30,13 @@ public class NavigationController {
      * Moderators see pending evidence submissions to approve/reject.
      * Regular users see form to submit their own evidence photos.
      */
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private BadgeRepository badgeRepository;
+
     @GetMapping("/evidence")
     public String evidence(Authentication authentication) {
         if (authentication == null) {
@@ -65,7 +81,20 @@ public class NavigationController {
     }
 
     @GetMapping("/badges")
-    public String badges(){
+    public String badges(Authentication authentication, Model model) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        User user = userRepository.findByUsername(authentication.getName());
+        if (user == null) {
+            return "redirect:/login";
+        }
+        // Build a set of badge names this user has completed (lowercased for easy comparison)
+        Set<String> completedBadgeNames = badgeRepository.findByUserId(user.getId())
+            .stream()
+            .map(b -> b.getName().trim().toLowerCase())
+            .collect(Collectors.toSet());
+        model.addAttribute("completedBadgeNames", completedBadgeNames);
         return "badges";
     }
     
