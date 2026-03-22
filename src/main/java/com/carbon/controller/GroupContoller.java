@@ -15,6 +15,7 @@ import com.carbon.repository.GroupRepository;
 import com.carbon.repository.UserRepository;
 import com.carbon.model.Group;
 import com.carbon.model.User;
+import com.carbon.service.BadgeService;
 
 @Controller
 public class GroupContoller {
@@ -24,6 +25,9 @@ public class GroupContoller {
 
     @Autowired
     private GroupRepository groupRepository;
+
+    @Autowired
+    private BadgeService badgeService;
 
     @GetMapping("/groups")
     public String groups(Authentication auth, Model model){
@@ -94,6 +98,7 @@ public class GroupContoller {
     private void addUserToGroup(User user, Group group){
         group.getMembers().add(user);
         groupRepository.save(group);
+        badgeService.evaluateAllBadgeMechanisms(user.getId());
     }
 
     private String generateInviteCode(){

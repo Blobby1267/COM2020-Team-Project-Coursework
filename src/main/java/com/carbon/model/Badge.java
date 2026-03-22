@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 /**
@@ -30,15 +31,28 @@ public class Badge {
     @Column(nullable = false)
     private String name;
 
-    private String imageFilename;
+    private String imageFilename = "";
 
-    private String contentType;
+    private String contentType = "application/octet-stream";
 
     private long sizeBytes;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte[] image;
+    private byte[] image = new byte[0];
+
+    @PrePersist
+    private void applyInsertDefaults() {
+        if (imageFilename == null) {
+            imageFilename = "";
+        }
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        if (image == null) {
+            image = new byte[0];
+        }
+    }
 
     // Getters
     public Long getId() {

@@ -44,6 +44,14 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
     @Query("SELECT DISTINCT e.taskTitle FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED)")
     List<String> findTodayCompletedTaskTitles(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    long countByUser_IdAndStatus(Long userId, EvidenceStatus status);
+
+    @Query("SELECT COUNT(e) FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED AND e.challenge IS NOT NULL AND LOWER(e.challenge.frequency) = LOWER(:frequency)")
+    long countAcceptedByUserIdAndFrequency(@Param("userId") Long userId, @Param("frequency") String frequency);
+
+    @Query("SELECT COUNT(DISTINCT e.challenge.taxonomy) FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED AND e.challenge IS NOT NULL AND e.challenge.taxonomy IS NOT NULL AND TRIM(e.challenge.taxonomy) <> ''")
+    long countDistinctAcceptedTaxonomiesByUserId(@Param("userId") Long userId);
 }
 
 interface DataForProfile{
