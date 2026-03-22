@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 /**
  * Entity class representing a badge earned by a user.
@@ -18,7 +19,9 @@ import jakarta.persistence.Table;
  */
 
 @Entity
-@Table(name = "badges")
+@Table(name = "badges", uniqueConstraints = {
+    @UniqueConstraint(name = "uq_badge_user_name", columnNames = {"user_id", "name"})
+})
 public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
