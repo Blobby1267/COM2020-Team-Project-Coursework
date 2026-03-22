@@ -2,6 +2,8 @@ package com.carbon.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.DayOfWeek;
+import java.time.temporal.TemporalAdjusters;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +26,8 @@ import com.carbon.model.User;
  */
 @Service
 public class ChallengeService {
+
+    private record TimeWindow(LocalDateTime start, LocalDateTime end) {}
 
     // Repository for accessing challenge data from database
     private final ChallengeRepository challengeRepository;
@@ -82,11 +86,9 @@ public class ChallengeService {
         Challenge challenge = challengeRepository.findById(challengeId)
             .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
 
-        // Prevent completing the same task more than once per day
-        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
-        LocalDateTime startOfNextDay = startOfDay.plusDays(1);
-        if (evidenceRepository.hasEvidenceTodayForTask(user.getId(), challenge.getTitle(), startOfDay, startOfNextDay)) {
-            throw new IllegalStateException("You have already completed this task today. Try again tomorrow.");
+        TimeWindow window = getCompletionWindow(challenge.getFrequency());
+        if (evidenceRepository.hasEvidenceForTaskInWindow(user.getId(), challenge.getTitle(), window.start(), window.end())) {
+            throw new IllegalStateException(getRepeatMessage(challenge.getFrequency()));
         }
 
         Evidence evidence = new Evidence();
@@ -106,5 +108,32 @@ public class ChallengeService {
         user.setPoints(updatedPoints);
         userRepository.save(user);
         return updatedPoints;
+    }
+
+    private TimeWindow getCompletionWindow(String frequency) {
+        LocalDate today = LocalDate.now();
+
+        if ("Weekly".equalsIgnoreCase(frequency)) {
+            LocalDate weekStart = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            return new TimeWindow(weekStart.atStartOfDay(), weekStart.plusWeeks(1).atStartOfDay());
+        }
+
+        if ("Monthly".equalsIgnoreCase(frequency)) {
+            LocalDate monthStart = today.withDayOfMonth(1);
+            return new TimeWindow(monthStart.atStartOfDay(), monthStart.plusMonths(1).atStartOfDay());
+        }
+
+        LocalDateTime dayStart = today.atStartOfDay();
+        return new TimeWindow(dayStart, dayStart.plusDays(1));
+    }
+
+    private String getRepeatMessage(String frequency) {
+        if ("Weekly".equalsIgnoreCase(frequency)) {
+            return "You have already completed this weekly task this week. Try again next week.";
+        }
+        if ("Monthly".equalsIgnoreCase(frequency)) {
+            return "You have already completed this monthly task this month. Try again next month.";
+        }
+        return "You have already completed this daily task today. Try again tomorrow.";
     }
 }

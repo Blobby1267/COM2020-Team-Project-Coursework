@@ -1,8 +1,10 @@
 package com.carbon.service;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +28,8 @@ import com.carbon.repository.ChallengeRepository;
  */
 @Service
 public class EvidenceService {
+
+    private record TimeWindow(LocalDateTime start, LocalDateTime end) {}
     // Repository for persisting and retrieving evidence submissions
     private final EvidenceRepository evidenceRepository;
     // Repository for user data 
@@ -63,11 +67,17 @@ public class EvidenceService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
-        // Prevent submitting evidence for the same task more than once per day
-        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
-        LocalDateTime startOfNextDay = startOfDay.plusDays(1);
-        if (evidenceRepository.hasEvidenceTodayForTask(user.getId(), taskTitle, startOfDay, startOfNextDay)) {
-            throw new IllegalStateException("You have already submitted evidence for this task today. Try again tomorrow.");
+        Challenge linkedChallenge = null;
+        if (challengeId != null) {
+            linkedChallenge = challengeRepository.findById(challengeId)
+                .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
+        }
+
+        String resolvedTitle = linkedChallenge != null ? linkedChallenge.getTitle() : taskTitle;
+        String frequency = linkedChallenge != null ? linkedChallenge.getFrequency() : "Daily";
+        TimeWindow window = getCompletionWindow(frequency);
+        if (evidenceRepository.hasEvidenceForTaskInWindow(user.getId(), resolvedTitle, window.start(), window.end())) {
+            throw new IllegalStateException(getRepeatMessage(frequency));
         }
 
         // Validate photo is provided
@@ -85,19 +95,44 @@ public class EvidenceService {
         evidence.setOriginalFilename(photo.getOriginalFilename());
         evidence.setContentType(contentType);
         evidence.setSizeBytes(photo.getSize());
-        evidence.setTaskTitle(taskTitle);
+        evidence.setTaskTitle(resolvedTitle);
         evidence.setPhoto(photo.getBytes()); // Store binary image data
         evidence.setStatus(EvidenceStatus.PENDING); // Sets status
         evidence.setSubmittedAt(LocalDateTime.now());
 
         // Link evidence to challenge if challengeId is provided
         if (challengeId != null) {
-            Challenge challenge = challengeRepository.findById(challengeId)
-                .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
-            evidence.setChallenge(challenge);
+            evidence.setChallenge(linkedChallenge);
         }
 
         return initializeSummaryFields(evidenceRepository.save(evidence));
+    }
+
+    private TimeWindow getCompletionWindow(String frequency) {
+        LocalDate today = LocalDate.now();
+
+        if ("Weekly".equalsIgnoreCase(frequency)) {
+            LocalDate weekStart = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            return new TimeWindow(weekStart.atStartOfDay(), weekStart.plusWeeks(1).atStartOfDay());
+        }
+
+        if ("Monthly".equalsIgnoreCase(frequency)) {
+            LocalDate monthStart = today.withDayOfMonth(1);
+            return new TimeWindow(monthStart.atStartOfDay(), monthStart.plusMonths(1).atStartOfDay());
+        }
+
+        LocalDateTime dayStart = today.atStartOfDay();
+        return new TimeWindow(dayStart, dayStart.plusDays(1));
+    }
+
+    private String getRepeatMessage(String frequency) {
+        if ("Weekly".equalsIgnoreCase(frequency)) {
+            return "You have already completed this weekly task this week. Try again next week.";
+        }
+        if ("Monthly".equalsIgnoreCase(frequency)) {
+            return "You have already completed this monthly task this month. Try again next month.";
+        }
+        return "You have already completed this daily task today. Try again tomorrow.";
     }
 
     /**
