@@ -152,12 +152,13 @@ label {
   position: absolute;
   width: 100%;
 }
-
+/*
 #top-bar h1 {
-  /* position: absolute;
+  position: absolute;
   left: 50%;
-  transform: translateX(-50%); */
+  transform: translateX(-50%);
 }
+*/
 
 #logo {
   height: 100%;
@@ -614,14 +615,27 @@ canvas {
 
 .badges-grid {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1em;
 }
 
-.badges-grid div {
+.badge-card {
   background-color: white;
-  border: 0.5em solid #007d69;
-  padding: 0.5em;
-  margin: 0.5em;
+  border-radius: 0.75em;
+  padding: 0.75em;
+  text-align: center;
+}
+
+.badge-card img {
+  width: 100%;
+  max-width: 160px;
+  height: auto;
+}
+
+.badge-card p {
+  color: #003c3c;
+  font-size: 16px;
+  margin: 0.5em 0 0;
 }
 
 @media screen and (max-width: 1000px) {
