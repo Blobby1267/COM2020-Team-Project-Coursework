@@ -39,10 +39,10 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
      * Checks whether a user has already submitted evidence for a task with the given title
      * within the specified time window.
      */
-    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN TRUE ELSE FALSE END FROM Evidence e WHERE e.user.id = :userId AND e.taskTitle = :taskTitle AND e.submittedAt >= :start AND e.submittedAt < :end")
+    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN TRUE ELSE FALSE END FROM Evidence e WHERE e.user.id = :userId AND e.taskTitle = :taskTitle AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED)")
     boolean hasEvidenceForTaskInWindow(@Param("userId") Long userId, @Param("taskTitle") String taskTitle, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    @Query("SELECT DISTINCT e.taskTitle FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end")
+    @Query("SELECT DISTINCT e.taskTitle FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED)")
     List<String> findTodayCompletedTaskTitles(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }
 
