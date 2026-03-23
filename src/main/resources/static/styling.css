@@ -665,6 +665,30 @@ canvas {
 .badge-modal h2 { color: #003c3c; margin: 0 0 0.6em; font-size: 1.3em; }
 .badge-modal p { color: #333; font-size: 1em; margin: 0; }
 
+.badge-select-button {
+  width: auto;
+  min-width: 150px;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.badge-select-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.badge-select-hint {
+  font-size: 0.95rem;
+  color: #003c3c;
+  margin-top: 0.8rem;
+}
+
+.leaderboard-badge {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
 .badge-modal-close {
   position: absolute;
   top: 0.6em;
@@ -675,6 +699,48 @@ canvas {
   cursor: pointer;
   color: #003c3c;
   line-height: 1;
+}
+
+.auth-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1200;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-modal-overlay.active {
+  display: flex;
+}
+
+.auth-modal {
+  background: white;
+  border-radius: 0.9em;
+  width: min(90%, 420px);
+  padding: 1.5em;
+  border: 3px solid #003c3c;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.auth-modal h2 {
+  color: #003c3c;
+  margin: 0 0 0.5em;
+  font-size: 1.6em;
+  text-align: left;
+}
+
+.auth-modal p {
+  color: #003c3c;
+  margin: 0 0 1.2em;
+  font-size: 1.05em;
+  text-align: left;
+}
+
+.auth-modal button {
+  width: 100%;
+  font-size: 1.2em;
 }
 
 @media screen and (max-width: 1000px) {

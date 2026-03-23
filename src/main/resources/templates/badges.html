@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="styling.css">
 </head>
 
-<body>
+<body th:attr="data-selected-badge=${selectedBadgeName}">
     <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
       <img src="Footprint.png" id="logo" alt="footprint" />
@@ -123,6 +123,12 @@
       <div class="badge-modal">
         <h2 id="badgeModalTitle"></h2>
         <p id="badgeModalDesc"></p>
+        <form id="badgeSelectForm" th:action="@{/badges/select}" method="post">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <input type="hidden" name="badgeName" id="selectedBadgeNameInput" />
+          <button id="badgeSelectButton" class="badge-select-button" type="submit">Select</button>
+        </form>
+        <p id="badgeSelectHint" class="badge-select-hint"></p>
       </div>
     </div>
 
@@ -135,9 +141,54 @@
             dropdown_menu.classList.toggle("open");
         });
 
+        const currentSelectedBadge = (document.body.dataset.selectedBadge || "").trim().toLowerCase();
+
+        function getBadgeNameFromCard(card) {
+          const badgeImage = card.querySelector("img");
+          if (!badgeImage) {
+            return "";
+          }
+          const fileName = badgeImage.getAttribute("src").split("/").pop() || "";
+          return fileName
+            .replace(".png", "")
+            .replace("bw_", "")
+            .trim()
+            .toLowerCase();
+        }
+
+        function isBadgeEarned(card) {
+          const badgeImage = card.querySelector("img");
+          if (!badgeImage) {
+            return false;
+          }
+          return !badgeImage.getAttribute("src").includes("/team_project_badges_bw/");
+        }
+
         function openBadgeModal(card) {
+          const badgeName = getBadgeNameFromCard(card);
+          const earned = isBadgeEarned(card);
+          const selectButton = document.getElementById("badgeSelectButton");
+          const badgeNameInput = document.getElementById("selectedBadgeNameInput");
+          const badgeSelectHint = document.getElementById("badgeSelectHint");
+
             document.getElementById('badgeModalTitle').textContent = card.dataset.title;
             document.getElementById('badgeModalDesc').textContent = card.dataset.desc;
+
+          badgeNameInput.value = badgeName;
+          if (!earned) {
+            selectButton.disabled = true;
+            selectButton.textContent = "Select (Locked)";
+            badgeSelectHint.textContent = "You can only select badges you have unlocked.";
+          } else if (badgeName === currentSelectedBadge) {
+            selectButton.disabled = true;
+            selectButton.textContent = "Selected";
+            badgeSelectHint.textContent = "This badge is already selected on your profile.";
+          } else {
+            selectButton.disabled = false;
+            selectButton.textContent = "Select";
+            badgeSelectHint.textContent = "Select this badge to show it on the leaderboard.";
+          }
+
             document.getElementById('badgeModalOverlay').classList.add('active');
         }
 

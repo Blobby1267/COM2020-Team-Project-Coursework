@@ -9,9 +9,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carbon.model.User;
+import com.carbon.model.UserBadge;
 import com.carbon.repository.BadgeRepository;
+import com.carbon.repository.UserBadgeRepository;
 import com.carbon.repository.UserRepository;
 
 /**
@@ -36,6 +40,9 @@ public class NavigationController {
 
     @Autowired
     private BadgeRepository badgeRepository;
+
+    @Autowired
+    private UserBadgeRepository userBadgeRepository;
 
     @GetMapping("/evidence")
     public String evidence(Authentication authentication) {
@@ -96,7 +103,40 @@ public class NavigationController {
             .map(name -> name.trim().toLowerCase())
             .collect(Collectors.toSet());
         model.addAttribute("completedBadgeNames", completedBadgeNames);
+        String selectedBadgeName = userBadgeRepository.findByUserId(user.getId())
+            .map(UserBadge::getBadgeName)
+            .orElse("");
+        model.addAttribute("selectedBadgeName", selectedBadgeName);
         return "badges";
+    }
+
+    @PostMapping("/badges/select")
+    public String selectBadge(Authentication authentication, @RequestParam("badgeName") String badgeName) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        User user = userRepository.findByUsername(authentication.getName());
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        String normalizedBadgeName = normalizeBadgeName(badgeName);
+        if (normalizedBadgeName.isEmpty()) {
+            return "redirect:/badges";
+        }
+
+        // Users can only select badges they have already earned.
+        if (!badgeRepository.existsByUserIdAndNameIgnoreCase(user.getId(), normalizedBadgeName)) {
+            return "redirect:/badges";
+        }
+
+        UserBadge selectedBadge = userBadgeRepository.findByUserId(user.getId())
+            .orElseGet(UserBadge::new);
+        selectedBadge.setUserId(user.getId());
+        selectedBadge.setBadgeName(normalizedBadgeName);
+        userBadgeRepository.save(selectedBadge);
+
+        return "redirect:/badges";
     }
     
     /**
@@ -126,5 +166,12 @@ public class NavigationController {
             || normalized.equals("ADMIN")
             || normalized.equals("ROLE_MODERATOR")
             || normalized.equals("ROLE_ADMIN");
+    }
+
+    private String normalizeBadgeName(String badgeName) {
+        if (badgeName == null) {
+            return "";
+        }
+        return badgeName.trim().toLowerCase();
     }
 }

@@ -2,9 +2,10 @@ package com.carbon.service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.logging.Logger;
 
 import org.springframework.stereotype.Service;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.carbon.model.Badge;
 import com.carbon.model.User;
@@ -22,6 +23,8 @@ import com.carbon.repository.UserRepository;
  */
 @Service
 public class BadgeService {
+
+    private static final Logger LOGGER = Logger.getLogger(BadgeService.class.getName());
 
     private final BadgeRepository badgeRepository;
     private final UserRepository userRepository;
@@ -136,18 +139,28 @@ public class BadgeService {
             return;
         }
 
-        boolean alreadyAwarded = badgeRepository.existsByUserIdAndName(userId, badgeName);
+        String normalizedBadgeName = badgeName == null ? "" : badgeName.trim().toLowerCase();
+        if (normalizedBadgeName.isEmpty()) {
+            return;
+        }
+
+        boolean alreadyAwarded = badgeRepository.existsByUserIdAndNameIgnoreCase(userId, normalizedBadgeName);
         if (alreadyAwarded) {
             return;
         }
 
         Badge badge = new Badge();
         badge.setUserId(userId);
-        badge.setName(badgeName);
+        badge.setName(normalizedBadgeName);
         badge.setImageFilename("");
         badge.setContentType("application/octet-stream");
         badge.setSizeBytes(0);
         badge.setImage(new byte[0]);
-        badgeRepository.save(badge);
+        try {
+            badgeRepository.save(badge);
+        } catch (DataIntegrityViolationException ex) {
+            // Ignore duplicate insert races so task completion still succeeds.
+            LOGGER.fine("Badge already exists for userId=" + userId + " and badge=" + normalizedBadgeName);
+        }
     }
 }

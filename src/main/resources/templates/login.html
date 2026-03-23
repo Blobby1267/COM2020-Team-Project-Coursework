@@ -17,7 +17,7 @@
     <div id="main-task-container">
       <div class="sidebar login">
         <!-- Registration form with user details -->
-        <form th:action="@{/register}" th:object="${user}" method="post">
+        <form id="register-form" th:action="@{/register}" th:object="${user}" method="post">
           <p>
             <input type="text" name="username" placeholder="Username..." />
           </p>
@@ -64,7 +64,7 @@
           </p>
         </form>
         <!-- Login form for existing users -->
-        <form th:action="@{/login}" method="post">
+        <form id="login-form" th:action="@{/login}" method="post">
           <p>
             <input type="text" name="username" placeholder="Username..." />
           </p>
@@ -106,5 +106,99 @@
         <!-- </div> -->
       </div>
     </div>
+
+    <div id="auth-error-modal" class="auth-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="auth-error-title" aria-describedby="auth-error-message">
+      <div class="auth-modal">
+        <h2 id="auth-error-title">Sign-in issue</h2>
+        <p id="auth-error-message">Please check your details and try again.</p>
+        <button id="auth-error-close" type="button">Close</button>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const errorMessages = {
+          true: "Invalid username or password.",
+          empty: "Username and password cannot be empty.",
+          exists: "That username is already taken."
+        };
+
+        const modal = document.getElementById("auth-error-modal");
+        const messageEl = document.getElementById("auth-error-message");
+        const closeButton = document.getElementById("auth-error-close");
+
+        function showError(message) {
+          messageEl.textContent = message;
+          modal.classList.add("active");
+          closeButton.focus();
+        }
+
+        function hideError() {
+          modal.classList.remove("active");
+        }
+
+        function isLoginPath(pathname) {
+          return pathname.endsWith("/login") || pathname.endsWith("/login.html") || pathname === "/";
+        }
+
+        async function submitAuthForm(event) {
+          event.preventDefault();
+          const form = event.currentTarget;
+
+          try {
+            const response = await fetch(form.action, {
+              method: "POST",
+              credentials: "same-origin",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-Requested-With": "XMLHttpRequest"
+              },
+              body: new URLSearchParams(new FormData(form))
+            });
+
+            const finalUrl = new URL(response.url, window.location.origin);
+            const errorCode = finalUrl.searchParams.get("error");
+
+            if (errorCode) {
+              showError(errorMessages[errorCode] || "We could not process your request. Please try again.");
+              return;
+            }
+
+            if (!isLoginPath(finalUrl.pathname)) {
+              window.location.href = finalUrl.pathname + finalUrl.search + finalUrl.hash;
+              return;
+            }
+
+            showError("We could not process your request. Please try again.");
+          } catch (error) {
+            showError("Network error. Please check your connection and try again.");
+          }
+        }
+
+        function showErrorFromUrl() {
+          const currentUrl = new URL(window.location.href);
+          const errorCode = currentUrl.searchParams.get("error");
+
+          if (!errorCode) {
+            return;
+          }
+
+          showError(errorMessages[errorCode] || "We could not process your request. Please try again.");
+          currentUrl.searchParams.delete("error");
+          window.history.replaceState({}, document.title, currentUrl.pathname + currentUrl.search + currentUrl.hash);
+        }
+
+        document.getElementById("register-form").addEventListener("submit", submitAuthForm);
+        document.getElementById("login-form").addEventListener("submit", submitAuthForm);
+        closeButton.addEventListener("click", hideError);
+        modal.addEventListener("click", (event) => {
+          if (event.target === modal) {
+            hideError();
+          }
+        });
+
+        showErrorFromUrl();
+      })();
+    </script>
   </body>
 </html>

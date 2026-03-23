@@ -54,11 +54,19 @@
                 <tr>
                 <th>User</th>
                 <th>Points</th>
+                <th>Badge</th>
                 </tr>
                 <!-- Dynamically populate table rows using Thymeleaf iteration over users list -->
                 <tr th:each="user : ${users}">
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.points}"></td>
+                <td>
+                  <img
+                    class="leaderboard-badge"
+                    th:if="${selectedBadgesByUserId[user.id] != null}"
+                    th:src="@{'/team_project_badges/' + ${selectedBadgesByUserId[user.id]} + '.png'}"
+                    alt="Selected badge" />
+                </td>
                 </tr>
               </table>
             </div>
@@ -76,10 +84,10 @@
                 <th>Group</th>
                 <th>Points</th>
                 </tr>
-                <!-- Dynamically populate table rows using Thymeleaf iteration over users list -->
-                <tr th:each="user : ${users}">
-                <td th:text="${user.username}"></td>
-                <td th:text="${user.points}"></td>
+                <!-- Dynamically populate table rows using Thymeleaf iteration over top groups -->
+                <tr th:each="group : ${groups}">
+                <td th:text="${group.name}"></td>
+                <td th:text="${group.points}"></td>
                 </tr>
               </table>
             </div>

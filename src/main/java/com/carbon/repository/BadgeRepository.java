@@ -22,9 +22,12 @@ public interface BadgeRepository extends JpaRepository<Badge, Long> {
      * Returns only the badge names for a user — avoids loading the image LOB column.
      * Use this whenever you only need to check which badges a user has earned.
      */
-    @Query("SELECT b.name FROM Badge b WHERE b.userId = :userId")
+    @Query("SELECT LOWER(b.name) FROM Badge b WHERE b.userId = :userId")
     Set<String> findNamesByUserId(@Param("userId") Long userId);
 
     /** Returns true if the user has already been awarded the named badge. */
     boolean existsByUserIdAndName(Long userId, String name);
+
+    /** Case-insensitive variant used to support legacy badge name casing. */
+    boolean existsByUserIdAndNameIgnoreCase(Long userId, String name);
 }
