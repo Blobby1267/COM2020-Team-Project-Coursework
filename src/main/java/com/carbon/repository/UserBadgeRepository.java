@@ -12,4 +12,6 @@ public interface UserBadgeRepository extends JpaRepository<UserBadge, Long> {
     Optional<UserBadge> findByUserId(Long userId);
 
     List<UserBadge> findByUserIdIn(List<Long> userIds);
+
+    long deleteByUserId(Long userId);
 }
