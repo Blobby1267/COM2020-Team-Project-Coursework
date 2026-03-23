@@ -6,6 +6,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -41,6 +43,7 @@ public class User {
     private String year = "First_Year"; // Academic year of the user
 
     @ManyToMany(mappedBy = "members")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Group> groups = new HashSet<>();
 
     public static String normalizeUsername(String username) {

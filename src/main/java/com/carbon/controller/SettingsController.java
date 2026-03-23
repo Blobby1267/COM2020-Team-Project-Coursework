@@ -1,9 +1,7 @@
 package com.carbon.controller;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,13 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carbon.model.User;
-import com.carbon.model.Group;
-import com.carbon.repository.BadgeRepository;
-import com.carbon.repository.EvidenceRepository;
-import com.carbon.repository.GroupRepository;
-import com.carbon.repository.LeaderboardRepository;
 import com.carbon.repository.UserRepository;
-import com.carbon.repository.UserBadgeRepository;
 import com.carbon.service.CustomUserDetailsService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,21 +30,6 @@ public class SettingsController {
 
     @Autowired 
     private UserRepository userRepository;
-
-    @Autowired
-    private EvidenceRepository evidenceRepository;
-
-    @Autowired
-    private BadgeRepository badgeRepository;
-
-    @Autowired
-    private UserBadgeRepository userBadgeRepository;
-
-    @Autowired
-    private LeaderboardRepository leaderboardRepository;
-
-    @Autowired
-    private GroupRepository groupRepository;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -125,31 +102,7 @@ public class SettingsController {
 
         Long userId = user.getId();
 
-        List<Group> ownedGroups = groupRepository.findByOwner_Id(userId);
-        Set<Integer> ownedGroupIds = new HashSet<>();
-        for (Group ownedGroup : ownedGroups) {
-            ownedGroupIds.add(ownedGroup.getId());
-        }
-
-        List<Group> memberGroups = groupRepository.findByMembers_Id(userId);
-        for (Group group : memberGroups) {
-            if (ownedGroupIds.contains(group.getId())) {
-                continue;
-            }
-            group.getMembers().remove(user);
-            groupRepository.save(group);
-        }
-
-        if (!ownedGroups.isEmpty()) {
-            groupRepository.deleteAll(ownedGroups);
-        }
-
-        evidenceRepository.deleteByUser_Id(userId);
-        badgeRepository.deleteByUserId(userId);
-        userBadgeRepository.deleteByUserId(userId);
-        leaderboardRepository.deleteByUserId(userId);
-
-        userRepository.delete(user);
+        userRepository.deleteById(userId);
         request.getSession().invalidate();
         return "redirect:/login?accountdeleted=true";
     }

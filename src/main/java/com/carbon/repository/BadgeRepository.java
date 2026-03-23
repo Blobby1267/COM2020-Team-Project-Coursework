@@ -31,6 +31,4 @@ public interface BadgeRepository extends JpaRepository<Badge, Long> {
     /** Case-insensitive variant used to support legacy badge name casing. */
     boolean existsByUserIdAndNameIgnoreCase(Long userId, String name);
 
-    /** Deletes all badge rows associated with a user. */
-    long deleteByUserId(Long userId);
 }
