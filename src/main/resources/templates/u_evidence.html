@@ -100,6 +100,17 @@
       // Handle evidence form submission
       evidenceForm.addEventListener("submit", async (event) => {
         event.preventDefault();
+
+        const taskTitle = taskTitleInput.value.trim();
+        const points = pointsInput.value.trim();
+
+        if (!taskTitle || !points) {
+          const popupMessage = "Please submit evidence from a task.";
+          alert(popupMessage);
+          messageEl.textContent = popupMessage;
+          return;
+        }
+
         messageEl.textContent = "Submitting...";
 
         const formData = new FormData(evidenceForm);

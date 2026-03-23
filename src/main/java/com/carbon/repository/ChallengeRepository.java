@@ -1,6 +1,7 @@
 package com.carbon.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import com.carbon.model.Challenge;
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
      * Equivalent SQL: SELECT * FROM challenges WHERE frequency = ?
      */
     List<Challenge> findByFrequency(String frequency);
+
+    @Query("SELECT COUNT(DISTINCT c.taxonomy) FROM Challenge c WHERE c.taxonomy IS NOT NULL AND TRIM(c.taxonomy) <> ''")
+    long countDistinctTaxonomies();
 }

@@ -8,39 +8,62 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
-/** 
- * Entity class representing the badges that the users can earn
- * Maps to the "badges" table in the database
-*/
+/**
+ * Entity class representing a badge earned by a user.
+ * Maps to the "badges" table in the database.
+ * Each row records one badge completion for one user.
+ */
 
 @Entity
-@Table(name = "badges")
+@Table(name = "badges", uniqueConstraints = {
+    @UniqueConstraint(name = "uq_badge_user_name", columnNames = {"user_id", "name"})
+})
 public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
- 
-    @Column(nullable = false, unique = true)
+
+    // The user who earned this badge (references users.id)
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String imageFilename;
+    private String imageFilename = "";
 
-    @Column(nullable = false)
-    private String contentType;
+    private String contentType = "application/octet-stream";
 
     private long sizeBytes;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(nullable = false)
-    private byte[] image;
+    private byte[] image = new byte[0];
+
+    @PrePersist
+    private void applyInsertDefaults() {
+        if (imageFilename == null) {
+            imageFilename = "";
+        }
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        if (image == null) {
+            image = new byte[0];
+        }
+    }
 
     // Getters
     public Long getId() {
         return id;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     public String getName() {
@@ -64,6 +87,10 @@ public class Badge {
     }
 
     // Setters
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

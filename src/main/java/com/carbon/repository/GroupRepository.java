@@ -11,5 +11,6 @@ public interface GroupRepository extends JpaRepository<Group, Integer>{
     Group findByInviteCode(String inviteCode);
 
     List<Group> findByMembers_Id(long user_id);
+    long countByMembers_Id(long userId);
     boolean existsByInviteCode(String inviteCode);
 }

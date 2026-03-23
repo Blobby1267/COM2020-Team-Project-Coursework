@@ -19,12 +19,15 @@ public class TravelService {
 
     // Repository for accessing and updating user data
     private final UserRepository userRepository;
+    // Badge logic service
+    private final BadgeService badgeService;
     // Points awarded per kilometer traveled
     private static final int POINTS_PER_KM = 5;
 
     // Constructor injection for UserRepository
-    public TravelService(UserRepository userRepository) {
+    public TravelService(UserRepository userRepository, BadgeService badgeService) {
         this.userRepository = userRepository;
+        this.badgeService = badgeService;
     }
     
 
@@ -51,6 +54,7 @@ public class TravelService {
         int pointsEarned = (int)(POINTS_PER_KM * distance);
         user.setPoints(user.getPoints() + pointsEarned);
         userRepository.save(user); // Save updated points to database
+        badgeService.evaluateAllBadgeMechanisms(user.getId());
         
         // Build result map with calculation details for display
         Map<String, Object> result = new HashMap<>();

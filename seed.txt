@@ -61,162 +61,64 @@ INSERT INTO users (username, password, points, role, campus, "year") VALUES ('da
 INSERT INTO users (username, password, points, role, campus, "year") VALUES ('emily', '$2a$10$Oy4/psxBHZ6PpdQP7x6VNOw8p5jchFdqMCop/rp6fiRGabXmhY2qS', 100, 'USER', 'st lukes', 'Third_Year');
 
 -- seeding data into GROUPS table
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (1, 'G1AB12', 'EcoSquad', (SELECT id FROM users WHERE username='ben'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (2, 'H2CD34', 'GreenGang', (SELECT id FROM users WHERE username='madi'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (3, 'I3EF56', 'PlanetPals', (SELECT id FROM users WHERE username='marko'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (4, 'J4GH78', 'CarbonCrew', (SELECT id FROM users WHERE username='phoebe'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (5, 'K5IJ90', 'LeafLeague', (SELECT id FROM users WHERE username='davi'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (6, 'L6KL12', 'RecycleRangers', (SELECT id FROM users WHERE username='zarreen'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (7, 'M7MN34', 'SustainableStars', (SELECT id FROM users WHERE username='armin'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (8, 'N8OP56', 'EcoChampions', (SELECT id FROM users WHERE username='jai'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (9, 'O9QR78', 'GreenHeroes', (SELECT id FROM users WHERE username='oliver'));
-INSERT INTO groups (id, inviteCode, name, owner_id) VALUES (10, 'P0ST90', 'ClimateCrew', (SELECT id FROM users WHERE username='emma'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('G1AB12', 'EcoSquad', (SELECT id FROM users WHERE username='ben'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('H2CD34', 'GreenGang', (SELECT id FROM users WHERE username='madi'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('I3EF56', 'PlanetPals', (SELECT id FROM users WHERE username='marko'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('J4GH78', 'CarbonCrew', (SELECT id FROM users WHERE username='phoebe'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('K5IJ90', 'LeafLeague', (SELECT id FROM users WHERE username='davi'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('L6KL12', 'RecycleRangers', (SELECT id FROM users WHERE username='zarreen'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('M7MN34', 'SustainableStars', (SELECT id FROM users WHERE username='armin'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('N8OP56', 'EcoChampions', (SELECT id FROM users WHERE username='jai'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('O9QR78', 'GreenHeroes', (SELECT id FROM users WHERE username='oliver'));
+INSERT INTO groups (invite_code, name, owner_id) VALUES ('P0ST90', 'ClimateCrew', (SELECT id FROM users WHERE username='emma'));
 
 -- seeding data into GROUP_MEMBERS table (join table for groups and users)
-INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='ben'));
-INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='madi'));
-INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='marko'));
-INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='phoebe'));
-INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='davi'));
-INSERT INTO group_members (group_id, user_id) VALUES (1, (SELECT id FROM users WHERE username='zarreen'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='armin'));
-INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='jai'));
-INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='oliver'));
-INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='emma'));
-INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='sophie'));
-INSERT INTO group_members (group_id, user_id) VALUES (2, (SELECT id FROM users WHERE username='liam'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='ava'));
-INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='noah'));
-INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='isabella'));
-INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='ethan'));
-INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='lily'));
-INSERT INTO group_members (group_id, user_id) VALUES (3, (SELECT id FROM users WHERE username='lucas'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='mia'));
-INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='jack'));
-INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='charlotte'));
-INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='harold'));
-INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='amelia'));
-INSERT INTO group_members (group_id, user_id) VALUES (4, (SELECT id FROM users WHERE username='olivia'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='james'));
-INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='ella'));
-INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='william'));
-INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='sophia'));
-INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='benjamin'));
-INSERT INTO group_members (group_id, user_id) VALUES (5, (SELECT id FROM users WHERE username='marc'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='zoe'));
-INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='leo'));
-INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='grace'));
-INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='jackson'));
-INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='lilya'));
-INSERT INTO group_members (group_id, user_id) VALUES (6, (SELECT id FROM users WHERE username='mason'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='eva'));
-INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='logan'));
-INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='mario'));
-INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='jaden'));
-INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='chloe'));
-INSERT INTO group_members (group_id, user_id) VALUES (7, (SELECT id FROM users WHERE username='lewis'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='max'));
-INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='steve'));
-INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='toby'));
-INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='simon'));
-INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='harry'));
-INSERT INTO group_members (group_id, user_id) VALUES (8, (SELECT id FROM users WHERE username='carlos'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='percy'));
-INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='charlie'));
-INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='francis'));
-INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='charles'));
-INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='sofia'));
-INSERT INTO group_members (group_id, user_id) VALUES (9, (SELECT id FROM users WHERE username='alex'));
-
-INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='lucaa'));
-INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='michael'));
-INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='ken'));
-INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='george'));
-INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='daniel'));
-INSERT INTO group_members (group_id, user_id) VALUES (10, (SELECT id FROM users WHERE username='emily'));
+INSERT INTO group_members (group_id, user_id)
+SELECT g.id, u.id
+FROM (
+	VALUES
+		('G1AB12', 'ben'), ('G1AB12', 'madi'), ('G1AB12', 'marko'), ('G1AB12', 'phoebe'), ('G1AB12', 'davi'), ('G1AB12', 'zarreen'),
+		('H2CD34', 'armin'), ('H2CD34', 'jai'), ('H2CD34', 'oliver'), ('H2CD34', 'emma'), ('H2CD34', 'sophie'), ('H2CD34', 'liam'),
+		('I3EF56', 'ava'), ('I3EF56', 'noah'), ('I3EF56', 'isabella'), ('I3EF56', 'ethan'), ('I3EF56', 'lily'), ('I3EF56', 'lucas'),
+		('J4GH78', 'mia'), ('J4GH78', 'jack'), ('J4GH78', 'charlotte'), ('J4GH78', 'harold'), ('J4GH78', 'amelia'), ('J4GH78', 'olivia'),
+		('K5IJ90', 'james'), ('K5IJ90', 'ella'), ('K5IJ90', 'william'), ('K5IJ90', 'sophia'), ('K5IJ90', 'benjamin'), ('K5IJ90', 'marc'),
+		('L6KL12', 'zoe'), ('L6KL12', 'leo'), ('L6KL12', 'grace'), ('L6KL12', 'jackson'), ('L6KL12', 'lilya'), ('L6KL12', 'mason'),
+		('M7MN34', 'eva'), ('M7MN34', 'logan'), ('M7MN34', 'mario'), ('M7MN34', 'jaden'), ('M7MN34', 'chloe'), ('M7MN34', 'lewis'),
+		('N8OP56', 'max'), ('N8OP56', 'steve'), ('N8OP56', 'toby'), ('N8OP56', 'simon'), ('N8OP56', 'harry'), ('N8OP56', 'carlos'),
+		('O9QR78', 'percy'), ('O9QR78', 'charlie'), ('O9QR78', 'francis'), ('O9QR78', 'charles'), ('O9QR78', 'sofia'), ('O9QR78', 'alex'),
+		('P0ST90', 'lucaa'), ('P0ST90', 'michael'), ('P0ST90', 'ken'), ('P0ST90', 'george'), ('P0ST90', 'daniel'), ('P0ST90', 'emily')
+) AS gm(invite_code, username)
+JOIN groups g ON g.invite_code = gm.invite_code
+JOIN users u ON u.username = gm.username;
 
 -- seeding data into LEADERBOARD table
-INSERT INTO leaderboard (id, userId, username, points) VALUES
-(1, 5, 'davi', 290),
-(2, 52, 'charles', 260),
-(3, 1, 'ben', 250),
-(4, 51, 'francis', 250),
-(5, 39, 'mario', 230),
-(6, 54, 'alex', 230),
-(7, 4, 'phoebe', 220),
-(8, 9, 'oliver', 200),
-(9, 14, 'noah', 190),
-(10, 22, 'harold', 190),
-(11, 2, 'madi', 180),
-(12, 10, 'emma', 180),
-(13, 12, 'liam', 180),
-(14, 27, 'william', 180),
-(15, 36, 'mason', 180),
-(16, 16, 'ethan', 175),
-(17, 42, 'lewis', 175),
-(18, 3, 'marko', 170),
-(19, 23, 'amelia', 170),
-(20, 43, 'max', 170),
-(21, 29, 'benjamin', 160),
-(22, 48, 'carlos', 160),
-(23, 57, 'ken', 160),
-(24, 37, 'eva', 155),
-(25, 41, 'chloe', 155),
-(26, 50, 'charlie', 155),
-(27, 6, 'zarreen', 150),
-(28, 32, 'leo', 150),
-(29, 46, 'simon', 150),
-(30, 56, 'michael', 150),
-(31, 59, 'daniel', 150),
-(32, 53, 'sofia', 145),
-(33, 11, 'sophie', 140),
-(34, 28, 'sophia', 140),
-(35, 49, 'percy', 140),
-(36, 58, 'george', 140),
-(37, 24, 'olivia', 135),
-(38, 34, 'jackson', 135),
-(39, 47, 'harry', 135),
-(40, 55, 'lucaa', 135),
-(41, 7, 'armin', 130),
-(42, 30, 'marc', 130),
-(43, 21, 'charlotte', 125),
-(44, 35, 'lilya', 125),
-(45, 8, 'jai', 120),
-(46, 31, 'zoe', 120),
-(47, 40, 'jaden', 120),
-(48, 25, 'james', 115),
-(49, 15, 'isabella', 110),
-(50, 44, 'steve', 110),
-(51, 38, 'logan', 100),
-(52, 60, 'emily', 100),
-(53, 18, 'lucas', 95),
-(54, 13, 'ava', 90),
-(55, 26, 'ella', 80),
-(56, 33, 'grace', 70),
-(57, 20, 'jack', 60),
-(58, 17, 'lily', 50),
-(59, 19, 'mia', 40),
-(60, 45, 'toby', 30);
+INSERT INTO leaderboard (user_id, username, points)
+SELECT u.id, lb.username, lb.points
+FROM (
+	VALUES
+		('davi', 290), ('charles', 260), ('ben', 250), ('francis', 250), ('mario', 230), ('alex', 230), ('phoebe', 220), ('oliver', 200),
+		('noah', 190), ('harold', 190), ('madi', 180), ('emma', 180), ('liam', 180), ('william', 180), ('mason', 180), ('ethan', 175),
+		('lewis', 175), ('marko', 170), ('amelia', 170), ('max', 170), ('benjamin', 160), ('carlos', 160), ('ken', 160), ('eva', 155),
+		('chloe', 155), ('charlie', 155), ('zarreen', 150), ('leo', 150), ('simon', 150), ('michael', 150), ('daniel', 150), ('sofia', 145),
+		('sophie', 140), ('sophia', 140), ('percy', 140), ('george', 140), ('olivia', 135), ('jackson', 135), ('harry', 135), ('lucaa', 135),
+		('armin', 130), ('marc', 130), ('charlotte', 125), ('lilya', 125), ('jai', 120), ('zoe', 120), ('jaden', 120), ('james', 115),
+		('isabella', 110), ('steve', 110), ('logan', 100), ('emily', 100), ('lucas', 95), ('ava', 90), ('ella', 80), ('grace', 70),
+		('jack', 60), ('lily', 50), ('mia', 40), ('toby', 30)
+) AS lb(username, points)
+JOIN users u ON u.username = lb.username;
 
 -- seeding data into CHALLENGES table
-INSERT INTO challenges (id, title, description, points, frequency, startDate, endDate, scope, requiresEvidence, taxonomy, carbonSaved) VALUES
-(1, 'Eat a vegetarian meal', 'Eat a vegetarian or vegan meal to reduce carbon footprint', 10, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Diet', 0.64103),
-(2, 'Walk to campus', 'Walk to campus instead of using a petrol car', 10, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Transport', 0.17),
-(3, 'Use a reusable coffee cup', 'Use a reusable coffee cup instead of disposable cups', 5, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.026),
-(4, 'Use a reusable water bottle', 'Use a reusable water bottle throughout the day', 5, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.47123),
-(5, 'Recycle', 'Recycle all materials for the day', 15, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Waste', 1.9),
-(6, 'Shop second-hand clothes', 'Purchase second-hand clothing to reduce carbon footprint', 20, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
-(7, 'Shop local (Farmer''s market)', 'Buy local produce from farmers'' markets', 10, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Food', NULL),
-(8, 'Line dry clothes', 'Line dry clothes instead of using a tumble dryer', 10, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Energy', 1.8),
-(9, 'Borrow a library book', 'Borrow books instead of buying new ones', 5, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Resources', 0.7),
-(10, 'Donate an item', 'Donate clothes or other items instead of discarding', 15, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
-(11, 'Repair an item', 'Repair an item instead of buying new', 20, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Consumption', 32.9),
-(12, 'Purchase 2good2go', 'Save food using the 2good2go app', 10, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Food', 2.7);
+INSERT INTO challenges (title, description, points, frequency, start_date, end_date, scope, requires_evidence, taxonomy, carbon_saved) VALUES
+('Eat a vegetarian meal', 'Eat a vegetarian or vegan meal to reduce carbon footprint', 10, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Diet', 0.64103),
+('Walk to campus', 'Walk to campus instead of using a petrol car', 10, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Transport', 0.17),
+('Use a reusable coffee cup', 'Use a reusable coffee cup instead of disposable cups', 5, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.026),
+('Use a reusable water bottle', 'Use a reusable water bottle throughout the day', 5, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.47123),
+('Recycle', 'Recycle all materials for the day', 15, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Waste', 1.9),
+('Shop second-hand clothes', 'Purchase second-hand clothing to reduce carbon footprint', 20, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
+('Shop local (Farmer''s market)', 'Buy local produce from farmers'' markets', 10, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Food', NULL),
+('Line dry clothes', 'Line dry clothes instead of using a tumble dryer', 10, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Energy', 1.8),
+('Borrow a library book', 'Borrow books instead of buying new ones', 5, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Resources', 0.7),
+('Donate an item', 'Donate clothes or other items instead of discarding', 15, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
+('Repair an item', 'Repair an item instead of buying new', 20, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Consumption', 32.9),
+('Purchase 2good2go', 'Save food using the 2good2go app', 10, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Food', 2.7);
+

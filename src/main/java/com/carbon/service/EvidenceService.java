@@ -36,12 +36,20 @@ public class EvidenceService {
     private final UserRepository userRepository;
     // Repository for challenge data 
     private final ChallengeRepository challengeRepository;
+    // Badge logic service
+    private final BadgeService badgeService;
 
     // Constructor injection for all required repositories
-    public EvidenceService(EvidenceRepository evidenceRepository, UserRepository userRepository, ChallengeRepository challengeRepository) {
+    public EvidenceService(
+        EvidenceRepository evidenceRepository,
+        UserRepository userRepository,
+        ChallengeRepository challengeRepository,
+        BadgeService badgeService
+    ) {
         this.evidenceRepository = evidenceRepository;
         this.userRepository = userRepository;
         this.challengeRepository = challengeRepository;
+        this.badgeService = badgeService;
     }
 
     /**
@@ -178,6 +186,10 @@ public class EvidenceService {
             int challengePoints = challenge.getPoints();
             user.setPoints(currentPoints + challengePoints);
             userRepository.save(user); // Update user's total points
+        }
+
+        if (status == EvidenceStatus.ACCEPTED && evidence.getUser() != null) {
+            badgeService.evaluateAllBadgeMechanisms(evidence.getUser().getId());
         }
         
         return initializeSummaryFields(evidenceRepository.save(evidence));

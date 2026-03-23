@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,9 +46,10 @@ public class EvidenceController {
      * @throws IOException if file reading fails
      */
     @PostMapping(path = "/evidence", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<EvidenceSummary> submitEvidence(
+    public ResponseEntity<?> submitEvidence(
         @RequestParam("photo") MultipartFile photo,
         @RequestParam(value = "taskTitle", required = false) String taskTitle,
+        @RequestParam(value = "points", required = false) String points,
         @RequestParam(value = "challengeId", required = false) Long challengeId,
         @RequestParam(value = "status", required = false) EvidenceStatus status,
         Authentication authentication
@@ -55,6 +57,10 @@ public class EvidenceController {
         // Check user is logged in
         if (authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (!StringUtils.hasText(taskTitle) || !StringUtils.hasText(points)) {
+            return ResponseEntity.badRequest().body("Please submit evidence from a task.");
         }
 
         // Delegate to service layer

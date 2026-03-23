@@ -7,9 +7,11 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import com.carbon.repository.ChallengeRepository;
 import com.carbon.repository.EvidenceRepository;
 import com.carbon.repository.UserRepository;
@@ -31,14 +33,22 @@ public class ChallengeService {
 
     // Repository for accessing challenge data from database
     private final ChallengeRepository challengeRepository;
+    // Badge service for evaluating and awarding badges
+    private final BadgeService badgeService;
     // Repository for storing automatic evidence records for no-evidence challenges
     private final EvidenceRepository evidenceRepository;
     // Repository for accessing and updating user data
     private final UserRepository userRepository;
 
     // Constructor injection for repositories (preferred over field injection)
-    public ChallengeService(ChallengeRepository challengeRepository, EvidenceRepository evidenceRepository, UserRepository userRepository) {
+    public ChallengeService(
+        ChallengeRepository challengeRepository,
+        BadgeService badgeService,
+        EvidenceRepository evidenceRepository,
+        UserRepository userRepository
+    ) {
         this.challengeRepository = challengeRepository;
+        this.badgeService = badgeService;
         this.evidenceRepository = evidenceRepository;
         this.userRepository = userRepository;
     }
@@ -107,6 +117,8 @@ public class ChallengeService {
         int updatedPoints = user.getPoints() + challenge.getPoints();
         user.setPoints(updatedPoints);
         userRepository.save(user);
+
+        badgeService.evaluateAllBadgeMechanisms(user.getId());
         return updatedPoints;
     }
 
