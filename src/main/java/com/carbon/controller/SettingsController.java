@@ -84,7 +84,7 @@ public class SettingsController {
     @PostMapping("/update_password")
     public String updatePassword(@RequestParam String oldPassword, @RequestParam String  newPassword, Authentication authentication){
         if (!User.isValidPassword(newPassword)) {
-            return "redirect:/settings?updatedpassword=false";
+            return "redirect:/settings?passwordTooShort=true";
         }
 
         userDetailsService.updatePassword(authentication.getName(), oldPassword, newPassword);
