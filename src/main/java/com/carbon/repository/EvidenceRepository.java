@@ -67,5 +67,6 @@ interface DataForProfile{
     Challenge getChallenge();
     EvidenceStatus getStatus();
     LocalDateTime getSubmittedAt();
+    String getReason();
 } 
     

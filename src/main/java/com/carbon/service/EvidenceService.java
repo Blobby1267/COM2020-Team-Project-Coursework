@@ -219,11 +219,18 @@ public class EvidenceService {
      *   → No points awarded
      */
     @Transactional
-    public Evidence updateEvidenceStatus(Long evidenceId, EvidenceStatus status) {
+    public Evidence updateEvidenceStatus(Long evidenceId, EvidenceStatus status, String reason) {
         // Fetch and validate evidence exists
         Evidence evidence = evidenceRepository.findById(evidenceId)
             .orElseThrow(() -> new IllegalArgumentException("Evidence not found: " + evidenceId));
+
+        String trimmedReason = reason == null ? null : reason.trim();
+        if (status != EvidenceStatus.PENDING && !org.springframework.util.StringUtils.hasText(trimmedReason)) {
+            throw new IllegalArgumentException("Please provide a reason for this moderation decision.");
+        }
+
         evidence.setStatus(status);
+        evidence.setReason(trimmedReason);
         
         // Award points to user if evidence is accepted and linked to a challenge
         if (status == EvidenceStatus.ACCEPTED && evidence.getChallenge() != null) {

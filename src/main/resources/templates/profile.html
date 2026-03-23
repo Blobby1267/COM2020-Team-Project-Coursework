@@ -53,6 +53,7 @@
               <th>Date</th>
               <th>Points</th>
               <th>Approval</th>
+              <th>Reason</th>
             </tr>
             <tr th:each="evidence, iterStat : ${evidence}">
               <td th:text="${evidence.challenge.title}"></td>
@@ -61,6 +62,7 @@
               ></td>
               <td th:text="${evidence.challenge.points}"></td>
               <td th:text="${evidence.status}"></td>
+              <td th:text="${evidence.reason != null and !#strings.isEmpty(evidence.reason) ? evidence.reason : '-'}"></td>
             </tr>
           </table>
         </div>
