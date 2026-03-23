@@ -10,8 +10,10 @@
   <body>
     <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
-      <img src="Footprint.png" id="logo" alt="footprint" />
-      <h1>FOOTPRINT</h1>
+      <div id="topbar-left">
+        <img src="Footprint.png" id="logo" alt="footprint" />
+        <h1>FOOTPRINT</h1>
+      </div>
       <!-- Logout form with CSRF protection -->
       <form th:action="@{/logout}" th:object="${user}" method="post">
         <input
