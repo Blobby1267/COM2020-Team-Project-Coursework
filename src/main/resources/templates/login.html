@@ -19,10 +19,10 @@
         <!-- Registration form with user details -->
         <form id="register-form" th:action="@{/register}" th:object="${user}" method="post">
           <p>
-            <input type="text" name="username" placeholder="Username..." />
+            <input type="text" name="username" placeholder="Username..." minlength="4" pattern="[A-Za-z0-9]+" title="Username must be at least 4 characters and contain only letters and numbers." required />
           </p>
           <p>
-            <input type="password" name="password" placeholder="Password..." />
+            <input type="password" name="password" placeholder="Password..." minlength="8" title="Password must be at least 8 characters long." required />
           </p>
           <!-- CSRF token for security -->
           <input
@@ -66,10 +66,10 @@
         <!-- Login form for existing users -->
         <form id="login-form" th:action="@{/login}" method="post">
           <p>
-            <input type="text" name="username" placeholder="Username..." />
+            <input type="text" name="username" placeholder="Username..." minlength="4" pattern="[A-Za-z0-9]+" title="Username must be at least 4 characters and contain only letters and numbers." required />
           </p>
           <p>
-            <input type="password" name="password" placeholder="Password..." />
+            <input type="password" name="password" placeholder="Password..." minlength="8" title="Password must be at least 8 characters long." required />
           </p>
           <!-- CSRF token for security -->
           <input
@@ -141,9 +141,39 @@
           return pathname.endsWith("/login") || pathname.endsWith("/login.html") || pathname === "/";
         }
 
+        function validateCredentials(form) {
+          const usernameInput = form.querySelector('input[name="username"]');
+          const passwordInput = form.querySelector('input[name="password"]');
+
+          const username = usernameInput.value.trim();
+          const password = passwordInput.value;
+
+          usernameInput.value = username;
+
+          if (username.length < 4) {
+            return "Username must be at least 4 characters long.";
+          }
+
+          if (!/^[A-Za-z0-9]+$/.test(username)) {
+            return "Username can only contain letters and numbers.";
+          }
+
+          if (password.length < 8) {
+            return "Password must be at least 8 characters long.";
+          }
+
+          return null;
+        }
+
         async function submitAuthForm(event) {
           event.preventDefault();
           const form = event.currentTarget;
+
+          const validationError = validateCredentials(form);
+          if (validationError) {
+            showError(validationError);
+            return;
+          }
 
           try {
             const response = await fetch(form.action, {

@@ -59,12 +59,12 @@
                 <tr th:each="user : ${users}">
                 <td>
                   <div class="leaderboard-user-cell">
+                    <span th:text="${user.username}"></span>
                     <img
                       class="leaderboard-badge"
                       th:if="${selectedBadgesByUserId[user.id] != null}"
                       th:src="@{'/team_project_badges/' + ${selectedBadgesByUserId[user.id]} + '.png'}"
                       alt="Selected badge" />
-                    <span th:text="${user.username}"></span>
                   </div>
                 </td>
                 <td th:text="${user.points}"></td>
