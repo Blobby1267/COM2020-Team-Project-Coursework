@@ -47,6 +47,9 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
     long countByUser_IdAndStatus(Long userId, EvidenceStatus status);
 
+    @Query("SELECT COUNT(e) FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED AND e.challenge IS NOT NULL AND e.challenge.requiresEvidence = TRUE")
+    long countApprovedEvidenceForBadgeByUserId(@Param("userId") Long userId);
+
     @Query("SELECT COUNT(e) FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED AND e.challenge IS NOT NULL AND LOWER(e.challenge.frequency) = LOWER(:frequency)")
     long countAcceptedByUserIdAndFrequency(@Param("userId") Long userId, @Param("frequency") String frequency);
 

@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.carbon.model.Badge;
-import com.carbon.model.EvidenceStatus;
 import com.carbon.model.User;
 import com.carbon.repository.BadgeRepository;
 import com.carbon.repository.ChallengeRepository;
@@ -58,7 +57,7 @@ public class BadgeService {
         int streakDays = streakService.calculateStreak(evidenceRepository.findAcceptedEvidenceByUserId(userId));
         int completedDailyTasks = Math.toIntExact(evidenceRepository.countAcceptedByUserIdAndFrequency(userId, "Daily"));
         int completedWeeklyTasks = Math.toIntExact(evidenceRepository.countAcceptedByUserIdAndFrequency(userId, "Weekly"));
-        int approvedEvidenceCount = Math.toIntExact(evidenceRepository.countByUser_IdAndStatus(userId, EvidenceStatus.ACCEPTED));
+        int approvedEvidenceCount = Math.toIntExact(evidenceRepository.countApprovedEvidenceForBadgeByUserId(userId));
         long completedTaxonomyCount = evidenceRepository.countDistinctAcceptedTaxonomiesByUserId(userId);
         long totalTaxonomyCount = challengeRepository.countDistinctTaxonomies();
         boolean completedEachTaxonomy = totalTaxonomyCount > 0 && completedTaxonomyCount >= totalTaxonomyCount;
