@@ -123,8 +123,21 @@
           });
 
           if (!response.ok) {
-            const errorText = await response.text();
-            messageEl.textContent = errorText || "Upload failed.";
+            let errorMessage = "Upload failed.";
+            const contentType = response.headers.get("content-type") || "";
+            if (contentType.includes("application/json")) {
+              const errorPayload = await response.json();
+              if (errorPayload?.message) {
+                errorMessage = errorPayload.message;
+              }
+            } else {
+              const errorText = await response.text();
+              if (errorText) {
+                errorMessage = errorText;
+              }
+            }
+            messageEl.textContent = errorMessage;
+            alert(errorMessage);
             return;
           }
 

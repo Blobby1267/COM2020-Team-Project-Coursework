@@ -6,6 +6,7 @@ import java.time.DayOfWeek;
 import java.time.temporal.TemporalAdjusters;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -64,6 +65,11 @@ public class ChallengeService {
         return challengeRepository.findByFrequency(frequency);
     }
 
+    public Challenge getChallengeById(Long challengeId) {
+        return challengeRepository.findById(challengeId)
+            .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
+    }
+
     /**
      * Returns the set of task titles the user has already completed today (local time).
      * Used to highlight completed tasks on the tasks page.
@@ -96,9 +102,13 @@ public class ChallengeService {
         Challenge challenge = challengeRepository.findById(challengeId)
             .orElseThrow(() -> new IllegalArgumentException("Challenge not found: " + challengeId));
 
-        TimeWindow window = getCompletionWindow(challenge.getFrequency());
-        if (evidenceRepository.hasEvidenceForTaskInWindow(user.getId(), challenge.getTitle(), window.start(), window.end())) {
-            throw new IllegalStateException(getRepeatMessage(challenge.getFrequency()));
+        Optional<EvidenceStatus> existingStatus = getCompletionStatusInCurrentWindow(
+            user.getId(),
+            challenge.getTitle(),
+            challenge.getFrequency()
+        );
+        if (existingStatus.isPresent()) {
+            throw new IllegalStateException(getRepeatMessage(existingStatus.get(), challenge.getFrequency()));
         }
 
         Evidence evidence = new Evidence();
@@ -139,6 +149,20 @@ public class ChallengeService {
         return new TimeWindow(dayStart, dayStart.plusDays(1));
     }
 
+    public Optional<EvidenceStatus> getCompletionStatusInCurrentWindow(Long userId, String taskTitle, String frequency) {
+        TimeWindow window = getCompletionWindow(frequency);
+        List<EvidenceStatus> statuses = evidenceRepository.findCompletionStatusesInWindow(
+            userId,
+            taskTitle,
+            window.start(),
+            window.end()
+        );
+        if (statuses.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(statuses.get(0));
+    }
+
     private String getRepeatMessage(String frequency) {
         if ("Weekly".equalsIgnoreCase(frequency)) {
             return "You have already completed this weekly task this week. Try again next week.";
@@ -147,5 +171,15 @@ public class ChallengeService {
             return "You have already completed this monthly task this month. Try again next month.";
         }
         return "You have already completed this daily task today. Try again tomorrow.";
+    }
+
+    private String getRepeatMessage(EvidenceStatus status, String frequency) {
+        if (status == EvidenceStatus.PENDING) {
+            return "Task waiting to be accepted.";
+        }
+        if (status == EvidenceStatus.ACCEPTED) {
+            return "Task already complete.";
+        }
+        return getRepeatMessage(frequency);
     }
 }

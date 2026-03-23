@@ -63,9 +63,13 @@ public class EvidenceController {
             return ResponseEntity.badRequest().body("Please submit evidence from a task.");
         }
 
-        // Delegate to service layer
-        Evidence evidence = evidenceService.submitEvidence(authentication.getName(), photo, taskTitle, challengeId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(toSummary(evidence));
+        try {
+            // Delegate to service layer
+            Evidence evidence = evidenceService.submitEvidence(authentication.getName(), photo, taskTitle, challengeId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(toSummary(evidence));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(e.getMessage()));
+        }
     }
 
     /**
@@ -191,6 +195,18 @@ public class EvidenceController {
 
         public String getOriginalFilename() {
             return originalFilename;
+        }
+    }
+
+    public static class ErrorResponse {
+        private final String message;
+
+        public ErrorResponse(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
 }
