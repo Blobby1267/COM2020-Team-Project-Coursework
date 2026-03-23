@@ -60,9 +60,15 @@ public class SettingsController {
         String normalizedOldUsername = User.normalizeUsername(oldUsername);
         String normalizedNewUsername = User.normalizeUsername(newUsername);
 
+        User existingUser = userRepository.findByUsername(normalizedNewUsername);
+
+        if (existingUser != null && !normalizedNewUsername.equals(authentication.getName())) {
+            return "redirect:/settings?usernameTaken=true";
+        }
+
         if(normalizedOldUsername.equals(authentication.getName())
             && User.isValidUsername(normalizedNewUsername)
-            && (userRepository.findByUsername(normalizedNewUsername) == null || normalizedNewUsername.equals(authentication.getName()))){
+            && (existingUser == null || normalizedNewUsername.equals(authentication.getName()))){
             User user = userRepository.findByUsername(normalizedOldUsername);
             user.setUsername(normalizedNewUsername);
             userRepository.save(user);

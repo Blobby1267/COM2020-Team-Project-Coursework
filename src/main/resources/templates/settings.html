@@ -167,6 +167,9 @@
       </div>
     </div>
 
+    <script th:if="${param.usernameTaken != null}">
+      window.alert("The username is already taken.");
+    </script>
     <script>
       let dropdown = document.querySelector(".dropdown-button");
       let dropdown_menu = document.querySelector(".sidebar");
