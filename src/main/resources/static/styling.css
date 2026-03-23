@@ -689,6 +689,12 @@ canvas {
   object-fit: contain;
 }
 
+.leaderboard-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .badge-modal-close {
   position: absolute;
   top: 0.6em;
