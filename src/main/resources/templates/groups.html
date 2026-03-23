@@ -55,6 +55,8 @@
                   <input
                     th:name="@{groupIdString}"
                     placeholder="Group Code..."
+                    minlength="3" 
+                    pattern="[A-Za-z0-9]+"
                   />
                 </p>
                 <p>
@@ -67,7 +69,12 @@
               <h1>Create a group:</h1>
               <form th:action="@{/create_group}" method="post">
                 <p>
-                  <input name="groupName" placeholder="Group Name..." />
+                  <input name="groupName" 
+                  placeholder="Group Name..." 
+                  minlength="3" 
+                  pattern="[A-Za-z0-9]+" 
+                  title="Group name must be at least 3 characters and can't contain special characters."
+                  required/>
                 </p>
                 <p>
                   <button type="submit">Create Group</button>
