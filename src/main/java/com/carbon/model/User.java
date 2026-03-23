@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import jakarta.persistence.Column;
 
@@ -21,6 +22,11 @@ import jakarta.persistence.Column;
 @Entity // Tells JPA this class maps to a database table
 @Table(name = "users")
 public class User {
+    public static final int MIN_USERNAME_LENGTH = 4;
+    public static final int MIN_PASSWORD_LENGTH = 8;
+
+    private static final Pattern USERNAME_PATTERN = Pattern.compile("^[A-Za-z0-9]+$");
+
     @Id  // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing ID
     private Long id; // Unique identifier
@@ -36,6 +42,38 @@ public class User {
 
     @ManyToMany(mappedBy = "members")
     private Set<Group> groups = new HashSet<>();
+
+    public static String normalizeUsername(String username) {
+        return username == null ? "" : username.trim();
+    }
+
+    public static boolean isValidUsername(String username) {
+        String normalizedUsername = normalizeUsername(username);
+        return normalizedUsername.length() >= MIN_USERNAME_LENGTH
+            && USERNAME_PATTERN.matcher(normalizedUsername).matches();
+    }
+
+    public static boolean isValidPassword(String password) {
+        return password != null && password.length() >= MIN_PASSWORD_LENGTH;
+    }
+
+    public static String getCredentialErrorCode(String username, String password) {
+        String normalizedUsername = normalizeUsername(username);
+
+        if (normalizedUsername.isEmpty() || password == null || password.isEmpty()) {
+            return "empty";
+        }
+
+        if (!isValidUsername(normalizedUsername)) {
+            return "invalid_username";
+        }
+
+        if (!isValidPassword(password)) {
+            return "invalid_password";
+        }
+
+        return null;
+    }
 
     // === Getter Methods ===
     public Long getId() {

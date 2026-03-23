@@ -36,12 +36,18 @@ public class CustomUserDetailsService implements UserDetailsService{
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       String normalizedUsername = User.normalizeUsername(username);
+
+       if (!User.isValidUsername(normalizedUsername)) {
+           throw new UsernameNotFoundException("Invalid username format");
+       }
+
        // Fetch user from database
-       User user = userRepository.findByUsername(username);
+       User user = userRepository.findByUsername(normalizedUsername);
        
        // If user not found, authentication fails
        if (user == null) {
-           throw new UsernameNotFoundException("User not found: " + username);
+           throw new UsernameNotFoundException("User not found: " + normalizedUsername);
        }
 
        // Convert our User entity to Spring Security's UserDetails format

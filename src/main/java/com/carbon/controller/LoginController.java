@@ -67,15 +67,18 @@ public class LoginController {
      */
     @PostMapping("/register")
     public String handleRegister(@RequestParam String username, @RequestParam String password, @RequestParam String campus, @RequestParam String year, HttpServletRequest request) {
+        String normalizedUsername = User.normalizeUsername(username);
+        String errorCode = User.getCredentialErrorCode(normalizedUsername, password);
+
         // Check if username is available
-        if(username.isEmpty() || password.isEmpty()) {
+        if (errorCode != null) {
             LOGGER.info("Username or password cannot be empty.");
-            return "redirect:/login?error=empty";
+            return "redirect:/login?error=" + errorCode;
         }
-        if (userRepository.findByUsername(username) == null) {
+        if (userRepository.findByUsername(normalizedUsername) == null) {
             // Create new user with default settings
             User newUser = new User();
-            newUser.setUsername(username);
+            newUser.setUsername(normalizedUsername);
             newUser.setPassword(password); // Will be encrypted in registerUser()
             newUser.setRole("USER"); // Default role for new registrations
             newUser.setPoints(0); // Start with zero points
@@ -92,7 +95,7 @@ public class LoginController {
             
             // Authenticate the user immediately after registration
             try {
-                request.login(username, password);
+                request.login(normalizedUsername, password);
                 LOGGER.info("User has been created and logged in.");
             } catch (ServletException e) {
                 LOGGER.severe("Auto-login failed after registration: " + e.getMessage());
