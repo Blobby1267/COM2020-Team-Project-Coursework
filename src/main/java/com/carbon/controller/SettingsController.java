@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +19,6 @@ import com.carbon.repository.UserRepository;
 import com.carbon.service.CustomUserDetailsService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -37,11 +35,16 @@ public class SettingsController {
 
     @PostMapping("/update_username")
     public String updateUsername(@RequestParam String oldUsername, @RequestParam String  newUsername, Authentication authentication){
-        if(oldUsername.equals(authentication.getName())){
-            User user = userRepository.findByUsername(oldUsername);
-            user.setUsername(newUsername);
+        String normalizedOldUsername = User.normalizeUsername(oldUsername);
+        String normalizedNewUsername = User.normalizeUsername(newUsername);
+
+        if(normalizedOldUsername.equals(authentication.getName())
+            && User.isValidUsername(normalizedNewUsername)
+            && (userRepository.findByUsername(normalizedNewUsername) == null || normalizedNewUsername.equals(authentication.getName()))){
+            User user = userRepository.findByUsername(normalizedOldUsername);
+            user.setUsername(normalizedNewUsername);
             userRepository.save(user);
-            UserDetails updatedUser = new org.springframework.security.core.userdetails.User(newUsername, user.getPassword(), authentication.getAuthorities());
+            UserDetails updatedUser = new org.springframework.security.core.userdetails.User(normalizedNewUsername, user.getPassword(), authentication.getAuthorities());
             UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updatedUser, authentication.getCredentials(), authentication.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(newAuth);
             return "redirect:/settings?updatedname=true";
@@ -52,6 +55,10 @@ public class SettingsController {
     
     @PostMapping("/update_password")
     public String updatePassword(@RequestParam String oldPassword, @RequestParam String  newPassword, Authentication authentication){
+        if (!User.isValidPassword(newPassword)) {
+            return "redirect:/settings?updatedpassword=false";
+        }
+
         userDetailsService.updatePassword(authentication.getName(), oldPassword, newPassword);
         return "redirect:/settings?updatedpassword=true";
     } 
