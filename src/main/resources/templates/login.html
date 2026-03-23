@@ -10,19 +10,41 @@
   <body>
     <!-- Top navigation bar with logo -->
     <div id="top-bar">
-      <img src="Footprint.png" id="logo" alt="footprint" />
-      <h1>FOOTPRINT</h1>
+      <div id="topbar-left">
+        <img src="Footprint.png" id="logo" alt="footprint" />
+        <h1>FOOTPRINT</h1>
+      </div>
     </div>
     <!-- Main container holding registration and login forms -->
     <div id="main-task-container">
       <div class="sidebar login">
         <!-- Registration form with user details -->
-        <form id="register-form" th:action="@{/register}" th:object="${user}" method="post">
+        <form
+          id="register-form"
+          th:action="@{/register}"
+          th:object="${user}"
+          method="post"
+        >
           <p>
-            <input type="text" name="username" placeholder="Username..." minlength="3" pattern="[A-Za-z0-9]+" title="Username must be at least 3 characters and can't contain special characters." required />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username..."
+              minlength="3"
+              pattern="[A-Za-z0-9]+"
+              title="Username must be at least 3 characters and can't contain special characters."
+              required
+            />
           </p>
           <p>
-            <input type="password" name="password" placeholder="Password..." minlength="8" title="Password must be at least 8 characters long." required />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password..."
+              minlength="8"
+              title="Password must be at least 8 characters long."
+              required
+            />
           </p>
           <!-- CSRF token for security -->
           <input
@@ -66,10 +88,20 @@
         <!-- Login form for existing users -->
         <form id="login-form" th:action="@{/login}" method="post">
           <p>
-            <input type="text" name="username" placeholder="Username..." required />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username..."
+              required
+            />
           </p>
           <p>
-            <input type="password" name="password" placeholder="Password..." required />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password..."
+              required
+            />
           </p>
           <!-- CSRF token for security -->
           <input
@@ -83,31 +115,38 @@
         </form>
       </div>
       <!-- <div id="task-information-container"> -->
-        <!-- Information box explaining the application purpose -->
-        <div class="login-box">
-          <h1 class="title">Our Purpose</h1>
-          <p>
-            CO2 is the biggest contributor to global warming. it is now or never
-            for us to take actions to reduce our carbon footprint. We want to
-            help sensitise our students and staff about how their daily actions
-            contribute to this issue and how individually they can take steps to
-            reduce their emissions. Each of us matters! Every gram saved by a
-            person adds up when everyone is conscious and doing their best. We
-            hope that this website will help you understand your emissions and
-            motivate you to take these steps for the betterment of all.
-          </p>
-          <p>
-            There is a list of tasks that can be completed daily and challenges,
-            for those that want to go the extra mile, will be released monthly.
-            You can also participate in groups and compete with each other. A
-            leaderboard will show who is the most green among us and special
-            prizes await them. May the best eco person win!
-          </p>
+      <!-- Information box explaining the application purpose -->
+      <div class="login-box">
+        <h1 class="title">Our Purpose</h1>
+        <p>
+          CO2 is the biggest contributor to global warming. it is now or never
+          for us to take actions to reduce our carbon footprint. We want to help
+          sensitise our students and staff about how their daily actions
+          contribute to this issue and how individually they can take steps to
+          reduce their emissions. Each of us matters! Every gram saved by a
+          person adds up when everyone is conscious and doing their best. We
+          hope that this website will help you understand your emissions and
+          motivate you to take these steps for the betterment of all.
+        </p>
+        <p>
+          There is a list of tasks that can be completed daily and challenges,
+          for those that want to go the extra mile, will be released monthly.
+          You can also participate in groups and compete with each other. A
+          leaderboard will show who is the most green among us and special
+          prizes await them. May the best eco person win!
+        </p>
         <!-- </div> -->
       </div>
     </div>
 
-    <div id="auth-error-modal" class="auth-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="auth-error-title" aria-describedby="auth-error-message">
+    <div
+      id="auth-error-modal"
+      class="auth-modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="auth-error-title"
+      aria-describedby="auth-error-message"
+    >
       <div class="auth-modal">
         <h2 id="auth-error-title">Sign-in issue</h2>
         <p id="auth-error-message">Please check your details and try again.</p>
@@ -140,7 +179,11 @@
         }
 
         function isLoginPath(pathname) {
-          return pathname.endsWith("/login") || pathname.endsWith("/login.html") || pathname === "/";
+          return (
+            pathname.endsWith("/login") ||
+            pathname.endsWith("/login.html") ||
+            pathname === "/"
+          );
         }
 
         function validateCredentials(form, enforceRules) {
@@ -187,27 +230,33 @@
               credentials: "same-origin",
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "X-Requested-With": "XMLHttpRequest"
+                "X-Requested-With": "XMLHttpRequest",
               },
-              body: new URLSearchParams(new FormData(form))
+              body: new URLSearchParams(new FormData(form)),
             });
 
             const finalUrl = new URL(response.url, window.location.origin);
             const errorCode = finalUrl.searchParams.get("error");
 
             if (errorCode) {
-              showError(errorMessages[errorCode] || "We could not process your request. Please try again.");
+              showError(
+                errorMessages[errorCode] ||
+                  "We could not process your request. Please try again.",
+              );
               return;
             }
 
             if (!isLoginPath(finalUrl.pathname)) {
-              window.location.href = finalUrl.pathname + finalUrl.search + finalUrl.hash;
+              window.location.href =
+                finalUrl.pathname + finalUrl.search + finalUrl.hash;
               return;
             }
 
             showError("We could not process your request. Please try again.");
           } catch (error) {
-            showError("Network error. Please check your connection and try again.");
+            showError(
+              "Network error. Please check your connection and try again.",
+            );
           }
         }
 
@@ -219,13 +268,24 @@
             return;
           }
 
-          showError(errorMessages[errorCode] || "We could not process your request. Please try again.");
+          showError(
+            errorMessages[errorCode] ||
+              "We could not process your request. Please try again.",
+          );
           currentUrl.searchParams.delete("error");
-          window.history.replaceState({}, document.title, currentUrl.pathname + currentUrl.search + currentUrl.hash);
+          window.history.replaceState(
+            {},
+            document.title,
+            currentUrl.pathname + currentUrl.search + currentUrl.hash,
+          );
         }
 
-        document.getElementById("register-form").addEventListener("submit", submitAuthForm);
-        document.getElementById("login-form").addEventListener("submit", submitAuthForm);
+        document
+          .getElementById("register-form")
+          .addEventListener("submit", submitAuthForm);
+        document
+          .getElementById("login-form")
+          .addEventListener("submit", submitAuthForm);
         closeButton.addEventListener("click", hideError);
         modal.addEventListener("click", (event) => {
           if (event.target === modal) {

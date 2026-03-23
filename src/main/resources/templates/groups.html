@@ -10,8 +10,10 @@
   <body>
     <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
-      <img src="Footprint.png" id="logo" alt="footprint" />
-      <h1>FOOTPRINT</h1>
+      <div id="topbar-left">
+        <img src="Footprint.png" id="logo" alt="footprint" />
+        <h1>FOOTPRINT</h1>
+      </div>
       <!-- Logout form with CSRF protection -->
       <form th:action="@{/logout}" th:object="${user}" method="post">
         <input
@@ -62,7 +64,7 @@
             </div>
             <!-- Create new group section -->
             <div class="groups-box">
-              <h1>Create a groups:</h1>
+              <h1>Create a group:</h1>
               <form th:action="@{/create_group}" method="post">
                 <p>
                   <input name="groupName" placeholder="Group Name..." />
