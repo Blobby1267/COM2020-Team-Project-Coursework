@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -83,9 +84,9 @@ public class EvidenceService {
 
         String resolvedTitle = linkedChallenge != null ? linkedChallenge.getTitle() : taskTitle;
         String frequency = linkedChallenge != null ? linkedChallenge.getFrequency() : "Daily";
-        TimeWindow window = getCompletionWindow(frequency);
-        if (evidenceRepository.hasEvidenceForTaskInWindow(user.getId(), resolvedTitle, window.start(), window.end())) {
-            throw new IllegalStateException(getRepeatMessage(frequency));
+        Optional<EvidenceStatus> existingStatus = getCompletionStatusInCurrentWindow(user.getId(), resolvedTitle, frequency);
+        if (existingStatus.isPresent()) {
+            throw new IllegalStateException(getRepeatMessage(existingStatus.get(), frequency));
         }
 
         // Validate photo is provided
@@ -133,6 +134,20 @@ public class EvidenceService {
         return new TimeWindow(dayStart, dayStart.plusDays(1));
     }
 
+    public Optional<EvidenceStatus> getCompletionStatusInCurrentWindow(Long userId, String taskTitle, String frequency) {
+        TimeWindow window = getCompletionWindow(frequency);
+        List<EvidenceStatus> statuses = evidenceRepository.findCompletionStatusesInWindow(
+            userId,
+            taskTitle,
+            window.start(),
+            window.end()
+        );
+        if (statuses.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(statuses.get(0));
+    }
+
     private String getRepeatMessage(String frequency) {
         if ("Weekly".equalsIgnoreCase(frequency)) {
             return "You have already completed this weekly task this week. Try again next week.";
@@ -141,6 +156,16 @@ public class EvidenceService {
             return "You have already completed this monthly task this month. Try again next month.";
         }
         return "You have already completed this daily task today. Try again tomorrow.";
+    }
+
+    private String getRepeatMessage(EvidenceStatus status, String frequency) {
+        if (status == EvidenceStatus.PENDING) {
+            return "Task waiting to be accepted.";
+        }
+        if (status == EvidenceStatus.ACCEPTED) {
+            return "Task already completed.";
+        }
+        return getRepeatMessage(frequency);
     }
 
     /**

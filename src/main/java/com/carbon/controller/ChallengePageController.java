@@ -3,6 +3,7 @@ package com.carbon.controller;
 import org.springframework.stereotype.Controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,8 @@ import org.springframework.http.HttpStatus;
 
 import com.carbon.repository.UserRepository;
 import com.carbon.service.ChallengeService;
+import com.carbon.model.Challenge;
+import com.carbon.model.EvidenceStatus;
 import com.carbon.model.User;
 
 import org.springframework.ui.Model;
@@ -87,8 +90,62 @@ public class ChallengePageController {
                 "message", "Challenge completed successfully",
                 "updatedPoints", updatedPoints
             ));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("message", e.getMessage()));
         } catch (Exception e) {
             // Return error message if something goes wrong (e.g., challenge not found)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/api/challenges/status")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> getChallengeCompletionStatus(
+        @RequestParam Long challengeId,
+        Authentication authentication
+    ) {
+        if (authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "User not authenticated"));
+        }
+
+        User user = userRepository.findByUsername(authentication.getName());
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "User not authenticated"));
+        }
+
+        try {
+            Challenge challenge = challengeService.getChallengeById(challengeId);
+            Optional<EvidenceStatus> completionStatus = challengeService.getCompletionStatusInCurrentWindow(
+                user.getId(),
+                challenge.getTitle(),
+                challenge.getFrequency()
+            );
+
+            if (completionStatus.isEmpty()) {
+                return ResponseEntity.ok(Map.of("completionStatus", "NONE"));
+            }
+
+            EvidenceStatus status = completionStatus.get();
+            if (status == EvidenceStatus.PENDING) {
+                return ResponseEntity.ok(Map.of(
+                    "completionStatus", "PENDING",
+                    "message", "Task waiting to be accepted."
+                ));
+            }
+
+            if (status == EvidenceStatus.ACCEPTED) {
+                return ResponseEntity.ok(Map.of(
+                    "completionStatus", "ACCEPTED",
+                    "message", "Task already completed."
+                ));
+            }
+
+            return ResponseEntity.ok(Map.of("completionStatus", "NONE"));
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("message", e.getMessage()));
         }

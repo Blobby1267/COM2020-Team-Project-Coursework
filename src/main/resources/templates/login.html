@@ -160,9 +160,8 @@
           true: "Invalid username or password.",
           empty: "Username and password cannot be empty.",
           exists: "That username is already taken.",
-          invalid_username:
-            "Username must be at least 4 characters long and contain only letters and numbers.",
-          invalid_password: "Password must be at least 8 characters long.",
+          invalid_username: "Username must be at least 3 characters long and contain only letters and numbers.",
+          invalid_password: "Password must be at least 8 characters long."
         };
 
         const modal = document.getElementById("auth-error-modal");
@@ -187,7 +186,7 @@
           );
         }
 
-        function validateCredentials(form) {
+        function validateCredentials(form, enforceRules) {
           const usernameInput = form.querySelector('input[name="username"]');
           const passwordInput = form.querySelector('input[name="password"]');
 
@@ -196,8 +195,12 @@
 
           usernameInput.value = username;
 
-          if (username.length < 4) {
-            return "Username must be at least 4 characters long.";
+          if (!enforceRules) {
+            return null;
+          }
+
+          if (username.length < 3) {
+            return "Username must be at least 3 characters long.";
           }
 
           if (!/^[A-Za-z0-9]+$/.test(username)) {
@@ -215,7 +218,7 @@
           event.preventDefault();
           const form = event.currentTarget;
 
-          const validationError = validateCredentials(form);
+          const validationError = validateCredentials(form, form.id === "register-form");
           if (validationError) {
             showError(validationError);
             return;

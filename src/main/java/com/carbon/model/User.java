@@ -22,7 +22,7 @@ import jakarta.persistence.Column;
 @Entity // Tells JPA this class maps to a database table
 @Table(name = "users")
 public class User {
-    public static final int MIN_USERNAME_LENGTH = 4;
+    public static final int MIN_USERNAME_LENGTH = 3;
     public static final int MIN_PASSWORD_LENGTH = 8;
 
     private static final Pattern USERNAME_PATTERN = Pattern.compile("^[A-Za-z0-9]+$");

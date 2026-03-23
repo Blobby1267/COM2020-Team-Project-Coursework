@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.carbon.model.Challenge;
 import com.carbon.model.Evidence;
+import com.carbon.model.EvidenceStatus;
 import com.carbon.model.User;
 import com.carbon.repository.ChallengeRepository;
 import com.carbon.repository.EvidenceRepository;
@@ -137,5 +139,57 @@ public class TestEvidence {
 
         //Check exception message
         assertEquals("Only image uploads are allowed.",exception.getMessage());
+    }
+
+    @Test
+    void TestSubmitEvidenceDuplicatePendingReturnsPendingMessage() throws IOException {
+        User testUser = new User();
+        testUser.setUsername("testUser");
+        when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
+
+        Challenge testChallenge = new Challenge();
+        testChallenge.setTitle("testTitle");
+        testChallenge.setFrequency("Daily");
+        when(challengeRepository.findById(anyLong())).thenReturn(Optional.of(testChallenge));
+        when(evidenceRepositoryMock.findCompletionStatusesInWindow(any(), anyString(), any(), any()))
+            .thenReturn(List.of(EvidenceStatus.PENDING));
+
+        MultipartFile mockPhoto = mock(MultipartFile.class);
+        when(mockPhoto.isEmpty()).thenReturn(false);
+        when(mockPhoto.getContentType()).thenReturn("image/png");
+
+        Throwable exception = assertThrows(
+            IllegalStateException.class,
+            () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L)
+        );
+
+        assertEquals("Task waiting to be accepted.", exception.getMessage());
+        verify(evidenceRepositoryMock, never()).save(any(Evidence.class));
+    }
+
+    @Test
+    void TestSubmitEvidenceDuplicateAcceptedReturnsCompletedMessage() throws IOException {
+        User testUser = new User();
+        testUser.setUsername("testUser");
+        when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
+
+        Challenge testChallenge = new Challenge();
+        testChallenge.setTitle("testTitle");
+        testChallenge.setFrequency("Weekly");
+        when(challengeRepository.findById(anyLong())).thenReturn(Optional.of(testChallenge));
+        when(evidenceRepositoryMock.findCompletionStatusesInWindow(any(), anyString(), any(), any()))
+            .thenReturn(List.of(EvidenceStatus.ACCEPTED));
+
+        MultipartFile mockPhoto = mock(MultipartFile.class);
+        when(mockPhoto.isEmpty()).thenReturn(false);
+        when(mockPhoto.getContentType()).thenReturn("image/jpeg");
+
+        Throwable exception = assertThrows(
+            IllegalStateException.class,
+            () -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L)
+        );
+
+        assertEquals("Task already completed.", exception.getMessage());
+        verify(evidenceRepositoryMock, never()).save(any(Evidence.class));
     }
 }

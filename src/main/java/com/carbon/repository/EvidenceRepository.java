@@ -42,6 +42,9 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
     @Query("SELECT CASE WHEN COUNT(e) > 0 THEN TRUE ELSE FALSE END FROM Evidence e WHERE e.user.id = :userId AND e.taskTitle = :taskTitle AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED)")
     boolean hasEvidenceForTaskInWindow(@Param("userId") Long userId, @Param("taskTitle") String taskTitle, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
+    @Query("SELECT e.status FROM Evidence e WHERE e.user.id = :userId AND e.taskTitle = :taskTitle AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED) ORDER BY e.submittedAt DESC")
+    List<EvidenceStatus> findCompletionStatusesInWindow(@Param("userId") Long userId, @Param("taskTitle") String taskTitle, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
     @Query("SELECT DISTINCT e.taskTitle FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED)")
     List<String> findTodayCompletedTaskTitles(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
@@ -55,6 +58,9 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
     @Query("SELECT COUNT(DISTINCT e.challenge.taxonomy) FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED AND e.challenge IS NOT NULL AND e.challenge.taxonomy IS NOT NULL AND TRIM(e.challenge.taxonomy) <> ''")
     long countDistinctAcceptedTaxonomiesByUserId(@Param("userId") Long userId);
+
+    long deleteByUser_Id(Long userId);
+
 }
 
 interface DataForProfile{

@@ -10,12 +10,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carbon.model.User;
+import com.carbon.model.Group;
+import com.carbon.repository.BadgeRepository;
+import com.carbon.repository.EvidenceRepository;
+import com.carbon.repository.GroupRepository;
+import com.carbon.repository.LeaderboardRepository;
 import com.carbon.repository.UserRepository;
+import com.carbon.repository.UserBadgeRepository;
 import com.carbon.service.CustomUserDetailsService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +36,21 @@ public class SettingsController {
 
     @Autowired 
     private UserRepository userRepository;
+
+    @Autowired
+    private EvidenceRepository evidenceRepository;
+
+    @Autowired
+    private BadgeRepository badgeRepository;
+
+    @Autowired
+    private UserBadgeRepository userBadgeRepository;
+
+    @Autowired
+    private LeaderboardRepository leaderboardRepository;
+
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -90,6 +112,7 @@ public class SettingsController {
     } 
 
     @PostMapping("/delete_account")
+    @Transactional
     public String deleteAccount(@RequestParam String username, @RequestParam String password, Authentication authentication, Model model, HttpServletRequest request){
         User user = userRepository.findByUsername(authentication.getName());
 
@@ -97,8 +120,19 @@ public class SettingsController {
             model.addAttribute("deleteError", "Incorrect username or password");
             return "settings";
         }
-        request.getSession().invalidate();
+
+        Long userId = user.getId();
+
+        groupRepository.deleteMembershipsByUserId(userId);
+        groupRepository.deleteByOwner_Id(userId);
+
+        evidenceRepository.deleteByUser_Id(userId);
+        badgeRepository.deleteByUserId(userId);
+        userBadgeRepository.deleteByUserId(userId);
+        leaderboardRepository.deleteByUserId(userId);
+
         userRepository.delete(user);
-        return "redirect:/goodbye";
+        request.getSession().invalidate();
+        return "redirect:/login?accountdeleted=true";
     }
 }

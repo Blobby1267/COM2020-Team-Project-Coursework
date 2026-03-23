@@ -38,10 +38,6 @@ public class CustomUserDetailsService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        String normalizedUsername = User.normalizeUsername(username);
 
-       if (!User.isValidUsername(normalizedUsername)) {
-           throw new UsernameNotFoundException("Invalid username format");
-       }
-
        // Fetch user from database
        User user = userRepository.findByUsername(normalizedUsername);
        

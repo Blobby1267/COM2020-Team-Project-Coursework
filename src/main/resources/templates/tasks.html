@@ -250,6 +250,19 @@
               return extraHeaders;
             }
 
+            function showPopup(message) {
+              window.alert(message);
+            }
+
+            async function parseResponsePayload(response) {
+              const contentType = response.headers.get("content-type") || "";
+              if (contentType.includes("application/json")) {
+                return response.json();
+              }
+              const text = await response.text();
+              return { message: text };
+            }
+
             // Toggle challenge details visibility
             function openTab(tab) {
               var i, x;
@@ -261,11 +274,37 @@
             }
 
             // Navigate to evidence page with pre-filled challenge data
-            function addEvidenceFromData(button) {
+            async function addEvidenceFromData(button) {
               const challengeId = button.getAttribute("data-challenge-id");
               const title = button.getAttribute("data-title");
               const points = button.getAttribute("data-points");
               const encodedTitle = encodeURIComponent(title);
+
+              try {
+                const statusResponse = await fetch(
+                  `/api/challenges/status?challengeId=${encodeURIComponent(challengeId)}`,
+                  {
+                    method: "GET",
+                    credentials: "same-origin",
+                    headers: withCsrfHeaders(),
+                  },
+                );
+
+                const statusPayload = await parseResponsePayload(statusResponse);
+                if (statusResponse.ok) {
+                  if (statusPayload.completionStatus === "PENDING") {
+                    showPopup(statusPayload.message || "Task waiting to be accepted.");
+                    return;
+                  }
+                  if (statusPayload.completionStatus === "ACCEPTED") {
+                    showPopup(statusPayload.message || "Task already completed.");
+                    return;
+                  }
+                }
+              } catch (error) {
+                // Fall back to opening the evidence page if status check fails.
+              }
+
               window.location.href = `/evidence?challengeId=${challengeId}&title=${encodedTitle}&points=${points}`;
             }
 
@@ -285,7 +324,7 @@
                   credentials: "same-origin",
                 });
 
-                const payload = await response.json();
+                const payload = await parseResponsePayload(response);
 
                 if (response.ok) {
                   const pointsLabel = document.getElementById("user-points");
@@ -301,18 +340,15 @@
                     window.location.reload();
                   }, 1000);
                 } else {
-                  button.textContent = "Failed";
+                  const message = payload?.message || "Task could not be completed.";
+                  showPopup(message);
+                  button.textContent = "Complete";
                   button.disabled = false;
-                  setTimeout(() => {
-                    button.textContent = "Complete";
-                  }, 2000);
                 }
               } catch (error) {
-                button.textContent = "Error";
+                showPopup("Something went wrong while completing the task.");
+                button.textContent = "Complete";
                 button.disabled = false;
-                setTimeout(() => {
-                  button.textContent = "Complete";
-                }, 2000);
               }
             }
 
