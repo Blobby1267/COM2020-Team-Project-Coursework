@@ -75,7 +75,7 @@
           <!-- Data collection consent checkbox -->
           <p>
             <label class="checkbox" for="consent">
-              <input type="checkbox" id="consent" value="true" />
+              <input type="checkbox" id="consent" name="consent" value="true" />
               <span class="checkmark"></span>
               I consent to data collection following guidelines outlined in
               legal documents
@@ -189,6 +189,7 @@
         function validateCredentials(form, enforceRules) {
           const usernameInput = form.querySelector('input[name="username"]');
           const passwordInput = form.querySelector('input[name="password"]');
+          const consentInput = form.querySelector('input[name="consent"]');
 
           const username = usernameInput.value.trim();
           const password = passwordInput.value;
@@ -209,6 +210,10 @@
 
           if (password.length < 8) {
             return "Password must be at least 8 characters long.";
+          }
+
+          if (consentInput && !consentInput.checked) {
+            return "Please agree to the terms and conditions.";
           }
 
           return null;
