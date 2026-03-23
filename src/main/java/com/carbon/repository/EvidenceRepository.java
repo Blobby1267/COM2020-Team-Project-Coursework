@@ -56,6 +56,8 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
     @Query("SELECT COUNT(DISTINCT e.challenge.taxonomy) FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED AND e.challenge IS NOT NULL AND e.challenge.taxonomy IS NOT NULL AND TRIM(e.challenge.taxonomy) <> ''")
     long countDistinctAcceptedTaxonomiesByUserId(@Param("userId") Long userId);
 
+    long deleteByUser_Id(Long userId);
+
 }
 
 interface DataForProfile{

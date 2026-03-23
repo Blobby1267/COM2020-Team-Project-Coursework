@@ -11,5 +11,7 @@ import com.carbon.model.LeaderboardEntry;
  */
 public interface LeaderboardRepository
         extends JpaRepository<LeaderboardEntry, Long> {
+
+        long deleteByUserId(Long userId);
 }
 

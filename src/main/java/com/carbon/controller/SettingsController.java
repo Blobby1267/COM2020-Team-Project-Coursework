@@ -16,7 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carbon.model.User;
+import com.carbon.model.Group;
+import com.carbon.repository.BadgeRepository;
+import com.carbon.repository.EvidenceRepository;
+import com.carbon.repository.GroupRepository;
+import com.carbon.repository.LeaderboardRepository;
 import com.carbon.repository.UserRepository;
+import com.carbon.repository.UserBadgeRepository;
 import com.carbon.service.CustomUserDetailsService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,6 +36,21 @@ public class SettingsController {
 
     @Autowired 
     private UserRepository userRepository;
+
+    @Autowired
+    private EvidenceRepository evidenceRepository;
+
+    @Autowired
+    private BadgeRepository badgeRepository;
+
+    @Autowired
+    private UserBadgeRepository userBadgeRepository;
+
+    @Autowired
+    private LeaderboardRepository leaderboardRepository;
+
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -102,7 +123,15 @@ public class SettingsController {
 
         Long userId = user.getId();
 
-        userRepository.deleteById(userId);
+        groupRepository.deleteMembershipsByUserId(userId);
+        groupRepository.deleteByOwner_Id(userId);
+
+        evidenceRepository.deleteByUser_Id(userId);
+        badgeRepository.deleteByUserId(userId);
+        userBadgeRepository.deleteByUserId(userId);
+        leaderboardRepository.deleteByUserId(userId);
+
+        userRepository.delete(user);
         request.getSession().invalidate();
         return "redirect:/login?accountdeleted=true";
     }
