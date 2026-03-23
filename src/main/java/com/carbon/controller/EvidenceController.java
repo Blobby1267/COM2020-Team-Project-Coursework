@@ -69,6 +69,8 @@ public class EvidenceController {
             return ResponseEntity.status(HttpStatus.CREATED).body(toSummary(evidence));
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
 

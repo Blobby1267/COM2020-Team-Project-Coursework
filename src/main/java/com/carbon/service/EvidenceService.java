@@ -1,12 +1,17 @@
 package com.carbon.service;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Set;
 import java.util.List;
 import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -31,6 +36,12 @@ import com.carbon.repository.ChallengeRepository;
 public class EvidenceService {
 
     private record TimeWindow(LocalDateTime start, LocalDateTime end) {}
+    private static final Set<String> ALLOWED_IMAGE_CONTENT_TYPES = Set.of(
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/bmp"
+    );
     // Repository for persisting and retrieving evidence submissions
     private final EvidenceRepository evidenceRepository;
     // Repository for user data 
@@ -93,11 +104,15 @@ public class EvidenceService {
         if (photo == null || photo.isEmpty()) {
             throw new IllegalArgumentException("Photo is required.");
         }
-        // Validate photo is an image file
+        // Validate is an allowed image type.
         String contentType = photo.getContentType();
-        if (contentType == null || !contentType.startsWith("image/")) {
+        if (contentType == null || !ALLOWED_IMAGE_CONTENT_TYPES.contains(contentType.toLowerCase())) {
             throw new IllegalArgumentException("Only image uploads are allowed.");
         }
+
+        byte[] imageBytes = photo.getBytes();
+        validateImageFile(imageBytes);
+
         // Create and populate evidence entity
         Evidence evidence = new Evidence();
         evidence.setUser(user);
@@ -105,7 +120,7 @@ public class EvidenceService {
         evidence.setContentType(contentType);
         evidence.setSizeBytes(photo.getSize());
         evidence.setTaskTitle(resolvedTitle);
-        evidence.setPhoto(photo.getBytes()); // Store binary image data
+        evidence.setPhoto(imageBytes); // Store original validated image bytes
         evidence.setStatus(EvidenceStatus.PENDING); // Sets status
         evidence.setSubmittedAt(LocalDateTime.now());
 
@@ -115,6 +130,13 @@ public class EvidenceService {
         }
 
         return initializeSummaryFields(evidenceRepository.save(evidence));
+    }
+
+    private void validateImageFile(byte[] uploadedBytes) throws IOException {
+        BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(uploadedBytes));
+        if (bufferedImage == null) {
+            throw new IllegalArgumentException("Please submit a valid image file.");
+        }
     }
 
     private TimeWindow getCompletionWindow(String frequency) {
