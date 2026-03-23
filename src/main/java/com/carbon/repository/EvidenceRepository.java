@@ -32,7 +32,7 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
     Collection<DataForProfile> findByUserId(long USER_ID);
 
-    @Query("SELECT e.challenge.points as points, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
+    @Query("SELECT COALESCE(e.challenge.carbonSaved, 0) as carbonSaved, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
     List<DataForAnalytics> findAcceptedEvidenceByUserId(@Param("userId") long userId);
 
     /**

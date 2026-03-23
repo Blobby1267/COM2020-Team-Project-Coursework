@@ -3,7 +3,7 @@ package com.carbon.model;
 import java.time.LocalDateTime;
 
 public interface DataForAnalytics{
-    Integer getPoints();
+    Double getCarbonSaved();
     String getTaxonomy();
     LocalDateTime getSubmittedAt();
 }

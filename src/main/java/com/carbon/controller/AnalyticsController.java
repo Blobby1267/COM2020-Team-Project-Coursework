@@ -56,13 +56,12 @@ public class AnalyticsController {
         List<DataForAnalytics> weekEvidence = allEvidence.stream().filter(e -> e.getSubmittedAt().isAfter(sevenDaysAgo)).collect(Collectors.toList());        
         List<DataForAnalytics> monthEvidence = allEvidence.stream().filter(e -> e.getSubmittedAt().isAfter(oneMonthAgo)).collect(Collectors.toList());  
         
-        int[] weekPoints = new int[7];
-        int[] monthPoints = new int[30];
-        List<Integer> allPoints = new ArrayList<Integer>();
+        double[] weekPoints = new double[7];
+        double[] monthPoints = new double[30];
 
-        List<Integer> weekPointsPie = new ArrayList<Integer>();
-        List<Integer> monthPointsPie = new ArrayList<Integer>();
-        List<Integer> allPointsPie = new ArrayList<Integer>();
+        List<Double> weekPointsPie = new ArrayList<Double>();
+        List<Double> monthPointsPie = new ArrayList<Double>();
+        List<Double> allPointsPie = new ArrayList<Double>();
 
         List<String> weekTaxPie = new ArrayList<String>();
         List<String> monthTaxPie = new ArrayList<String>();
@@ -73,42 +72,42 @@ public class AnalyticsController {
         for(DataForAnalytics d : weekEvidence){
             LocalDate submittedDate = d.getSubmittedAt().toLocalDate();
             int dayIndex = Math.abs(((int) ChronoUnit.DAYS.between(submittedDate, today))-6);
-            weekPoints[dayIndex] += d.getPoints();
+            weekPoints[dayIndex] += d.getCarbonSaved();
             int p = weekTaxPie.indexOf(d.getTaxonomy());
             if(p == -1){
                 weekTaxPie.add(d.getTaxonomy());
-                weekPointsPie.add(d.getPoints());
+                weekPointsPie.add(d.getCarbonSaved());
             }
             else{
-                weekPointsPie.set(p, weekPointsPie.get(p)+d.getPoints());
+                weekPointsPie.set(p, weekPointsPie.get(p)+d.getCarbonSaved());
             }
         }
 
         for(DataForAnalytics d : monthEvidence){
             LocalDate submittedDate = d.getSubmittedAt().toLocalDate();
             int dayIndex = Math.abs(((int) ChronoUnit.DAYS.between(submittedDate, today)) - 29);
-            monthPoints[dayIndex] += d.getPoints();
+            monthPoints[dayIndex] += d.getCarbonSaved();
             int p = monthTaxPie.indexOf(d.getTaxonomy());
             if(p == -1){
                 monthTaxPie.add(d.getTaxonomy());
-                monthPointsPie.add(d.getPoints());
+                monthPointsPie.add(d.getCarbonSaved());
             }
             else{
-                monthPointsPie.set(p, monthPointsPie.get(p)+d.getPoints());
+                monthPointsPie.set(p, monthPointsPie.get(p)+d.getCarbonSaved());
             }
         }
 
-        Map<YearMonth, Integer> pointsByMonth = new TreeMap<>();
+        Map<YearMonth, Double> pointsByMonth = new TreeMap<>();
         for(DataForAnalytics d : allEvidence){
             YearMonth month = YearMonth.from(d.getSubmittedAt());
-            pointsByMonth.merge(month, d.getPoints(), Integer::sum);
+            pointsByMonth.merge(month, d.getCarbonSaved(), Double::sum);
             int p = allTaxPie.indexOf(d.getTaxonomy());
             if(p == -1){
                 allTaxPie.add(d.getTaxonomy());
-                allPointsPie.add(d.getPoints());
+                allPointsPie.add(d.getCarbonSaved());
             }
             else{
-                allPointsPie.set(p, allPointsPie.get(p)+d.getPoints());
+                allPointsPie.set(p, allPointsPie.get(p)+d.getCarbonSaved());
             }
         }
         
