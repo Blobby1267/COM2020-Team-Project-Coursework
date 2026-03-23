@@ -1,20 +1,26 @@
 <!-- Settings Page - Update user account information and preferences -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title> Carbon Challenge! </title>
-    <link rel="stylesheet" href="styling.css">
-</head>
+    <title>Carbon Challenge!</title>
+    <link rel="stylesheet" href="styling.css" />
+  </head>
 
-<body>
+  <body>
     <!-- Top navigation bar with logo and logout functionality -->
     <div id="top-bar">
-      <img src="Footprint.png" id="logo" alt="footprint" />
-      <h1>FOOTPRINT</h1>
+      <div id="topbar-left">
+        <img src="Footprint.png" id="logo" alt="footprint" />
+        <h1>FOOTPRINT</h1>
+      </div>
       <!-- Logout form with CSRF protection -->
-      <form th:action = "@{/logout}" th:object = "${user}"method="post">
-        <input type = "hidden" th:name = "${_csrf.parameterName}" th:value = "${_csrf.token}" />
+      <form th:action="@{/logout}" th:object="${user}" method="post">
+        <input
+          type="hidden"
+          th:name="${_csrf.parameterName}"
+          th:value="${_csrf.token}"
+        />
         <button class="log-out" type="submit">Log Out</button>
       </form>
     </div>
@@ -30,7 +36,9 @@
         <a href="analytics">Analytics</a>
         <a href="evidence">Evidence</a>
         <!-- Challenges link only visible to moderators using Spring Security authorization -->
-        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges">Challenges</a>
+        <a sec:authorize="hasRole('ROLE_MODERATOR')" href="challenges"
+          >Challenges</a
+        >
         <a class="active" href="settings">Settings</a>
         <a href="travel">Travel</a>
         <a href="badges">Badges</a>
@@ -39,107 +47,124 @@
       <!-- Main content area with settings forms -->
       <div id="task-information-container">
         <div class="settings-box container" id="settings-box">
-
           <span>
-          <h2>Update username:</h2>
-          <!-- Form to change username -->
-          <form th:action="@{/update_username}" method="post">
+            <h2>Update username:</h2>
+            <!-- Form to change username -->
+            <form th:action="@{/update_username}" method="post">
               <p>
-                  <input name="oldUsername" placeholder="Old username..." />
+                <input name="oldUsername" placeholder="Old username..." />
               </p>
               <p>
-                  <input name="newUsername" placeholder="New username..."/>
-              </p>
-              <p>
-                <button type="submit">Submit</button>
-              </p>
-          </form>
-
-
-          <h2>Update password:</h2>
-          <!-- Form to change password -->
-          <form th:action="@{/update_password}" method="post">
-              <p>
-                  <input name="oldPassword" placeholder="Old password..." />
-              </p>
-              <p>
-                  <input name="newPassword" placeholder="New password..."/>
+                <input name="newUsername" placeholder="New username..." />
               </p>
               <p>
                 <button type="submit">Submit</button>
               </p>
-          </form>
+            </form>
+
+            <h2>Update password:</h2>
+            <!-- Form to change password -->
+            <form th:action="@{/update_password}" method="post">
+              <p>
+                <input name="oldPassword" placeholder="Old password..." />
+              </p>
+              <p>
+                <input name="newPassword" placeholder="New password..." />
+              </p>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+            </form>
           </span>
           <span>
-          <h2>Update year:</h2>
-          <!-- Form to update year of study/role -->
-          <form th:action="@{/update_year}" method="post">
+            <h2>Update year:</h2>
+            <!-- Form to update year of study/role -->
+            <form th:action="@{/update_year}" method="post">
               <p>
                 <select name="year">
-                    <option value="First_Year">First Year</option>
-                    <option value="Second_Year">Second Year</option>
-                    <option value="Third_Year">Third Year</option>
-                    <option value="Fourth_Year">Fourth Year</option>
-                    <option value="PostGraduate">PostGraduate</option>
-                    <option value="Staff">Staff</option>
+                  <option value="First_Year">First Year</option>
+                  <option value="Second_Year">Second Year</option>
+                  <option value="Third_Year">Third Year</option>
+                  <option value="Fourth_Year">Fourth Year</option>
+                  <option value="PostGraduate">PostGraduate</option>
+                  <option value="Staff">Staff</option>
                 </select>
               </p>
               <p>
                 <button type="submit">Submit</button>
               </p>
-          </form>
-          <div>
-            
-          </div>
-          <h2>Update campus:</h2>
-          <!-- Form to update campus location -->
-          <form th:action="@{/update_campus}" method="post">
+            </form>
+            <div></div>
+            <h2>Update campus:</h2>
+            <!-- Form to update campus location -->
+            <form th:action="@{/update_campus}" method="post">
               <p>
                 <select name="campus">
-                    <option value="Streatham">Streatham </option>
-                    <option value="St Lukes">St Lukes</option>
-                    <option value="Penryn">Penryn </option>
-                    <option value="Truro">Truro</option>
+                  <option value="Streatham">Streatham</option>
+                  <option value="St Lukes">St Lukes</option>
+                  <option value="Penryn">Penryn</option>
+                  <option value="Truro">Truro</option>
                 </select>
               </p>
               <p>
                 <button type="submit">Submit</button>
               </p>
-          </form>
+            </form>
 
-          <!-- Contact information display section -->
-          <h1>Contact details:</h1>
-          <div class="contacts">
-            <p>Name: </p>
-            <p>Phone:</p>
-            <p>Email:</p>
-            <p>terms...</p>
-          </div>
-          </span> 
+            <!-- Contact information display section -->
+            <h1>Contact details:</h1>
+            <div class="contacts">
+              <p>Name:</p>
+              <p>Phone:</p>
+              <p>Email:</p>
+              <p>terms...</p>
+            </div>
+          </span>
           <span>
             <!-- Account deletion button -->
-            <button onclick="document.getElementById('deleteModal').showModal()" class="delete-button">Delete Account</button>
+            <button
+              onclick="document.getElementById('deleteModal').showModal()"
+              class="delete-button"
+            >
+              Delete Account
+            </button>
 
             <dialog id="deleteModal">
               <h2>Delete Account</h2>
-              <p>Warning this is permanent and can not be undone. Please enter your details to confirm</p>
+              <p>
+                Warning this is permanent and can not be undone. Please enter
+                your details to confirm
+              </p>
               <form method="post" th:action="@{/delete_account}">
                 <p>
-                  <input type="text" name="username" placeholder="Username...">
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Username..."
+                  />
                 </p>
                 <p>
-                  <input type="password" name="password" placeholder="Password...">
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password..."
+                  />
                 </p>
                 <p th:if="${deleteError}" th:text="${deleteError}"></p>
                 <p>
-                  <button type="button" onclick="document.getElementById('deleteModal').close()">Cancel</button>
+                  <button
+                    type="button"
+                    onclick="document.getElementById('deleteModal').close()"
+                  >
+                    Cancel
+                  </button>
                   <button type="submit">Delete Account</button>
                 </p>
               </form>
             </dialog>
-          </span>     
+          </span>
         </div>
-    </div>
+      </div>
     </div>
 
     <script>
@@ -151,5 +176,5 @@
         dropdown_menu.classList.toggle("open");
       });
     </script>
-</body>
-</html> 
+  </body>
+</html>
