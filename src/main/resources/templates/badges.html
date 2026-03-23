@@ -38,11 +38,11 @@
       <div class="badges-container">
         <h1>Badges</h1>
         <div class="badges-grid">
-            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Amateur Ecologist" data-desc="Have 5 evidences approved.">
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Amateur Ecologist" data-desc="Have 5 submitted evidences approved by moderators.">
               <img th:src="${completedBadgeNames.contains('amateur_ecologist') ? '/team_project_badges/amateur_ecologist.png' : '/team_project_badges_bw/bw_amateur_ecologist.png'}" src="/team_project_badges_bw/bw_amateur_ecologist.png" alt="Amateur Ecologist badge" loading="lazy" />
               <p>Amateur Ecologist</p>
             </div>
-            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Certified Ecologist" data-desc="Have 25 evidences approved.">
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Certified Ecologist" data-desc="Have 25 submitted evidences approved by moderators.">
               <img th:src="${completedBadgeNames.contains('certified_ecologist') ? '/team_project_badges/certified_ecologist.png' : '/team_project_badges_bw/bw_certified_ecologist.png'}" src="/team_project_badges_bw/bw_certified_ecologist.png" alt="Certified Ecologist badge" loading="lazy" />
               <p>Certified Ecologist</p>
             </div>
@@ -58,7 +58,7 @@
               <img th:src="${completedBadgeNames.contains('eco_soldier') ? '/team_project_badges/eco_soldier.png' : '/team_project_badges_bw/bw_eco_soldier.png'}" src="/team_project_badges_bw/bw_eco_soldier.png" alt="Eco Soldier badge" loading="lazy" />
               <p>Eco Soldier</p>
             </div>
-            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Field Ecologist" data-desc="Have 10 evidences approved.">
+            <div class="badge-card" onclick="openBadgeModal(this)" data-title="Field Ecologist" data-desc="Have 10 submitted evidences approved by moderators.">
               <img th:src="${completedBadgeNames.contains('field_ecologist') ? '/team_project_badges/field_ecologist.png' : '/team_project_badges_bw/bw_field_ecologist.png'}" src="/team_project_badges_bw/bw_field_ecologist.png" alt="Field Ecologist badge" loading="lazy" />
               <p>Field Ecologist</p>
             </div>
