@@ -104,6 +104,20 @@ label {
   align-items: center;
 }
 
+.sidebar label.checkbox a {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  text-decoration: underline;
+  font-size: inherit;
+}
+
+.sidebar.login label.checkbox {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
 .sidebar {
   padding: 1em;
   background-color: #007d69;
@@ -870,10 +884,6 @@ canvas {
     position: absolute;
     width: 100%;
   }
-
-  #top-bar h1 {
-  }
-
   #topbar-left {
     height: 10em;
   }
@@ -958,7 +968,12 @@ canvas {
 
     text-align: center;
     color: white;
-    font-size: 1.25em;
+    font-size: 0.95em;
+  }
+
+  .sidebar.login label.checkbox {
+    font-size: 0.85em;
+    line-height: 1.35;
   }
 
   input[id="consent"] {

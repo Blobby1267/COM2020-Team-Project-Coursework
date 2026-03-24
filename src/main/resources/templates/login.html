@@ -77,12 +77,13 @@
             <label class="checkbox" for="consent">
               <input type="checkbox" id="consent" name="consent" value="true" />
               <span class="checkmark"></span>
-              I consent and agree to the
-              <a href="/Terms%20%26%20Conditions.pdf" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>
-              and
-              <a href="/Accessibility%20Statement.pdf" target="_blank" rel="noopener noreferrer">Accessibility Statement</a>
-              of this website, including the collection and use of my data for the purpose of providing the services offered by this website and improving user experience. I understand that I can withdraw my consent at any time by contacting the website administrators.
-              
+              I consent and agree to the website policies.
+              Terms &amp; Conditions:
+              <a href="/Terms%20%26%20Conditions.pdf" th:href="@{/Terms%20%26%20Conditions.pdf}" target="_blank" rel="noopener noreferrer">Read PDF</a>
+              <a href="/Terms%20%26%20Conditions.pdf" th:href="@{/Terms%20%26%20Conditions.pdf}" download="Terms-and-Conditions.pdf">Download PDF</a>
+              Accessibility Statement:
+              <a href="/Accessibility%20Statement.pdf" th:href="@{/Accessibility%20Statement.pdf}" target="_blank" rel="noopener noreferrer">Read PDF</a>
+              <a href="/Accessibility%20Statement.pdf" th:href="@{/Accessibility%20Statement.pdf}" download="Accessibility-Statement.pdf">Download PDF</a>
             </label>
           </p>
           <p>
@@ -295,6 +296,11 @@
         document
           .getElementById("login-form")
           .addEventListener("submit", submitAuthForm);
+        document.querySelectorAll('label.checkbox a').forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.stopPropagation();
+          });
+        });
         closeButton.addEventListener("click", hideError);
         modal.addEventListener("click", (event) => {
           if (event.target === modal) {
