@@ -860,6 +860,9 @@ canvas {
 }
 
 @media screen and (max-width: 1000px) {
+  .checkbox a{
+    font-size: 1em;
+  }
   label{
     font-size: 2em;
   }
@@ -917,7 +920,7 @@ canvas {
 
   select,
   input {
-    font-size: 2.5em;
+    font-size: 2em;
     background-color: white;
     border-radius: 15px;
     padding-top: 0.75em;
@@ -1052,11 +1055,12 @@ canvas {
   .sidebar.login label a{
     text-decoration: underline;
     color: lightblue;
+    font-size: 1em;
   }
 
   input[id="consent"] {
-    width: 1em;
-    height: 1em;
+    width: 0.75em;
+    height: 0.75em;
   }
 
   .title {
