@@ -1,6 +1,6 @@
 <!-- Profile Page - Display user's completed tasks and activity history -->
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8" />
     <title>Carbon Challenge!</title>
@@ -56,11 +56,13 @@
               <th>Reason</th>
             </tr>
             <tr th:each="evidence, iterStat : ${evidence}">
-              <td th:text="${evidence.challenge.title}"></td>
               <td
-                th:text="${#temporals.format(evidence.SubmittedAt, 'dd/MM/yyy HH:mm')}"
+                th:text="${evidence.taskTitle != null and !#strings.isEmpty(evidence.taskTitle) ? evidence.taskTitle : (evidence.challenge != null ? evidence.challenge.title : '-')}"
               ></td>
-              <td th:text="${evidence.challenge.points}"></td>
+              <td
+                th:text="${evidence.submittedAt != null ? #temporals.format(evidence.submittedAt, 'dd/MM/yyyy HH:mm') : '-'}"
+              ></td>
+              <td th:text="${evidence.challenge != null ? evidence.challenge.points : '-'}"></td>
               <td th:text="${evidence.status}"></td>
               <td th:text="${evidence.reason != null and !#strings.isEmpty(evidence.reason) ? evidence.reason : '-'}"></td>
             </tr>

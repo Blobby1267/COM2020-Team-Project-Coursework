@@ -1,6 +1,5 @@
 package com.carbon.controller;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Authentication auth, Model model){
         User user = userRepository.findByUsername(auth.getName());
-        Collection evidenceList = evidenceRepository.findByUserId(user.getId());
+        List<Evidence> evidenceList = evidenceRepository.findByUserId(user.getId());
         model.addAttribute("evidence", evidenceList);
         return "profile";
     }

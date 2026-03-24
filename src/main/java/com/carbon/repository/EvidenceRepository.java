@@ -6,10 +6,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
-import com.carbon.model.Challenge;
 import com.carbon.model.Evidence;
 import com.carbon.model.EvidenceStatus;
 import com.carbon.model.DataForAnalytics;
@@ -30,7 +28,7 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
      */
     List<Evidence> findByStatus(EvidenceStatus status);
 
-    Collection<DataForProfile> findByUserId(long USER_ID);
+    List<Evidence> findByUserId(long userId);
 
     @Query("SELECT COALESCE(e.challenge.carbonSaved, 0) as carbonSaved, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
     List<DataForAnalytics> findAcceptedEvidenceByUserId(@Param("userId") long userId);
@@ -69,10 +67,4 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
 }
 
-interface DataForProfile{
-    Challenge getChallenge();
-    EvidenceStatus getStatus();
-    LocalDateTime getSubmittedAt();
-    String getReason();
-} 
-    
+
