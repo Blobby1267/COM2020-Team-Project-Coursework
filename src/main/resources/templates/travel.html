@@ -1,6 +1,6 @@
 <!-- Travel Page - Log eco-friendly travel (walking/biking) and calculate points earned -->
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8" />
     <title>Carbon Challenge!</title>
@@ -47,11 +47,17 @@
       <div id="task-information-container">
         <div class="challenges-box">
           <h1>Enter Travel Info</h1>
+          <p>Only one journey can be submitted per day.</p>
+          <p>Journeys over 20km require photo evidence and moderator approval.</p>
+          <p th:if="${travelError}" style="color: #b42318" th:text="${travelError}">
+            Travel submission failed.
+          </p>
           <!-- Form to submit travel distance and method -->
           <form
             th:action="@{/api/travel/submit}"
             method="post"
             id="evidence-form"
+            enctype="multipart/form-data"
           >
             <!-- Travel method selection dropdown -->
             <label for="travelType">Travel Method</label><br />
@@ -66,10 +72,14 @@
               id="distance"
               name="distance"
               placeholder="5"
-              min="1"
+              min="0.1"
               step="0.1"
               required
             /><br /><br />
+            <div id="travel-evidence-block" style="display: none">
+              <label for="photo">Photo evidence (required above 20km)</label><br />
+              <input type="file" id="photo" name="photo" accept="image/*" /><br /><br />
+            </div>
             <!-- CSRF token for security -->
             <input
               type="hidden"
@@ -107,6 +117,12 @@
                 <strong>Points Earned:</strong>
                 <span th:text="${calculation.pointsEarned}">0</span>
               </p>
+              <p th:if="${calculation.requiresModeratorApproval}">
+                <strong>Status:</strong> Pending moderator review
+              </p>
+              <p th:if="${!calculation.requiresModeratorApproval}">
+                <strong>Status:</strong> Accepted automatically
+              </p>
               <p>
                 <strong>Total Points:</strong>
                 <span th:text="${calculation.totalPoints}">0</span>
@@ -120,6 +136,24 @@
     <script>
       let dropdown = document.querySelector(".dropdown-button");
       let dropdown_menu = document.querySelector(".sidebar");
+      let distanceInput = document.querySelector("#distance");
+      let evidenceBlock = document.querySelector("#travel-evidence-block");
+      let photoInput = document.querySelector("#photo");
+
+      function updateEvidenceRequirement() {
+        const distance = Number(distanceInput.value || 0);
+        const needsEvidence = distance > 20;
+        evidenceBlock.style.display = needsEvidence ? "block" : "none";
+        if (photoInput) {
+          photoInput.required = needsEvidence;
+          if (!needsEvidence) {
+            photoInput.value = "";
+          }
+        }
+      }
+
+      distanceInput.addEventListener("input", updateEvidenceRequirement);
+      updateEvidenceRequirement();
 
       dropdown.addEventListener("click", (e) => {
         e.preventDefault();

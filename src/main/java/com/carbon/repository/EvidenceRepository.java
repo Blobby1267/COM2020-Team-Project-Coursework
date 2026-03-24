@@ -51,6 +51,9 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
     @Query("SELECT DISTINCT e.taskTitle FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED)")
     List<String> findTodayCompletedTaskTitles(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
+    @Query("SELECT e.status FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED) AND e.taskTitle LIKE :travelTaskPrefix ORDER BY e.submittedAt DESC")
+    List<EvidenceStatus> findTravelStatusesInWindow(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("travelTaskPrefix") String travelTaskPrefix);
+
     long countByUser_IdAndStatus(Long userId, EvidenceStatus status);
 
     @Query("SELECT COUNT(e) FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED AND e.challenge IS NOT NULL AND e.challenge.requiresEvidence = TRUE")

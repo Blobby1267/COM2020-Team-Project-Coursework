@@ -7,6 +7,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Set;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +38,9 @@ import com.carbon.repository.ChallengeRepository;
 public class EvidenceService {
 
     private record TimeWindow(LocalDateTime start, LocalDateTime end) {}
+    private static final String TRAVEL_TASK_PREFIX = "Travel Journey:";
+    private static final Pattern TRAVEL_DISTANCE_PATTERN = Pattern.compile("([0-9]+(?:\\.[0-9]+)?)km$");
+    private static final int TRAVEL_POINTS_PER_KM = 5;
     private static final Set<String> ALLOWED_IMAGE_CONTENT_TYPES = Set.of(
         "image/jpeg",
         "image/png",
@@ -224,6 +229,8 @@ public class EvidenceService {
         Evidence evidence = evidenceRepository.findById(evidenceId)
             .orElseThrow(() -> new IllegalArgumentException("Evidence not found: " + evidenceId));
 
+        EvidenceStatus previousStatus = evidence.getStatus();
+
         String trimmedReason = reason == null ? null : reason.trim();
         if (status != EvidenceStatus.PENDING && !org.springframework.util.StringUtils.hasText(trimmedReason)) {
             throw new IllegalArgumentException("Please provide a reason for this moderation decision.");
@@ -232,14 +239,24 @@ public class EvidenceService {
         evidence.setStatus(status);
         evidence.setReason(trimmedReason);
         
-        // Award points to user if evidence is accepted and linked to a challenge
-        if (status == EvidenceStatus.ACCEPTED && evidence.getChallenge() != null) {
+        // Award points only when transitioning into ACCEPTED to avoid duplicate awards.
+        if (status == EvidenceStatus.ACCEPTED && previousStatus != EvidenceStatus.ACCEPTED && evidence.getChallenge() != null) {
             User user = evidence.getUser();
             Challenge challenge = evidence.getChallenge();
             int currentPoints = user.getPoints();
             int challengePoints = challenge.getPoints();
             user.setPoints(currentPoints + challengePoints);
             userRepository.save(user); // Update user's total points
+        }
+
+        // Travel submissions are identified by title prefix and challenge == null.
+        if (status == EvidenceStatus.ACCEPTED && previousStatus != EvidenceStatus.ACCEPTED && evidence.getChallenge() == null && evidence.getUser() != null) {
+            int pointsToAward = resolveTravelPoints(evidence);
+            if (pointsToAward > 0) {
+                User user = evidence.getUser();
+                user.setPoints(user.getPoints() + pointsToAward);
+                userRepository.save(user);
+            }
         }
 
         if (status == EvidenceStatus.ACCEPTED && evidence.getUser() != null) {
@@ -266,5 +283,18 @@ public class EvidenceService {
             evidence.getUser().getUsername();
         }
         return evidence;
+    }
+
+    private int resolveTravelPoints(Evidence evidence) {
+        String title = evidence.getTaskTitle();
+        if (title == null || !title.startsWith(TRAVEL_TASK_PREFIX)) {
+            return 0;
+        }
+        Matcher matcher = TRAVEL_DISTANCE_PATTERN.matcher(title.trim());
+        if (!matcher.find()) {
+            return 0;
+        }
+        double distance = Double.parseDouble(matcher.group(1));
+        return (int) (distance * TRAVEL_POINTS_PER_KM);
     }
 }
