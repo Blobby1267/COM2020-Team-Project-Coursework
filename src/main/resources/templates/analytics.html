@@ -3,10 +3,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title> Carbon Challenge! </title>
+    <title>Carbon Challenge!</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styling.css">
-</head>
+    <link rel="stylesheet" href="styling.css" />
+  </head>
 
   <body>
     <!-- Top navigation bar with logo and logout functionality -->
@@ -28,7 +28,7 @@
 
     <!-- The sidebar -->
     <div id="main-task-container">
-      <button class="dropdown-button">Menu</button>
+      <button class="dropdown-button">Menu <img src="arrow-down.png" /></button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -81,46 +81,58 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
 
     <script th:inline="javascript">
       const analyticsDataByScope = /*[[${analyticsDataByScope}]]*/ {};
-      const currentYear = /*[[${currentYear}]]*/ '';
-      const currentCampus = /*[[${currentCampus}]]*/ '';
+      const currentYear = /*[[${currentYear}]]*/ "";
+      const currentCampus = /*[[${currentCampus}]]*/ "";
 
-      const timeframeSelect = document.getElementById('timeframeSelect');
-      const scopeSelect = document.getElementById('scopeSelect');
-      const analyticsTitle = document.getElementById('analyticsTitle');
+      const timeframeSelect = document.getElementById("timeframeSelect");
+      const scopeSelect = document.getElementById("scopeSelect");
+      const analyticsTitle = document.getElementById("analyticsTitle");
 
-      const pieContext = document.getElementById('analyticsPieChart').getContext('2d');
-      const lineContext = document.getElementById('analyticsLineChart').getContext('2d');
+      const pieContext = document
+        .getElementById("analyticsPieChart")
+        .getContext("2d");
+      const lineContext = document
+        .getElementById("analyticsLineChart")
+        .getContext("2d");
 
       let pieChart = null;
       let lineChart = null;
 
-      const pieColors = ['#33e9a6', '#013220', '#026440', '#1d8f6c', '#006a6a', '#68b0ab', '#9cc5a1'];
+      const pieColors = [
+        "#33e9a6",
+        "#013220",
+        "#026440",
+        "#1d8f6c",
+        "#006a6a",
+        "#68b0ab",
+        "#9cc5a1",
+      ];
 
       function prettyScopeLabel(scope) {
-        if (scope === 'individual') {
-          return 'Individual';
+        if (scope === "individual") {
+          return "Individual";
         }
-        if (scope === 'year') {
-          return 'Year: ' + (currentYear || 'Unknown');
+        if (scope === "year") {
+          return "Year: " + (currentYear || "Unknown");
         }
-        if (scope === 'campus') {
-          return 'Campus: ' + (currentCampus || 'Unknown');
+        if (scope === "campus") {
+          return "Campus: " + (currentCampus || "Unknown");
         }
         return scope;
       }
 
       function prettyTimeframeLabel(timeframe) {
-        if (timeframe === 'weekly') {
-          return 'Weekly';
+        if (timeframe === "weekly") {
+          return "Weekly";
         }
-        if (timeframe === 'monthly') {
-          return 'Monthly';
+        if (timeframe === "monthly") {
+          return "Monthly";
         }
-        return 'All Time';
+        return "All Time";
       }
 
       function renderCharts() {
@@ -132,49 +144,57 @@
           lineLabels: [],
           linePoints: [],
           pieLabels: [],
-          piePoints: []
+          piePoints: [],
         };
 
-        analyticsTitle.textContent = prettyScopeLabel(scope) + ' - ' + prettyTimeframeLabel(timeframe) + ' Stats';
+        analyticsTitle.textContent =
+          prettyScopeLabel(scope) +
+          " - " +
+          prettyTimeframeLabel(timeframe) +
+          " Stats";
 
         if (pieChart) {
           pieChart.destroy();
         }
         pieChart = new Chart(pieContext, {
-          type: 'pie',
+          type: "pie",
           data: {
             labels: chartData.pieLabels,
-            datasets: [{
-              label: 'Carbon Saved (kg CO2e)',
-              data: chartData.piePoints,
-              backgroundColor: pieColors,
-              borderWidth: 1
-            }]
+            datasets: [
+              {
+                label: "Carbon Saved (kg CO2e)",
+                data: chartData.piePoints,
+                backgroundColor: pieColors,
+                borderWidth: 1,
+              },
+            ],
           },
           options: {
             responsive: true,
             plugins: {
-              legend: { position: 'top' }
-            }
-          }
+              legend: { position: "top" },
+            },
+          },
         });
 
         if (lineChart) {
           lineChart.destroy();
         }
         lineChart = new Chart(lineContext, {
-          type: 'line',
+          type: "line",
           data: {
             labels: chartData.lineLabels,
-            datasets: [{
-              label: 'Carbon Saved (kg CO2e)',
-              data: chartData.linePoints,
-              borderColor: '#026440',
-              backgroundColor: 'rgba(2, 100, 64, 0.2)',
-              borderWidth: 2,
-              fill: true,
-              tension: 0.25
-            }]
+            datasets: [
+              {
+                label: "Carbon Saved (kg CO2e)",
+                data: chartData.linePoints,
+                borderColor: "#026440",
+                backgroundColor: "rgba(2, 100, 64, 0.2)",
+                borderWidth: 2,
+                fill: true,
+                tension: 0.25,
+              },
+            ],
           },
           options: {
             responsive: true,
@@ -182,23 +202,23 @@
               x: {
                 title: {
                   display: true,
-                  text: 'Time'
-                }
+                  text: "Time",
+                },
               },
               y: {
                 title: {
                   display: true,
-                  text: 'Carbon Saved (kg CO2e)'
+                  text: "Carbon Saved (kg CO2e)",
                 },
-                beginAtZero: true
-              }
-            }
-          }
+                beginAtZero: true,
+              },
+            },
+          },
         });
       }
 
-      timeframeSelect.addEventListener('change', renderCharts);
-      scopeSelect.addEventListener('change', renderCharts);
+      timeframeSelect.addEventListener("change", renderCharts);
+      scopeSelect.addEventListener("change", renderCharts);
       renderCharts();
 
       let dropdown = document.querySelector(".dropdown-button");
@@ -207,8 +227,25 @@
       dropdown.addEventListener("click", (e) => {
         e.preventDefault();
         dropdown_menu.classList.toggle("open");
+        if (dropdown_menu.classList.contains("open")) {
+          document.getElementById("analytics-tab-wrapper").style.display =
+            "none";
+        } else {
+          document.getElementById("analytics-tab-wrapper").style.display =
+            "flex";
+        }
+      });
+
+      window.addEventListener("resize", (e) => {
+        if (
+          dropdown_menu.classList.contains("open") &&
+          !window.matchMedia("(max-width: 1000px)").matches
+        ) {
+          dropdown_menu.classList.toggle("open");
+          document.getElementById("analytics-tab-wrapper").style.display =
+            "flex";
+        }
       });
     </script>
-    </div>
-</body>
+  </body>
 </html>

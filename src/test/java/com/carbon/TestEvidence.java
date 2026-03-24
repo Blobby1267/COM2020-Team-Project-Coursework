@@ -3,8 +3,13 @@ package com.carbon;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +20,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,24 +56,29 @@ public class TestEvidence {
         testUser.setUsername("testUser");
         when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
 
+
+        File file = new File("src/test/resources/Background.png");
+        FileInputStream input = new FileInputStream(file);
+        final MockMultipartFile photoFile = new MockMultipartFile(file.getName(), file.getName(), "image/png", input);
+
         //Create challenge object to return when the method findById() is called on the mock repository inside the service
         Challenge testChallenge = new Challenge();
         when(challengeRepository.findById(anyLong())).thenReturn(Optional.of(testChallenge));
-
+        when(evidenceRepositoryMock.save(any())).thenReturn(testChallenge);
         //Create a mock photo object and mock some values for the setters
-        final MultipartFile mockPhoto = mock(MultipartFile.class);
-        when(mockPhoto.getOriginalFilename()).thenReturn("CoolName");
-        when(mockPhoto.getSize()).thenReturn((long)10);
-        when(mockPhoto.getBytes()).thenReturn(new byte[10]);
-        when(mockPhoto.isEmpty()).thenReturn(false);
-        when(mockPhoto.getContentType()).thenReturn("image/Test-Content");
+        // final MultipartFile mockPhoto = mock(MultipartFile.class);
+        // when(mockPhoto.getOriginalFilename()).thenReturn("");
+        // when(mockPhoto.getSize()).thenReturn((long)10);
+        // when(mockPhoto.getBytes()).thenReturn(new byte[10]);
+        // when(mockPhoto.isEmpty()).thenReturn(false);
+        // when(mockPhoto.getContentType()).thenReturn("image/png");
 
-        //Make sure that the submit evidence is fully successful
-        assertDoesNotThrow(() -> evidenceService.submitEvidence("testUser", mockPhoto, "testTitle", 1L));
+        // //Make sure that the submit evidence is fully successful
+        evidenceService.submitEvidence("testUser", photoFile, "testTitle", 1L);
 
         //Argument captor is used to get the value passed into a method. We capture the evidence object saved into the repository
         ArgumentCaptor<Evidence> evidenceCaptor = ArgumentCaptor.forClass(Evidence.class);
-        verify(evidenceRepositoryMock,times(1)).save(evidenceCaptor.capture());
+        verify(evidenceRepositoryMock).save(evidenceCaptor.capture());
 
         //Check that the captor has the same name as our test user, indicating the correct evidence was saved.
         Evidence testEvidence = evidenceCaptor.getValue();
@@ -92,8 +103,10 @@ public class TestEvidence {
     void TestSubmitEvidencePhotoNotFoundNull(){
         //Create user to avoid unexpected exeception
         User testUser = new User();
+        Optional<Challenge> testChallenge = Optional.of(new Challenge());
         testUser.setUsername("testUser");
         when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
+        when(challengeRepository.findById(1L)).thenReturn(testChallenge);
 
         //Run the method without passing in a valid photo (null)
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> evidenceService.submitEvidence("testUser", null, "testTitle", 1L));
@@ -107,8 +120,10 @@ public class TestEvidence {
     void TestSubmitEvidenceImageOnlyAllowedNullValue(){
         //Create user to avoid unexpected exeception
         User testUser = new User();
+        Optional<Challenge> testChallenge = Optional.of(new Challenge());
         testUser.setUsername("testUser");
         when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
+        when(challengeRepository.findById(1L)).thenReturn(testChallenge);
 
         //Make mock photo object but mock the method getContentType() to get specific exception
         final MultipartFile mockPhoto = mock(MultipartFile.class);
@@ -126,8 +141,10 @@ public class TestEvidence {
     void TestSubmitEvidenceImageOnlyAllowedContentTypeWrong(){
         //Create user to avoid unexpected exeception
         User testUser = new User();
+        Optional<Challenge> testChallenge = Optional.of(new Challenge());
         testUser.setUsername("testUser");
         when(userRepositoryMock.findByUsername("testUser")).thenReturn(testUser);
+        when(challengeRepository.findById(1L)).thenReturn(testChallenge);
 
         //Create mock photo and make getContentType() method return invalid named location (should be "image/")
         final MultipartFile mockPhoto = mock(MultipartFile.class);
@@ -155,8 +172,6 @@ public class TestEvidence {
             .thenReturn(List.of(EvidenceStatus.PENDING));
 
         MultipartFile mockPhoto = mock(MultipartFile.class);
-        when(mockPhoto.isEmpty()).thenReturn(false);
-        when(mockPhoto.getContentType()).thenReturn("image/png");
 
         Throwable exception = assertThrows(
             IllegalStateException.class,
@@ -181,8 +196,6 @@ public class TestEvidence {
             .thenReturn(List.of(EvidenceStatus.ACCEPTED));
 
         MultipartFile mockPhoto = mock(MultipartFile.class);
-        when(mockPhoto.isEmpty()).thenReturn(false);
-        when(mockPhoto.getContentType()).thenReturn("image/jpeg");
 
         Throwable exception = assertThrows(
             IllegalStateException.class,

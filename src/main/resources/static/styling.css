@@ -110,7 +110,8 @@ label {
   margin: 0;
   border-radius: 0;
   text-decoration: underline;
-  font-size: inherit;
+  /* font-size: 50px; */
+  /* font-size: inherit; */
 }
 
 .sidebar.login label.checkbox {
@@ -118,8 +119,14 @@ label {
   width: 100%;
   max-width: 320px;
   font-size: 13px;
-  line-height: 0.8;
+  line-height: 1.5;
   text-align: left;
+}
+
+.sidebar.login label a {
+  text-decoration: underline;
+  cursor: pointer;
+  /* font-size: 50px; */
 }
 
 .sidebar {
@@ -293,7 +300,7 @@ label {
   overflow: scroll;
 }
 
-.challenges-box p{
+.challenges-box p {
   color: white;
 }
 
@@ -853,6 +860,13 @@ canvas {
 }
 
 @media screen and (max-width: 1000px) {
+  .checkbox a{
+    font-size: 1em;
+  }
+  label{
+    font-size: 2em;
+  }
+
   .login-box p {
     color: #003c3c;
     text-align: center;
@@ -906,7 +920,7 @@ canvas {
 
   select,
   input {
-    font-size: 2rem;
+    font-size: 2em;
     background-color: white;
     border-radius: 15px;
     padding-top: 0.75em;
@@ -927,7 +941,7 @@ canvas {
     border: 2px solid #003c3c;
     width: 100%;
     color: white;
-    font-size: 3rem;
+    font-size: 3em;
   }
 
   /*TOP BAR*/
@@ -956,7 +970,7 @@ canvas {
     color: white;
   }
 
-  #points-wrapper{
+  #points-wrapper {
     flex-direction: column;
   }
 
@@ -1013,7 +1027,7 @@ canvas {
   .contacts p {
     color: white;
     text-align: left;
-    font-size: 2rem;
+    font-size: 3rem;
   }
 
   label.checkbox {
@@ -1033,14 +1047,20 @@ canvas {
     display: block;
     width: 50vw;
     max-width: none;
-    font-size: 0.85em;
-    line-height: 0.6;
-    text-align: left;
+    font-size: 1.5em;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .sidebar.login label a{
+    text-decoration: underline;
+    color: lightblue;
+    font-size: 1em;
   }
 
   input[id="consent"] {
-    width: 0.5em;
-    height: 0.5em;
+    width: 0.75em;
+    height: 0.75em;
   }
 
   .title {
@@ -1050,10 +1070,20 @@ canvas {
   }
 
   .dropdown-button {
-    display: block;
+    display: flex;
+    flex-direction: row;
     width: 100%;
+    height: 3em;
     border-radius: 0;
     background-color: #007d69;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dropdown-button img {
+    height: 50%;
+    margin-inline: 0.4em;
+    color: white;
   }
 
   .sidebar {
@@ -1084,6 +1114,10 @@ canvas {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: fit-content;
+    /* max-height: 0; */
+    /* overflow: hidden; */
+    transition: height 0.2s ease-out;
   }
 
   .sidebar a {
@@ -1270,12 +1304,12 @@ canvas {
   }
 
   .challenges-box p {
-    font-size: 2em;
+    font-size: 2.5em;
     color: white;
   }
 
   .challenges-box label {
-    font-size: 2em;
+    font-size: 3em;
     font-weight: bold;
   }
 
@@ -1298,5 +1332,27 @@ canvas {
 
   .badge-card p {
     font-size: 0.75em;
+  }
+
+  .auth-modal {
+    background: white;
+    border-radius: 0.9em;
+    width: min(100%, 420px);
+    padding: 1.5em;
+    border: 3px solid #003c3c;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .auth-modal h2 {
+    font-size: 3.2em;
+  }
+
+  .auth-modal p {
+    font-size: 2em;
+  }
+
+  .auth-modal button {
+    font-size: 2em;
+    padding-block: 1em;
   }
 }

@@ -33,7 +33,7 @@
 
     <!-- The sidebar -->
     <div id="main-task-container">
-      <button class="dropdown-button">Menu</button>
+      <button class="dropdown-button">Menu <img src="arrow-down.png" /></button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -177,14 +177,17 @@
         }
 
         const actionLabel = status === "ACCEPTED" ? "approving" : "denying";
-        const reasonInput = prompt(`Please provide a reason for ${actionLabel} this evidence:`);
+        const reasonInput = prompt(
+          `Please provide a reason for ${actionLabel} this evidence:`,
+        );
         if (reasonInput === null) {
           return;
         }
 
         const reason = reasonInput.trim();
         if (!reason) {
-          messageEl.textContent = "A reason is required to approve or deny evidence.";
+          messageEl.textContent =
+            "A reason is required to approve or deny evidence.";
           return;
         }
 
@@ -199,7 +202,8 @@
             },
           );
           if (!response.ok) {
-            messageEl.textContent = "Failed to update evidence status. Please try again.";
+            messageEl.textContent =
+              "Failed to update evidence status. Please try again.";
             button.disabled = false;
             return;
           }
@@ -219,6 +223,24 @@
       dropdown.addEventListener("click", (e) => {
         e.preventDefault();
         dropdown_menu.classList.toggle("open");
+        if (dropdown_menu.classList.contains("open")) {
+          document.getElementById("task-information-container").style.display =
+            "none";
+        } else {
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
+      });
+
+      window.addEventListener("resize", (e) => {
+        if (
+          dropdown_menu.classList.contains("open") &&
+          !window.matchMedia("(max-width: 1000px)").matches
+        ) {
+          dropdown_menu.classList.toggle("open");
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
       });
     </script>
   </body>

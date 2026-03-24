@@ -27,7 +27,7 @@
 
     <!-- The sidebar -->
     <div id="main-task-container">
-      <button class="dropdown-button">Menu</button>
+      <button class="dropdown-button">Menu <img src="arrow-down.png" /></button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -48,8 +48,14 @@
         <div class="challenges-box">
           <h1>Enter Travel Info</h1>
           <p>Only one journey can be submitted per day.</p>
-          <p>Journeys over 20km require photo evidence and moderator approval.</p>
-          <p th:if="${travelError}" style="color: #b42318" th:text="${travelError}">
+          <p>
+            Journeys over 20km require photo evidence and moderator approval.
+          </p>
+          <p
+            th:if="${travelError}"
+            style="color: #b42318"
+            th:text="${travelError}"
+          >
             Travel submission failed.
           </p>
           <!-- Form to submit travel distance and method -->
@@ -77,8 +83,14 @@
               required
             /><br /><br />
             <div id="travel-evidence-block" style="display: none">
-              <label for="photo">Photo evidence (required above 20km)</label><br />
-              <input type="file" id="photo" name="photo" accept="image/*" /><br /><br />
+              <label for="photo">Photo evidence (required above 20km)</label
+              ><br />
+              <input
+                type="file"
+                id="photo"
+                name="photo"
+                accept="image/*"
+              /><br /><br />
             </div>
             <!-- CSRF token for security -->
             <input
@@ -158,6 +170,24 @@
       dropdown.addEventListener("click", (e) => {
         e.preventDefault();
         dropdown_menu.classList.toggle("open");
+        if (dropdown_menu.classList.contains("open")) {
+          document.getElementById("task-information-container").style.display =
+            "none";
+        } else {
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
+      });
+
+      window.addEventListener("resize", (e) => {
+        if (
+          dropdown_menu.classList.contains("open") &&
+          !window.matchMedia("(max-width: 1000px)").matches
+        ) {
+          dropdown_menu.classList.toggle("open");
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
       });
     </script>
   </body>
