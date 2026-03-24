@@ -12,6 +12,7 @@ import com.carbon.model.Evidence;
 import com.carbon.model.User;
 import com.carbon.repository.EvidenceRepository;
 import com.carbon.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 public class ProfileController {
@@ -23,9 +24,10 @@ public class ProfileController {
     private UserRepository userRepository;
 
     @GetMapping("/profile")
+    @Transactional
     public String profile(Authentication auth, Model model){
         User user = userRepository.findByUsername(auth.getName());
-        List<Evidence> evidenceList = evidenceRepository.findByUserId(user.getId());
+        List<Evidence> evidenceList = evidenceRepository.findByUserIdWithChallenge(user.getId());
         model.addAttribute("user", user);
         model.addAttribute("evidence", evidenceList);
         return "profile";
