@@ -581,6 +581,60 @@ tr:hover {
   flex-direction: column;
   width: 100%;
   height: fit-content;
+  padding: 1.25em;
+}
+
+.analytics-shell {
+  width: 100%;
+  background-color: #007d69;
+  border-radius: 10px;
+  padding: 1.2em;
+  box-sizing: border-box;
+}
+
+.analytics-shell h1 {
+  margin: 0 0 0.8em 0;
+  font-size: 32px;
+}
+
+.analytics-shell h2 {
+  color: white;
+  margin: 0 0 0.7em 0;
+}
+
+.analytics-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-bottom: 1.2em;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.control-group label {
+  font-weight: bold;
+}
+
+.analytics-chart-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1em;
+  height: auto;
+}
+
+.analytics-chart-card {
+  background-color: #1c5c5c;
+  border-radius: 10px;
+  padding: 1em;
+}
+
+.analytics-chart-card canvas {
+  width: 100% !important;
+  height: 320px !important;
 }
 
 .tab button {
@@ -1158,6 +1212,27 @@ canvas {
 
   #analytics-tab-wrapper {
     align-items: center;
+    padding: 0.6em;
+  }
+
+  .analytics-shell h1 {
+    font-size: 2.2em;
+  }
+
+  .analytics-controls {
+    flex-direction: column;
+  }
+
+  .control-group select {
+    width: 100%;
+  }
+
+  .analytics-chart-card {
+    padding: 0.7em;
+  }
+
+  .analytics-chart-card canvas {
+    height: 260px !important;
   }
 
   th {

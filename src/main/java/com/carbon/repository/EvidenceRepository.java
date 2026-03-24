@@ -35,6 +35,9 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
     @Query("SELECT COALESCE(e.challenge.carbonSaved, 0) as carbonSaved, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
     List<DataForAnalytics> findAcceptedEvidenceByUserId(@Param("userId") long userId);
 
+    @Query("SELECT COALESCE(e.challenge.carbonSaved, 0) as carbonSaved, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id IN :userIds AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
+    List<DataForAnalytics> findAcceptedEvidenceByUserIds(@Param("userIds") Collection<Long> userIds);
+
     /**
      * Checks whether a user has already submitted evidence for a task with the given title
      * within the specified time window.
