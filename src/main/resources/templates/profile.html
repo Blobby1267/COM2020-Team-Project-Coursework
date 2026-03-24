@@ -17,13 +17,6 @@
             <span th:text="${#authentication.name}">Username</span>
             <img id="selected-badge" class="leaderboard-badge" th:if="${selectedBadgeName != null and !#strings.isEmpty(selectedBadgeName)}" th:src="@{'/team_project_badges/' + ${selectedBadgeName} + '.png'}" alt="Selected badge"/>
         </div>
-        <img
-          id="selected-badge"
-          class="leaderboard-badge"
-          th:if="${selectedBadgeName != null and !#strings.isEmpty(selectedBadgeName)}"
-          th:src="@{'/team_project_badges/' + ${selectedBadgeName} + '.png'}"
-          alt="Selected badge"
-        />
       </div>
       <!-- Logout form with CSRF protection -->
       <form th:action="@{/logout}" th:object="${user}" method="post">
