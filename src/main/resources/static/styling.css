@@ -275,7 +275,7 @@ label {
   overflow: scroll;
 }
 
-.challenges-box p{
+.challenges-box p {
   color: white;
 }
 
@@ -888,7 +888,7 @@ canvas {
     color: white;
   }
 
-  #points-wrapper{
+  #points-wrapper {
     flex-direction: column;
   }
 
@@ -973,10 +973,20 @@ canvas {
   }
 
   .dropdown-button {
-    display: block;
+    display: flex;
+    flex-direction: row;
     width: 100%;
+    height: 3em;
     border-radius: 0;
     background-color: #007d69;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dropdown-button img{
+    height: 50%;
+    margin-inline:0.4em;
+    color: white;
   }
 
   .sidebar {
@@ -1007,6 +1017,10 @@ canvas {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: fit-content;
+    /* max-height: 0; */
+    /* overflow: hidden; */
+    transition: height 0.2s ease-out;
   }
 
   .sidebar a {

@@ -51,7 +51,8 @@
     </div>
     <!-- Main container with sidebar navigation -->
     <div id="main-task-container">
-      <button class="dropdown-button">Menu</button>
+      <button class="dropdown-button">Menu <img src="arrow-down.png" /></button>
+
       <div class="sidebar">
         <a class="active" href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -290,14 +291,19 @@
                   },
                 );
 
-                const statusPayload = await parseResponsePayload(statusResponse);
+                const statusPayload =
+                  await parseResponsePayload(statusResponse);
                 if (statusResponse.ok) {
                   if (statusPayload.completionStatus === "PENDING") {
-                    showPopup(statusPayload.message || "Task waiting to be accepted.");
+                    showPopup(
+                      statusPayload.message || "Task waiting to be accepted.",
+                    );
                     return;
                   }
                   if (statusPayload.completionStatus === "ACCEPTED") {
-                    showPopup(statusPayload.message || "Task already completed.");
+                    showPopup(
+                      statusPayload.message || "Task already completed.",
+                    );
                     return;
                   }
                 }
@@ -340,7 +346,8 @@
                     window.location.reload();
                   }, 1000);
                 } else {
-                  const message = payload?.message || "Task could not be completed.";
+                  const message =
+                    payload?.message || "Task could not be completed.";
                   showPopup(message);
                   button.textContent = "Complete";
                   button.disabled = false;
@@ -358,6 +365,22 @@
             dropdown.addEventListener("click", (e) => {
               e.preventDefault();
               dropdown_menu.classList.toggle("open");
+              if (dropdown_menu.classList.contains("open")) {
+                document.getElementById(
+                  "task-information-container",
+                ).style.display = "none";
+              } else {
+                document.getElementById(
+                  "task-information-container",
+                ).style.display = "flex";
+              }
+            });
+
+            window.addEventListener("resize", (e) => {
+              if (dropdown_menu.classList.contains("open") && !window.matchMedia("(max-width: 1000px)").matches) {
+                dropdown_menu.classList.toggle("open");
+                document.getElementById("task-information-container").style.display = "flex";
+              }
             });
           </script>
         </div>
