@@ -1,22 +1,13 @@
 package com.carbon.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
-
-import com.carbon.repository.ChallengeRepository;
-import com.carbon.repository.UserRepository;
-import com.carbon.service.ChallengeService;
 import com.carbon.service.TravelService;
 
-import org.springframework.ui.Model;
 import java.util.logging.Logger;
 import org.springframework.security.core.Authentication;
 import java.util.Map;
@@ -51,13 +42,21 @@ public class TravelController {
     public String completeChallenge(
         @RequestParam String travelType,
         @RequestParam double distance,
+        @RequestParam(value = "photo", required = false) MultipartFile photo,
         Authentication authentication,
         RedirectAttributes redirectAttributes
     ) {
-        // Calculate and award points based on travel distance
-        Map<String, Object> result = travelService.registerTravel(authentication.getName(), travelType, distance);
-        // Pass calculation details to redirected page for display
-        redirectAttributes.addFlashAttribute("calculation", result);
+        try {
+            // Calculate and award points based on travel distance
+            Map<String, Object> result = travelService.registerTravel(authentication.getName(), travelType, distance, photo);
+            // Pass calculation details to redirected page for display
+            redirectAttributes.addFlashAttribute("calculation", result);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("travelError", e.getMessage());
+        } catch (Exception e) {
+            LOGGER.warning("Travel submission failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("travelError", "Unable to submit travel at the moment. Please try again.");
+        }
         return "redirect:/travel";
     }
 }

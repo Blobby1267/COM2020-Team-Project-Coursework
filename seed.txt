@@ -109,16 +109,16 @@ JOIN users u ON u.username = lb.username;
 
 -- seeding data into CHALLENGES table
 INSERT INTO challenges (title, description, points, frequency, start_date, end_date, scope, requires_evidence, taxonomy, carbon_saved) VALUES
-('Eat a vegetarian meal', 'Eat a vegetarian or vegan meal to reduce carbon footprint', 10, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Diet', 0.64103),
-('Walk to campus', 'Walk to campus instead of using a petrol car', 10, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Transport', 0.17),
-('Use a reusable coffee cup', 'Use a reusable coffee cup instead of disposable cups', 5, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.026),
+('Eat a vegetarian meal', 'Eat a vegetarian or vegan meal to reduce carbon footprint', 6, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Diet', 0.64103),
+('Walk to campus', 'Walk to campus instead of using a petrol car', 2, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Transport', 0.17),
+('Use a reusable coffee cup', 'Use a reusable coffee cup instead of disposable cups', 1, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.026),
 ('Use a reusable water bottle', 'Use a reusable water bottle throughout the day', 5, 'Daily', '2026-03-21', NULL, 'Campus', false, 'Waste', 0.47123),
-('Recycle', 'Recycle all materials for the day', 15, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Waste', 1.9),
-('Shop second-hand clothes', 'Purchase second-hand clothing to reduce carbon footprint', 20, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
+('Recycle', 'Recycle all materials for the day', 19, 'Daily', '2026-03-21', NULL, 'Campus', true, 'Waste', 1.9),
+('Shop second-hand clothes', 'Purchase second-hand clothing to reduce carbon footprint', 139, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
 ('Shop local (Farmer''s market)', 'Buy local produce from farmers'' markets', 10, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Food', NULL),
-('Line dry clothes', 'Line dry clothes instead of using a tumble dryer', 10, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Energy', 1.8),
-('Borrow a library book', 'Borrow books instead of buying new ones', 5, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Resources', 0.7),
-('Donate an item', 'Donate clothes or other items instead of discarding', 15, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
-('Repair an item', 'Repair an item instead of buying new', 20, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Consumption', 32.9),
-('Purchase 2good2go', 'Save food using the 2good2go app', 10, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Food', 2.7);
+('Line dry clothes', 'Line dry clothes instead of using a tumble dryer', 18, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Energy', 1.8),
+('Borrow a library book', 'Borrow books instead of buying new ones', 7, 'Weekly', '2026-03-21', NULL, 'Campus', false, 'Resources', 0.7),
+('Donate an item', 'Donate clothes or other items instead of discarding', 139, 'Monthly', '2026-03-21', NULL, 'Campus', false, 'Consumption', 13.9),
+('Repair an item', 'Repair an item instead of buying new', 329, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Consumption', 32.9),
+('Purchase 2good2go', 'Save food using the 2good2go app', 27, 'Monthly', '2026-03-21', NULL, 'Campus', true, 'Food', 2.7);
 

@@ -6,10 +6,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
-import com.carbon.model.Challenge;
 import com.carbon.model.Evidence;
 import com.carbon.model.EvidenceStatus;
 import com.carbon.model.DataForAnalytics;
@@ -30,10 +28,16 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
      */
     List<Evidence> findByStatus(EvidenceStatus status);
 
-    Collection<DataForProfile> findByUserId(long USER_ID);
+    List<Evidence> findByUserId(long userId);
 
-    @Query("SELECT e.challenge.points as points, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
+        @Query("SELECT DISTINCT e FROM Evidence e LEFT JOIN FETCH e.challenge WHERE e.user.id = :userId")
+        List<Evidence> findByUserIdWithChallenge(@Param("userId") long userId);
+
+    @Query("SELECT COALESCE(e.challenge.carbonSaved, 0) as carbonSaved, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id = :userId AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
     List<DataForAnalytics> findAcceptedEvidenceByUserId(@Param("userId") long userId);
+
+    @Query("SELECT COALESCE(e.challenge.carbonSaved, 0) as carbonSaved, e.submittedAt as submittedAt, e.challenge.taxonomy as taxonomy FROM Evidence e WHERE e.user.id IN :userIds AND e.status = com.carbon.model.EvidenceStatus.ACCEPTED")
+    List<DataForAnalytics> findAcceptedEvidenceByUserIds(@Param("userIds") Collection<Long> userIds);
 
     /**
      * Checks whether a user has already submitted evidence for a task with the given title
@@ -47,6 +51,9 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
     @Query("SELECT DISTINCT e.taskTitle FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED)")
     List<String> findTodayCompletedTaskTitles(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query("SELECT e.status FROM Evidence e WHERE e.user.id = :userId AND e.submittedAt >= :start AND e.submittedAt < :end AND e.status IN (com.carbon.model.EvidenceStatus.PENDING, com.carbon.model.EvidenceStatus.ACCEPTED) AND e.taskTitle LIKE :travelTaskPrefix ORDER BY e.submittedAt DESC")
+    List<EvidenceStatus> findTravelStatusesInWindow(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("travelTaskPrefix") String travelTaskPrefix);
 
     long countByUser_IdAndStatus(Long userId, EvidenceStatus status);
 
@@ -63,9 +70,4 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
 }
 
-interface DataForProfile{
-    Challenge getChallenge();
-    EvidenceStatus getStatus();
-    LocalDateTime getSubmittedAt();
-} 
-    
+

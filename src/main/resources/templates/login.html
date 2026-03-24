@@ -75,10 +75,15 @@
           <!-- Data collection consent checkbox -->
           <p>
             <label class="checkbox" for="consent">
-              <input type="checkbox" id="consent" value="true" />
+              <input type="checkbox" id="consent" name="consent" value="true" />
               <span class="checkmark"></span>
-              I consent to data collection following guidelines outlined in
-              legal documents
+              I consent and agree to the website policies.
+              Terms &amp; Conditions:
+              <a href="/Terms%20%26%20Conditions.pdf" th:href="@{/Terms%20%26%20Conditions.pdf}" target="_blank" rel="noopener noreferrer">Read PDF</a>
+              <a href="/Terms%20%26%20Conditions.pdf" th:href="@{/Terms%20%26%20Conditions.pdf}" download="Terms-and-Conditions.pdf">Download PDF</a>
+              Accessibility Statement:
+              <a href="/Accessibility%20Statement.pdf" th:href="@{/Accessibility%20Statement.pdf}" target="_blank" rel="noopener noreferrer">Read PDF</a>
+              <a href="/Accessibility%20Statement.pdf" th:href="@{/Accessibility%20Statement.pdf}" download="Accessibility-Statement.pdf">Download PDF</a>
             </label>
           </p>
           <p>
@@ -119,7 +124,7 @@
       <div class="login-box">
         <h1 class="title">Our Purpose</h1>
         <p>
-          CO2 is the biggest contributor to global warming. it is now or never
+          CO2 is the biggest contributor to global warming. It is now or never
           for us to take actions to reduce our carbon footprint. We want to help
           sensitise our students and staff about how their daily actions
           contribute to this issue and how individually they can take steps to
@@ -189,6 +194,7 @@
         function validateCredentials(form, enforceRules) {
           const usernameInput = form.querySelector('input[name="username"]');
           const passwordInput = form.querySelector('input[name="password"]');
+          const consentInput = form.querySelector('input[name="consent"]');
 
           const username = usernameInput.value.trim();
           const password = passwordInput.value;
@@ -209,6 +215,10 @@
 
           if (password.length < 8) {
             return "Password must be at least 8 characters long.";
+          }
+
+          if (consentInput && !consentInput.checked) {
+            return "Please agree to the terms and conditions.";
           }
 
           return null;
@@ -286,6 +296,11 @@
         document
           .getElementById("login-form")
           .addEventListener("submit", submitAuthForm);
+        document.querySelectorAll('label.checkbox a').forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.stopPropagation();
+          });
+        });
         closeButton.addEventListener("click", hideError);
         modal.addEventListener("click", (event) => {
           if (event.target === modal) {

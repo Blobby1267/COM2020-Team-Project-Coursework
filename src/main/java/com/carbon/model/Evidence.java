@@ -63,6 +63,10 @@ public class Evidence {
     @Column(nullable = false)
     private LocalDateTime submittedAt; // Timestamp of submission
 
+    // Optional moderator note explaining approve/reject decisions
+    @Column(length = 500)
+    private String reason;
+
     //Getters
     public Long getId() {
         return id;
@@ -104,6 +108,10 @@ public class Evidence {
         return submittedAt;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
     //Setters
     
     public void setChallenge(Challenge challenge) {
@@ -141,4 +149,9 @@ public class Evidence {
     public void setSubmittedAt(LocalDateTime submittedAt) {
         this.submittedAt = submittedAt;
     }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
 }

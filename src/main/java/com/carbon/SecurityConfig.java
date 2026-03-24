@@ -42,7 +42,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints (no authentication required)
-                .requestMatchers("/", "/login", "/register", "/**.png", "/**.css", "/**.js", "/favicon.ico").permitAll()
+                .requestMatchers("/", "/login", "/register", "/**.png", "/**.css", "/**.js", "/**.pdf", "/favicon.ico").permitAll()
                 // Moderator-only endpoints (evidence review, challenge management)
                 .requestMatchers("/api/moderator/**").hasRole("MODERATOR")
                 // Authenticated user endpoints (challenge completion, evidence submission)

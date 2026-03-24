@@ -19,4 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * Equivalent SQL: SELECT * FROM users WHERE username = ? LIMIT 1
      */
     User findByUsername(String username);
+
+    java.util.List<User> findByYearIgnoreCase(String year);
+
+    java.util.List<User> findByCampusIgnoreCase(String campus);
 }

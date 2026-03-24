@@ -69,6 +69,8 @@ public class EvidenceController {
             return ResponseEntity.status(HttpStatus.CREATED).body(toSummary(evidence));
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
 
@@ -118,10 +120,11 @@ public class EvidenceController {
     @PostMapping("/moderator/evidence/{id}/status")
     public ResponseEntity<EvidenceSummary> updateStatus(
         @PathVariable("id") Long id,
-        @RequestParam("status") EvidenceStatus status
+        @RequestParam("status") EvidenceStatus status,
+        @RequestParam(value = "reason", required = false) String reason
     ) {
         // sends to service 
-        Evidence evidence = evidenceService.updateEvidenceStatus(id, status);
+        Evidence evidence = evidenceService.updateEvidenceStatus(id, status, reason);
         return ResponseEntity.ok(toSummary(evidence));
     }
 
@@ -139,7 +142,8 @@ public class EvidenceController {
             evidence.getTaskTitle(),
             evidence.getStatus(),
             evidence.getSubmittedAt(),
-            evidence.getOriginalFilename()
+            evidence.getOriginalFilename(),
+            evidence.getReason()
         );
     }
 
@@ -155,6 +159,7 @@ public class EvidenceController {
         private final EvidenceStatus status;
         private final LocalDateTime submittedAt;
         private final String originalFilename;
+        private final String reason;
 
         public EvidenceSummary(
             Long id,
@@ -162,7 +167,8 @@ public class EvidenceController {
             String taskTitle,
             EvidenceStatus status,
             LocalDateTime submittedAt,
-            String originalFilename
+            String originalFilename,
+            String reason
         ) {
             this.id = id;
             this.username = username;
@@ -170,6 +176,7 @@ public class EvidenceController {
             this.status = status;
             this.submittedAt = submittedAt;
             this.originalFilename = originalFilename;
+            this.reason = reason;
         }
 
         // getters
@@ -195,6 +202,10 @@ public class EvidenceController {
 
         public String getOriginalFilename() {
             return originalFilename;
+        }
+
+        public String getReason() {
+            return reason;
         }
     }
 

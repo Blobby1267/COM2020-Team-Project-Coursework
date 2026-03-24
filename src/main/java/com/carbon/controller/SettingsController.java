@@ -60,9 +60,18 @@ public class SettingsController {
         String normalizedOldUsername = User.normalizeUsername(oldUsername);
         String normalizedNewUsername = User.normalizeUsername(newUsername);
 
+        if (!User.isValidUsername(normalizedNewUsername)) {
+            return "redirect:/settings?invalidUsername=true";
+        }
+
+        User existingUser = userRepository.findByUsername(normalizedNewUsername);
+
+        if (existingUser != null && !normalizedNewUsername.equals(authentication.getName())) {
+            return "redirect:/settings?usernameTaken=true";
+        }
+
         if(normalizedOldUsername.equals(authentication.getName())
-            && User.isValidUsername(normalizedNewUsername)
-            && (userRepository.findByUsername(normalizedNewUsername) == null || normalizedNewUsername.equals(authentication.getName()))){
+            && (existingUser == null || normalizedNewUsername.equals(authentication.getName()))){
             User user = userRepository.findByUsername(normalizedOldUsername);
             user.setUsername(normalizedNewUsername);
             userRepository.save(user);
@@ -78,7 +87,7 @@ public class SettingsController {
     @PostMapping("/update_password")
     public String updatePassword(@RequestParam String oldPassword, @RequestParam String  newPassword, Authentication authentication){
         if (!User.isValidPassword(newPassword)) {
-            return "redirect:/settings?updatedpassword=false";
+            return "redirect:/settings?passwordTooShort=true";
         }
 
         userDetailsService.updatePassword(authentication.getName(), oldPassword, newPassword);

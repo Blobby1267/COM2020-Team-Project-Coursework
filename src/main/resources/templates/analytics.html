@@ -46,317 +46,160 @@
       </div>
 
       <div id="analytics-tab-wrapper">
-      <div class="tab">
-        <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'Weekly')">Weekly</button>
-        <button class="tablinks" onclick="openTab(event, 'Monthly')">Monthly</button>
-        <button class="tablinks" onclick="openTab(event, 'Total')">Total</button>
-        <button class="tablinks" onclick="openTab(event, 'ActionBreakdown')">Action Breakdown</button>
-      </div>
-      
-          
-        <div id="Weekly" class="tab-content">
-          <h1>Weekly Stats</h1>
- 
-            <div class="chart-container">
-              <canvas id="weeklyPieChart"></canvas>
-              <canvas id="weeklyLineChart"></canvas>
+        <div class="analytics-shell">
+          <h1 id="analyticsTitle">Analytics</h1>
+
+          <div class="analytics-controls">
+            <div class="control-group">
+              <label for="timeframeSelect">Timeframe</label>
+              <select id="timeframeSelect">
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="all">All Time</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label for="scopeSelect">Scope</label>
+              <select id="scopeSelect">
+                <option value="individual">Individual</option>
+                <option value="year">Year</option>
+                <option value="campus">Campus</option>
+              </select>
             </div>
           </div>
 
-        <div id="Monthly" class="tab-content">
-          <h1>Monthly Stats</h1>
-
-            <div class="chart-container">
-              <canvas id="monthlyPieChart"></canvas>
-              <canvas id="monthlyLineChart"></canvas>
+          <div class="chart-container analytics-chart-container">
+            <div class="analytics-chart-card">
+              <h2>Category Breakdown</h2>
+              <canvas id="analyticsPieChart"></canvas>
             </div>
-        </div>
-
-        <div id="Total" class="tab-content">
-          <h1>Total Stats</h1>
-
-            <div class="chart-container">
-              <canvas id="totalPieChart"></canvas>
-              <canvas id="totalLineChart"></canvas>
+            <div class="analytics-chart-card">
+              <h2>Carbon Saved Over Time</h2>
+              <canvas id="analyticsLineChart"></canvas>
             </div>
-        </div>
-
-        <div id="ActionBreakdown" class="tab-content">
-          <h1>Action Stats</h1>
-          There will be a pie chart
+          </div>
         </div>
       </div>
       </div>
 
     <script th:inline="javascript">
-      function openTab(event, tabName){
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++){
-          tabcontent[i].style.display = "none";
-        }
+      const analyticsDataByScope = /*[[${analyticsDataByScope}]]*/ {};
+      const currentYear = /*[[${currentYear}]]*/ '';
+      const currentCampus = /*[[${currentCampus}]]*/ '';
 
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++){
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
+      const timeframeSelect = document.getElementById('timeframeSelect');
+      const scopeSelect = document.getElementById('scopeSelect');
+      const analyticsTitle = document.getElementById('analyticsTitle');
 
-        document.getElementById(tabName).style.display = "block";
-        event.currentTarget.className += " active";
+      const pieContext = document.getElementById('analyticsPieChart').getContext('2d');
+      const lineContext = document.getElementById('analyticsLineChart').getContext('2d');
+
+      let pieChart = null;
+      let lineChart = null;
+
+      const pieColors = ['#33e9a6', '#013220', '#026440', '#1d8f6c', '#006a6a', '#68b0ab', '#9cc5a1'];
+
+      function prettyScopeLabel(scope) {
+        if (scope === 'individual') {
+          return 'Individual';
+        }
+        if (scope === 'year') {
+          return 'Year: ' + (currentYear || 'Unknown');
+        }
+        if (scope === 'campus') {
+          return 'Campus: ' + (currentCampus || 'Unknown');
+        }
+        return scope;
       }
 
-      window.onload = function(){
-        document.getElementById("defaultOpen").click();
-      };
-
-      let labelsWeek = /*[[${weekLabels}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
-      let datasetWeek = /*[[${weekPoints}]]*/[10,20,30,35,40];
-      let labelsMonth = /*[[${monthLabels}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
-      let datasetMonth = /*[[${monthPoints}]]*/[10,20,30,35,40];
-      let labelsTotal = /*[[${allLabels}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
-      let datasetTotal = /*[[${allPointsByMonth}]]*/[10,20,30,35,40];
-
-      let labelsPieWeek = /*[[${weekTaxPie}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
-      let datasetPieWeek = /*[[${weekPointsPie}]]*/[10,20,30,35,40];
-      let labelsPieMonth = /*[[${monthTaxPie}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
-      let datasetPieMonth = /*[[${monthPointsPie}]]*/[10,20,30,35,40];
-      let labelsPieTotal = /*[[${allTaxPie}]]*/['Jan', 'Feb', 'Mar','Apr', 'May'];
-      let datasetPieTotal = /*[[${allPointsPie}]]*/[10,20,30,35,40];
-      //let dataset2 = [15,30,45,60,76];
-
-      let weeklyLineChart = document.getElementById('weeklyLineChart').getContext('2d');
-      new Chart(weeklyLineChart, {
-        type: 'line',
-        data: {
-          labels: labelsWeek, 
-          datasets: [{
-          label: 'Yours',
-          data: datasetWeek,
-          borderColor: '#026440',
-          borderWidth: 2,
-          fill: false,
+      function prettyTimeframeLabel(timeframe) {
+        if (timeframe === 'weekly') {
+          return 'Weekly';
         }
-      // {
-      //   label: 'Average',
-      //   data: dataset2,
-      //   borderColor: '#33e9a6',
-      //   borderWidth: 2,
-      //   fill: false,
-      // }
-    ]
-    },
-      options:{
-        responsive: true,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Days',
-              font:{
-                padding: 4,
-                size: 10,
-                weight: 'bold',
-                family: 'Arial'
-              }, 
-              color: '#026440'
-            }
+        if (timeframe === 'monthly') {
+          return 'Monthly';
+        }
+        return 'All Time';
+      }
+
+      function renderCharts() {
+        const scope = scopeSelect.value;
+        const timeframe = timeframeSelect.value;
+
+        const scopeData = analyticsDataByScope[scope] || {};
+        const chartData = scopeData[timeframe] || {
+          lineLabels: [],
+          linePoints: [],
+          pieLabels: [],
+          piePoints: []
+        };
+
+        analyticsTitle.textContent = prettyScopeLabel(scope) + ' - ' + prettyTimeframeLabel(timeframe) + ' Stats';
+
+        if (pieChart) {
+          pieChart.destroy();
+        }
+        pieChart = new Chart(pieContext, {
+          type: 'pie',
+          data: {
+            labels: chartData.pieLabels,
+            datasets: [{
+              label: 'Carbon Saved (kg CO2e)',
+              data: chartData.piePoints,
+              backgroundColor: pieColors,
+              borderWidth: 1
+            }]
           },
-          y:{
-            title:{
-              display: true,
-              text: 'Values',
-              font: {
-                size: 10,
-                weight: 'bold',
-                family: 'Arial'
-              },
-              color: '#026440'
-            },
-            beginAtZero: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Values',
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: 'top' }
             }
           }
-        }
-      }
-      });
+        });
 
-      let monthlyLineChart = document.getElementById('monthlyLineChart').getContext('2d');
-      new Chart(monthlyLineChart, {
-        type: 'line',
-        data: {
-          labels: labelsMonth, 
-          datasets: [{
-          label: 'Yours',
-          data: datasetMonth,
-          borderColor: '#026440',
-          borderWidth: 2,
-          fill: false,
+        if (lineChart) {
+          lineChart.destroy();
         }
-      // {
-      //   label: 'Average',
-      //   data: dataset2,
-      //   borderColor: '#33e9a6',
-      //   borderWidth: 2,
-      //   fill: false,
-      // }
-    ]
-    },
-      options:{
-        responsive: true,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Dates',
-              font:{
-                padding: 4,
-                size: 10,
-                weight: 'bold',
-                family: 'Arial'
-              }, 
-              color: '#026440'
-            }
+        lineChart = new Chart(lineContext, {
+          type: 'line',
+          data: {
+            labels: chartData.lineLabels,
+            datasets: [{
+              label: 'Carbon Saved (kg CO2e)',
+              data: chartData.linePoints,
+              borderColor: '#026440',
+              backgroundColor: 'rgba(2, 100, 64, 0.2)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.25
+            }]
           },
-          y:{
-            title:{
-              display: true,
-              text: 'Values',
-              font: {
-                size: 10,
-                weight: 'bold',
-                family: 'Arial'
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Time'
+                }
               },
-              color: '#026440'
-            },
-            beginAtZero: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Values',
+              y: {
+                title: {
+                  display: true,
+                  text: 'Carbon Saved (kg CO2e)'
+                },
+                beginAtZero: true
+              }
             }
           }
-        }
+        });
       }
-      });
 
-      let totalLineChart = document.getElementById('totalLineChart').getContext('2d');
-      new Chart(totalLineChart, {
-        type: 'line',
-        data: {
-          labels: labelsTotal, 
-          datasets: [{
-          label: 'Yours',
-          data: datasetTotal,
-          borderColor: '#026440',
-          borderWidth: 2,
-          fill: false,
-        }
-      // {
-      //   label: 'Average',
-      //   data: dataset2,
-      //   borderColor: '#33e9a6',
-      //   borderWidth: 2,
-      //   fill: false,
-      // }
-    ]
-    },
-      options:{
-        responsive: true,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Months',
-              font:{
-                padding: 4,
-                size: 10,
-                weight: 'bold',
-                family: 'Arial'
-              }, 
-              color: '#026440'
-            }
-          },
-          y:{
-            title:{
-              display: true,
-              text: 'Values',
-              font: {
-                size: 10,
-                weight: 'bold',
-                family: 'Arial'
-              },
-              color: '#026440'
-            },
-            beginAtZero: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Values',
-            }
-          }
-        }
-      }
-      });
-
-      const weeklyPieChart = document.getElementById('weeklyPieChart').getContext('2d');
-      new Chart(weeklyPieChart,{
-        type: 'pie',
-        data: {
-          labels: labelsPieWeek,
-          datasets: [{
-            label: 'Points',
-            data: datasetPieWeek,
-            backgroundColor: ['#33e9a6','#013220','#026440'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'top' }
-          }
-        }
-      });
-
-      const monthlyPieChart = document.getElementById('monthlyPieChart').getContext('2d');
-      new Chart(monthlyPieChart,{
-        type: 'pie',
-        data: {
-          labels: labelsPieMonth,
-          datasets: [{
-            label: 'Points',
-            data: datasetPieMonth,
-            backgroundColor: ['#33e9a6','#013220','#026440'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'top' }
-          }
-        }
-      });
-
-      const totalPieChart = document.getElementById('totalPieChart').getContext('2d');
-      new Chart(totalPieChart,{
-        type: 'pie',
-        data: {
-          labels: labelsPieTotal,
-          datasets: [{
-            label: 'Points',
-            data: datasetPieTotal,
-            backgroundColor: ['#33e9a6','#013220','#026440'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'top' }
-          }
-        }
-      });
+      timeframeSelect.addEventListener('change', renderCharts);
+      scopeSelect.addEventListener('change', renderCharts);
+      renderCharts();
 
       let dropdown = document.querySelector(".dropdown-button");
       let dropdown_menu = document.querySelector(".sidebar");
