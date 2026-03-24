@@ -79,6 +79,7 @@ public class TestUser {
         Assertions.assertEquals(15, pointsField.get(testUser));
     }
 
+    @Test
     void TestValidUsername() {
         String username1 = "Bob123";
         String username2 = "Bob"; // Minimum number of characters
@@ -90,6 +91,7 @@ public class TestUser {
 
     }
 
+    @Test
     void TestInvalidUsernameLength() {
         String username1 = "";
         String username2 = "Bo";
@@ -97,6 +99,7 @@ public class TestUser {
         assertEquals(false, User.isValidUsername(username2));
     }
 
+    @Test
     void TestInvalidUsernamePattern() {
         String username1 = "hello@£*";
         String username2 = "Test^DSA";
