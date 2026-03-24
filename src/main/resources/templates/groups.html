@@ -27,7 +27,7 @@
 
     <!-- The sidebar -->
     <div id="main-task-container">
-      <button class="dropdown-button">Menu</button>
+      <button class="dropdown-button">Menu <img src="arrow-down.png" /></button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -55,7 +55,7 @@
                   <input
                     th:name="@{groupIdString}"
                     placeholder="Group Code..."
-                    minlength="3" 
+                    minlength="3"
                     pattern="[A-Za-z0-9]+"
                   />
                 </p>
@@ -69,12 +69,14 @@
               <h1>Create a group:</h1>
               <form th:action="@{/create_group}" method="post">
                 <p>
-                  <input name="groupName" 
-                  placeholder="Group Name..." 
-                  minlength="3" 
-                  pattern="[A-Za-z0-9 ]+" 
-                  title="Group name must be at least 3 characters and can only contain letters, numbers, and spaces."
-                  required/>
+                  <input
+                    name="groupName"
+                    placeholder="Group Name..."
+                    minlength="3"
+                    pattern="[A-Za-z0-9 ]+"
+                    title="Group name must be at least 3 characters and can only contain letters, numbers, and spaces."
+                    required
+                  />
                 </p>
                 <p>
                   <button type="submit">Create Group</button>
@@ -122,10 +124,28 @@
     <script>
       let dropdown = document.querySelector(".dropdown-button");
       let dropdown_menu = document.querySelector(".sidebar");
-
+      
       dropdown.addEventListener("click", (e) => {
         e.preventDefault();
         dropdown_menu.classList.toggle("open");
+        if (dropdown_menu.classList.contains("open")) {
+          document.getElementById("task-information-container").style.display =
+            "none";
+        } else {
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
+      });
+
+      window.addEventListener("resize", (e) => {
+        if (
+          dropdown_menu.classList.contains("open") &&
+          !window.matchMedia("(max-width: 1000px)").matches
+        ) {
+          dropdown_menu.classList.toggle("open");
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
       });
     </script>
   </body>

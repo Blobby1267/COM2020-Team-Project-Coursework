@@ -377,9 +377,14 @@
             });
 
             window.addEventListener("resize", (e) => {
-              if (dropdown_menu.classList.contains("open") && !window.matchMedia("(max-width: 1000px)").matches) {
+              if (
+                dropdown_menu.classList.contains("open") &&
+                !window.matchMedia("(max-width: 1000px)").matches
+              ) {
                 dropdown_menu.classList.toggle("open");
-                document.getElementById("task-information-container").style.display = "flex";
+                document.getElementById(
+                  "task-information-container",
+                ).style.display = "flex";
               }
             });
           </script>

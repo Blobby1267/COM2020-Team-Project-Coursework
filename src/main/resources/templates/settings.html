@@ -27,7 +27,7 @@
 
     <!-- The sidebar -->
     <div id="main-task-container">
-      <button class="dropdown-button">Menu</button>
+      <button class="dropdown-button">Menu <img src="arrow-down.png" /></button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a href="profile">Profile</a>
@@ -114,10 +114,40 @@
             <!-- Contact information display section -->
             <h1>Contact details:</h1>
             <div class="contacts">
-              <p>Name:</p>
-              <p>Phone:</p>
-              <p>Email:</p>
-              <p>terms...</p>
+              <p>Phone: +44 0123456789</p>
+              <p>Email: mw1104@exeter.ac.uk, zbp201@exeter.ac.uk</p>
+              <p>Address: Innovation Centre, Rennes Drive, Exeter, EX4 4RN, England</p>
+              <p>
+                Terms &amp; Conditions:<br>
+                <a
+                  href="/Terms%20%26%20Conditions.pdf"
+                  th:href="@{/Terms%20%26%20Conditions.pdf}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >
+                  Read PDF</a
+                ><br>
+                <a
+                  href="/Terms%20%26%20Conditions.pdf"
+                  th:href="@{/Terms%20%26%20Conditions.pdf}"
+                  download="Terms-and-Conditions.pdf"
+                  >Download PDF</a
+                ><br>
+                Accessibility Statement:<br>
+                <a
+                  href="/Accessibility%20Statement.pdf"
+                  th:href="@{/Accessibility%20Statement.pdf}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Read PDF</a
+                ><br>
+                <a
+                  href="/Accessibility%20Statement.pdf"
+                  th:href="@{/Accessibility%20Statement.pdf}"
+                  download="Accessibility-Statement.pdf"
+                  >Download PDF</a
+                >
+              </p>
             </div>
           </span>
           <span>
@@ -183,6 +213,24 @@
       dropdown.addEventListener("click", (e) => {
         e.preventDefault();
         dropdown_menu.classList.toggle("open");
+        if (dropdown_menu.classList.contains("open")) {
+          document.getElementById("task-information-container").style.display =
+            "none";
+        } else {
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
+      });
+
+      window.addEventListener("resize", (e) => {
+        if (
+          dropdown_menu.classList.contains("open") &&
+          !window.matchMedia("(max-width: 1000px)").matches
+        ) {
+          dropdown_menu.classList.toggle("open");
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
       });
     </script>
   </body>

@@ -27,7 +27,7 @@
 
     <!-- The sidebar -->
     <div id="main-task-container">
-      <button class="dropdown-button">Menu</button>
+      <button class="dropdown-button">Menu <img src="arrow-down.png" /></button>
       <div class="sidebar">
         <a href="tasks">Tasks</a>
         <a class="active" href="profile">Profile</a>
@@ -62,9 +62,13 @@
               <td
                 th:text="${evidence.submittedAt != null ? #temporals.format(evidence.submittedAt, 'dd/MM/yyyy HH:mm') : '-'}"
               ></td>
-              <td th:text="${evidence.challenge != null ? evidence.challenge.points : '-'}"></td>
+              <td
+                th:text="${evidence.challenge != null ? evidence.challenge.points : '-'}"
+              ></td>
               <td th:text="${evidence.status}"></td>
-              <td th:text="${evidence.reason != null and !#strings.isEmpty(evidence.reason) ? evidence.reason : '-'}"></td>
+              <td
+                th:text="${evidence.reason != null and !#strings.isEmpty(evidence.reason) ? evidence.reason : '-'}"
+              ></td>
             </tr>
           </table>
         </div>
@@ -78,6 +82,24 @@
       dropdown.addEventListener("click", (e) => {
         e.preventDefault();
         dropdown_menu.classList.toggle("open");
+        if (dropdown_menu.classList.contains("open")) {
+          document.getElementById("task-information-container").style.display =
+            "none";
+        } else {
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
+      });
+
+      window.addEventListener("resize", (e) => {
+        if (
+          dropdown_menu.classList.contains("open") &&
+          !window.matchMedia("(max-width: 1000px)").matches
+        ) {
+          dropdown_menu.classList.toggle("open");
+          document.getElementById("task-information-container").style.display =
+            "flex";
+        }
       });
     </script>
   </body>
