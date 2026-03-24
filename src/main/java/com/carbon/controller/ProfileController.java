@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.carbon.model.Evidence;
+import com.carbon.model.UserBadge;
 import com.carbon.model.User;
 import com.carbon.repository.EvidenceRepository;
+import com.carbon.repository.UserBadgeRepository;
 import com.carbon.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,13 +25,20 @@ public class ProfileController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserBadgeRepository userBadgeRepository;
+
     @GetMapping("/profile")
     @Transactional
     public String profile(Authentication auth, Model model){
         User user = userRepository.findByUsername(auth.getName());
         List<Evidence> evidenceList = evidenceRepository.findByUserIdWithChallenge(user.getId());
+        String selectedBadgeName = userBadgeRepository.findByUserId(user.getId())
+            .map(UserBadge::getBadgeName)
+            .orElse(null);
         model.addAttribute("user", user);
         model.addAttribute("evidence", evidenceList);
+        model.addAttribute("selectedBadgeName", selectedBadgeName);
         return "profile";
     }
 

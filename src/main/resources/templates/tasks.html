@@ -31,7 +31,6 @@
         <div id="points-wrapper">
           <div sec:authorize="isAuthenticated()" class="points-box">
             <span th:text="${#authentication.name}">Username</span>
-            <span id="selected-badge" th:text="${selectedBadgeName != null and !#strings.isEmpty(selectedBadgeName) ? selectedBadgeName : 'null'}">null</span>
           </div>
           <div sec:authorize="isAuthenticated()" class="points-box">
             <span>Points: </span>

@@ -14,12 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import com.carbon.repository.UserRepository;
-import com.carbon.repository.UserBadgeRepository;
 import com.carbon.service.ChallengeService;
 import com.carbon.model.Challenge;
 import com.carbon.model.EvidenceStatus;
 import com.carbon.model.User;
-import com.carbon.model.UserBadge;
 
 import org.springframework.ui.Model;
 import org.springframework.security.core.Authentication;
@@ -41,9 +39,6 @@ public class ChallengePageController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserBadgeRepository userBadgeRepository;
-
     /**
      * Displays the tasks page with all available challenges.
      * @param auth - Spring Security Authentication object containing the logged-in user's details
@@ -63,10 +58,6 @@ public class ChallengePageController {
             if (user != null) {
                 model.addAttribute("userPoints", user.getPoints()); // Add user's current points to the model
                 model.addAttribute("completedToday", challengeService.getCompletedTaskTitlesToday(auth.getName()));
-                String selectedBadgeName = userBadgeRepository.findByUserId(user.getId())
-                    .map(UserBadge::getBadgeName)
-                    .orElse(null);
-                model.addAttribute("selectedBadgeName", selectedBadgeName);
             }
         }
         
