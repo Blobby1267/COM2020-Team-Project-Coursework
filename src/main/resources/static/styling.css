@@ -115,7 +115,7 @@ label {
 
 .sidebar.login label.checkbox {
   font-size: 13px;
-  line-height: 1;
+  line-height: 0.8;
 }
 
 .sidebar {
@@ -973,7 +973,7 @@ canvas {
 
   .sidebar.login label.checkbox {
     font-size: 0.85em;
-    line-height: 1;
+    line-height: 0.6;
   }
 
   input[id="consent"] {
