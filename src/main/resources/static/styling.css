@@ -114,8 +114,12 @@ label {
 }
 
 .sidebar.login label.checkbox {
+  display: block;
+  width: 100%;
+  max-width: 320px;
   font-size: 13px;
   line-height: 0.8;
+  text-align: left;
 }
 
 .sidebar {
@@ -972,8 +976,12 @@ canvas {
   }
 
   .sidebar.login label.checkbox {
+    display: block;
+    width: 50vw;
+    max-width: none;
     font-size: 0.85em;
     line-height: 0.6;
+    text-align: left;
   }
 
   input[id="consent"] {
