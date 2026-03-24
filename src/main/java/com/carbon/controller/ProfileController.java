@@ -25,7 +25,8 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Authentication auth, Model model){
         User user = userRepository.findByUsername(auth.getName());
-        List<Evidence> evidenceList = evidenceRepository.findByUser_Id(user.getId());
+        List<Evidence> evidenceList = evidenceRepository.findByUserId(user.getId());
+        model.addAttribute("user", user);
         model.addAttribute("evidence", evidenceList);
         return "profile";
     }
