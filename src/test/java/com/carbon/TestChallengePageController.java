@@ -87,7 +87,6 @@ public class TestChallengePageController {
     void TestChallengeDoesNotAddUserPointsWhenUserNotFound() {
         
         when(authentication.getName()).thenReturn("unknownUser");
-        when(userRepository.findByUsername("unknownUser")).thenReturn(null);
 
         challengePageController.challenge(authentication, model);
 
