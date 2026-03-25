@@ -1,6 +1,6 @@
 Group Name: Stack Overflowed
 GitHub Repository URL: https://github.com/Blobby1267/COM2020-Team-Project-Coursework
-Deployed Demo URL: https://com2020-team-project-coursework.onrender.com
+Deployed URL: https://com2020-team-project-coursework.onrender.com
 
 Staging URL: https://com2020-team-project-coursework-testing.onrender.com 
 
