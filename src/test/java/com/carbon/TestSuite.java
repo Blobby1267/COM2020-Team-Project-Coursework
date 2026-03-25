@@ -13,6 +13,7 @@ import org.junit.platform.suite.api.Suite;
         TestEvidence.class,
         TestStreak.class,
         TestTravel.class,
+        TestChallengePageController.class
 })
 public class TestSuite {
 }

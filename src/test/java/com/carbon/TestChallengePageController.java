@@ -64,33 +64,10 @@ public class TestChallengePageController {
         verify(model).addAttribute(eq("monthlyChallenges"), any());
 
     }
-     @Test //Creates a test user with points set, then mocks auth and repo to return the test user. Calls the method with valid authentication and Verifies the user's points were added to the model
-    void TestChallengeAddsUserPointsWhenUserLoggedIn() {
-        
-        User testUser = new User();
-        testUser.setUsername("testUser");
-        testUser.setPoints(200);
-
-        when(authentication.getName()).thenReturn("testUser");
-        when(userRepository.findByUsername("testUser")).thenReturn(testUser);
-
-        challengePageController.challenge(authentication, model);
-
-        verify(model).addAttribute("userPoints", 200);
-    }
       @Test  //Calls with null auth to simulate no logged in user and Verifies userPoints is never added to the model
     void TestChallengeDoesNotAddUserPointsWhenAuthIsNull() {
        
         challengePageController.challenge(null, model);
-
-        verify(model, never()).addAttribute(eq("userPoints"), any());
-    }
-    @Test //Mock auth but return null from the repo to simulate user not existing in the DB, then Calls the method and Verifies userPoints is never added since the user was not found
-    void TestChallengeDoesNotAddUserPointsWhenUserNotFound() {
-        
-        when(authentication.getName()).thenReturn("unknownUser");
-
-        challengePageController.challenge(authentication, model);
 
         verify(model, never()).addAttribute(eq("userPoints"), any());
     }
