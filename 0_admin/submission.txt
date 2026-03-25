@@ -1,11 +1,15 @@
 Group Name: Stack Overflowed
 GitHub Repository URL: https://github.com/Blobby1267/COM2020-Team-Project-Coursework
-Deployed Demo URL: localhost:8080/login
+Deployed URL: https://com2020-team-project-coursework.onrender.com
+
+Staging URL: https://com2020-team-project-coursework-testing.onrender.com 
+
+**Our staging website is used for testing and developmental purposes, and can be used as a fallback if the deployed website fails to host. To access the staging website, the deployed URL must be suspended and the staging URL deployed.**
 
 Demo/Test Account Credentials:
-User Demo Account:
-Username: Bob
-Password: 123
 Moderator Demo Account:
+Username: Bob
+Password: 4@$A3nM7_G1
+User Demo Account:
 Username: Ben
-Password: 123
+Password: 73%&Nma1!

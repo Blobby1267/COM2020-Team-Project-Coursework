@@ -90,6 +90,11 @@ public class SettingsController {
             return "redirect:/settings?passwordTooShort=true";
         }
 
+        User user = userRepository.findByUsername(authentication.getName());
+        if (user == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+            return "redirect:/settings?updatedpassword=false";
+        }
+
         userDetailsService.updatePassword(authentication.getName(), oldPassword, newPassword);
         return "redirect:/settings?updatedpassword=true";
     } 

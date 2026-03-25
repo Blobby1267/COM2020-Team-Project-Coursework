@@ -1292,10 +1292,11 @@ canvas {
     height: fit-content;
   }
 
+  /*
   canvas {
-    /* margin: 10px; */
+    margin: 10px;
   }
-
+*/
   .tab {
     overflow: visible;
   }

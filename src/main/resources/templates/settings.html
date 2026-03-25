@@ -197,14 +197,43 @@
       </div>
     </div>
 
+    <script>
+      function showPopup(message) {
+        window.alert(message);
+      }
+    </script>
     <script th:if="${param.usernameTaken != null}">
-      window.alert("The username is already taken.");
+      showPopup("Username change was not successful: that username is already taken.");
     </script>
     <script th:if="${param.invalidUsername != null}">
-      window.alert("Invalid username");
+      showPopup("Username change was not successful: invalid username.");
     </script>
     <script th:if="${param.passwordTooShort != null}">
-      window.alert("Password must be at least 8 characters long.");
+      showPopup("Password change was not successful: password must be at least 8 characters long.");
+    </script>
+    <script th:if="${param.updatedname != null and param.updatedname[0] == 'true'}">
+      showPopup("Username change was successful.");
+    </script>
+    <script th:if="${param.updatedname != null and param.updatedname[0] == 'false'}">
+      showPopup("Username change was not successful.");
+    </script>
+    <script th:if="${param.updatedpassword != null and param.updatedpassword[0] == 'true'}">
+      showPopup("Password change was successful.");
+    </script>
+    <script th:if="${param.updatedpassword != null and param.updatedpassword[0] == 'false'}">
+      showPopup("Password change was not successful: old password was incorrect.");
+    </script>
+    <script th:if="${param.updatedyear != null and param.updatedyear[0] == 'true'}">
+      showPopup("Year change was successful.");
+    </script>
+    <script th:if="${param.updatedyear != null and param.updatedyear[0] == 'false'}">
+      showPopup("Year change was not successful.");
+    </script>
+    <script th:if="${param.updatedcampus != null and param.updatedcampus[0] == 'true'}">
+      showPopup("Campus change was successful.");
+    </script>
+    <script th:if="${param.updatedcampus != null and param.updatedcampus[0] == 'false'}">
+      showPopup("Campus change was not successful.");
     </script>
     <script>
       let dropdown = document.querySelector(".dropdown-button");
