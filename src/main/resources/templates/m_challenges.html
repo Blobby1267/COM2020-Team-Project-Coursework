@@ -50,57 +50,74 @@
         <div class="settings-box">
           <h1>Create challenge</h1>
           <!-- Challenge name input form -->
-          <form action="submit" method="post">
+          <form th:action="@{/create_challenge}" method="post">
             <p>
-              <label for="challenge-name">Challenge name: </label>
-              <input name="challenge-name" placeholder="Challenge name..." />
+              <label for="challengeName">Challenge name: </label>
+              <input name="challengeName" placeholder="Challenge name..." />
             </p>
-          </form>
 
-          <!-- Challenge start date form -->
-          <form action="submit" method="post">
             <p>
-              <label for="start-date">Start date: </label>
-              <input type="date" id="start-date" name="start-date" />
+              <label for="description">Description:</label>
+              <input name = "description" placeholder="Description..."/>
             </p>
-          </form>
+          <!-- Challenge start date form -->
+
+            <p>
+              <label for="startDate">Start date: </label>
+              <input type="date" id="startDate" name="startDate" />
+            </p>
+
 
           <!-- Challenge end date form -->
-          <form action="submit" method="post">
+ 
             <p>
-              <label for="end-date">End date: </label>
-              <input type="date" id="end-date" name="end-date" />
+              <label for="endDate">End date: </label>
+              <input type="date" id="endDate" name="endDate" />
             </p>
-          </form>
+
 
           <!-- Challenge points value form -->
-          <form action="submit" method="post">
             <p>
-              <label for="points">Points: </label>
-              <input name="points" placeholder="Points..." />
+              <label for="carbonSaved">Carbon Saved: </label>
+              <input name="carbonSaved" placeholder="carbon saved..." />
             </p>
-          </form>
+
 
           <!-- Challenge taxonomy dropdown -->
           <p>
             <label for="taxonomy">Taxonomy: </label>
             <select name="taxonomy">
-              <option value="evidence">Sumbit Evidence</option>
-              <option value="no-evidence">No Evidence</option>
+              <option value="diet">Diet</option>
+              <option value="transport">Transport</option>
+              <option value="waste">Waste</option>
+              <option value="food">Food</option>
+              <option value="energy">Energy</option>
+              <option value="resources">Resources</option>
+              <option value="consumption">Consumption</option>
             </select>
           </p>
 
           <!-- Challenge type dropdown -->
-          <p>
-            <label for="challenge-type">Challenge type: </label>
-            <select name="challenge-type">
-              <option value="evidence">Sumbit Evidence</option>
-              <option value="no-evidence">No Evidence</option>
-            </select>
-          </p>
-          <p>
-            <button type="submit">Submit</button>
-          </p>
+            <p>
+              <label for="challengeType">Challenge type: </label>
+              <select name="challengeType">
+                <option value="evidence">Sumbit Evidence</option>
+                <option value="no_evidence">No Evidence</option>
+              </select>
+            </p>
+
+            <p>
+              <label for="frequency">Frequency:</label>
+              <select name="frequency">
+                <option value="Daily">Daily</option>
+                <option value="Weekly">Weekly</option>
+                <option value="Monthly">Monthly</option>
+              </select>
+            </p>
+            <p>
+              <button type="submit">Submit</button>
+            </p>
+          </form>
         </div>
       </div>
     </div>
