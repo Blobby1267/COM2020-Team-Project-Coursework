@@ -31,6 +31,7 @@ import com.carbon.model.User;
 import com.carbon.repository.ChallengeRepository;
 import com.carbon.repository.EvidenceRepository;
 import com.carbon.repository.UserRepository;
+import com.carbon.service.BadgeService;
 import com.carbon.service.EvidenceService;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,6 +44,9 @@ public class TestEvidence {
 
     @Mock
     ChallengeRepository challengeRepository;
+
+    @Mock
+    BadgeService badgeServiceMock;
 
     //Injects all the repository mocks above into the evidence service
     //Avoids the need of creating an evidence service using the constructor
@@ -64,25 +68,17 @@ public class TestEvidence {
         //Create challenge object to return when the method findById() is called on the mock repository inside the service
         Challenge testChallenge = new Challenge();
         when(challengeRepository.findById(anyLong())).thenReturn(Optional.of(testChallenge));
-        when(evidenceRepositoryMock.save(any())).thenReturn(testChallenge);
-        //Create a mock photo object and mock some values for the setters
-        // final MultipartFile mockPhoto = mock(MultipartFile.class);
-        // when(mockPhoto.getOriginalFilename()).thenReturn("");
-        // when(mockPhoto.getSize()).thenReturn((long)10);
-        // when(mockPhoto.getBytes()).thenReturn(new byte[10]);
-        // when(mockPhoto.isEmpty()).thenReturn(false);
-        // when(mockPhoto.getContentType()).thenReturn("image/png");
+        when(evidenceRepositoryMock.save(any(Evidence.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // //Make sure that the submit evidence is fully successful
-        evidenceService.submitEvidence("testUser", photoFile, "testTitle", 1L);
+        Evidence returnedEvidence = evidenceService.submitEvidence("testUser", photoFile, "testTitle", 1L);
 
         //Argument captor is used to get the value passed into a method. We capture the evidence object saved into the repository
         ArgumentCaptor<Evidence> evidenceCaptor = ArgumentCaptor.forClass(Evidence.class);
         verify(evidenceRepositoryMock).save(evidenceCaptor.capture());
 
         //Check that the captor has the same name as our test user, indicating the correct evidence was saved.
-        Evidence testEvidence = evidenceCaptor.getValue();
-        assertEquals("testUser", testEvidence.getUser().getUsername());
+        assertEquals("testUser", returnedEvidence.getUser().getUsername());
     }
 
     @Test
@@ -204,5 +200,52 @@ public class TestEvidence {
 
         assertEquals("Task already completed.", exception.getMessage());
         verify(evidenceRepositoryMock, never()).save(any(Evidence.class));
+    }
+
+    @Test
+    void TestUpdateEvidenceStatusSuccessful(){
+        User user = new User();
+        user.setPoints(100);
+
+        Challenge challenge = new Challenge();
+        challenge.setPoints(50);
+
+        Evidence evidence = new Evidence();
+        evidence.setStatus(EvidenceStatus.PENDING);
+        evidence.setUser(user);
+        evidence.setChallenge(challenge);
+
+        when(evidenceRepositoryMock.findById(10L)).thenReturn(Optional.of(evidence));
+        // Ensure save returns the object to avoid NPE in initializeSummaryFields
+        when(evidenceRepositoryMock.save(any(Evidence.class))).thenAnswer(i -> i.getArgument(0));
+
+        Evidence result = evidenceService.updateEvidenceStatus(10L, EvidenceStatus.ACCEPTED, "Good work!");
+
+        assertEquals(EvidenceStatus.ACCEPTED, result.getStatus());
+        assertEquals("Good work!", result.getReason());
+        assertEquals(150, user.getPoints()); // 100 + 50
+        
+        verify(userRepositoryMock).save(user);
+        verify(badgeServiceMock).evaluateAllBadgeMechanisms(user.getId());
+        verify(evidenceRepositoryMock).save(evidence);
+    }
+
+    @Test
+    void updateEvidenceStatusNoPointsIfAccepted() {
+        User user = new User();
+        user.setPoints(100);
+
+        Evidence evidence = new Evidence();
+        evidence.setStatus(EvidenceStatus.ACCEPTED); // Already accepted
+        evidence.setUser(user);
+        evidence.setChallenge(new Challenge());
+
+        when(evidenceRepositoryMock.findById(1L)).thenReturn(Optional.of(evidence));
+        when(evidenceRepositoryMock.save(any())).thenAnswer(i -> i.getArgument(0));
+
+        evidenceService.updateEvidenceStatus(1L, EvidenceStatus.ACCEPTED, "Still accepted");
+
+        assertEquals(100, user.getPoints()); // Points should remain the same
+        verify(userRepositoryMock, never()).save(any(User.class));
     }
 }
