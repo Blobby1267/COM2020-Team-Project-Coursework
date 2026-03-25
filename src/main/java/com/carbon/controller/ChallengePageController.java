@@ -2,6 +2,9 @@ package com.carbon.controller;
 
 import org.springframework.stereotype.Controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import com.carbon.repository.ChallengeRepository;
 import com.carbon.repository.UserRepository;
 import com.carbon.service.ChallengeService;
 import com.carbon.model.Challenge;
@@ -38,6 +42,9 @@ public class ChallengePageController {
     // Repository for retrieving user information
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ChallengeRepository challengeRepository;
 
     /**
      * Displays the tasks page with all available challenges.
@@ -149,6 +156,36 @@ public class ChallengePageController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("message", e.getMessage()));
         }
+    }
+
+    @PostMapping("/create_challenge")
+    public String createChallenge(@RequestParam String challengeName, @RequestParam String description, @RequestParam Date startDate, @RequestParam Date endDate, @RequestParam Double carbonSaved, @RequestParam String taxonomy, @RequestParam String challengeType, @RequestParam String frequency){
+        LocalDate today = LocalDate.now();
+        Date todayDate = Date.valueOf(today);
+        System.out.println(todayDate);
+        System.out.println(startDate);
+        System.out.println(endDate);
+        if(!startDate.before(todayDate) && endDate.after(todayDate)){
+            System.out.println("hi");
+            Challenge newChallenge = new Challenge();
+            newChallenge.setTitle(challengeName);
+            newChallenge.setDescription(description);
+            newChallenge.setStartDate(startDate);
+            newChallenge.setEndDate(endDate);
+            newChallenge.setCarbonSaved(carbonSaved);
+            newChallenge.setPoints((int)(carbonSaved*10));
+            newChallenge.setFrequency(frequency);
+            newChallenge.setTaxonomy(taxonomy);
+            if(challengeType == "Submit Evidence"){
+                newChallenge.setRequiresEvidence(Boolean.TRUE);
+            }
+            if(challengeType == "No Evidence"){
+                newChallenge.setRequiresEvidence(Boolean.FALSE);
+            }
+            challengeRepository.save(newChallenge);
+            return "redirect:/challenges?true";
+        }
+        return "redirect:/challenges?false";
     }
 
     

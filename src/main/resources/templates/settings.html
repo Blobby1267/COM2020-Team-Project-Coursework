@@ -66,10 +66,10 @@
             <!-- Form to change password -->
             <form th:action="@{/update_password}" method="post">
               <p>
-                <input name="oldPassword" placeholder="Old password..." />
+                <input type="password" name="oldPassword" placeholder="Old password..." />
               </p>
               <p>
-                <input name="newPassword" placeholder="New password..." />
+                <input type="password" name="newPassword" placeholder="New password..." />
               </p>
               <p>
                 <button type="submit">Submit</button>
