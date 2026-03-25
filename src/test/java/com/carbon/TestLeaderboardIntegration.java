@@ -2,6 +2,8 @@ package com.carbon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.carbon.model.LeaderboardEntry;
 import com.carbon.model.User;
 import com.carbon.repository.LeaderboardRepository;
+import com.carbon.repository.UserRepository;
 
 @DataJpaTest
 public class TestLeaderboardIntegration {
@@ -24,6 +27,9 @@ public class TestLeaderboardIntegration {
     @Autowired
     private LeaderboardRepository leaderboardRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private LeaderboardEntry leaderboardEntry1;
     private LeaderboardEntry leaderboardEntry2;
 
@@ -35,25 +41,24 @@ public class TestLeaderboardIntegration {
         will be tested in a separate test class BEFORE TestLeaderboardIntegration 
         is tested.
     */
-    @BeforeEach
-    public void setup(){
-        //Create new users
+    @Test
+    void TestIdAutoIncrement(){
+
         user1 = new User();
         user2 = new User();
         user1.setUsername("user1");
         user2.setUsername("user2");
 
+        userRepository.save(user1);
+        userRepository.save(user2);
+
         //Add them to the leaderboard
-        leaderboardEntry1 = new LeaderboardEntry(user1);
-        leaderboardEntry2 = new LeaderboardEntry(user2);
+        LeaderboardEntry leaderboardEntry1 = new LeaderboardEntry(user1);
+        LeaderboardEntry leaderboardEntry2 = new LeaderboardEntry(user2);
 
         //save entries in repository
         leaderboardRepository.save(leaderboardEntry1);
         leaderboardRepository.save(leaderboardEntry2);
-    }
-
-    @Test
-    public void TestIdAutoIncrement(){
 
         //Test auto increment of the database/repository
         LeaderboardEntry testEntry1 = leaderboardRepository.getReferenceById(leaderboardEntry1.getId());

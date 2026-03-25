@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -96,19 +98,19 @@ public class TestChallengePageController {
     void TestCompleteChallengeSuccessful() {
         when(authentication.getName()).thenReturn("testUser");
 
-        ResponseEntity<String> response = challengePageController.completeChallenge(1L, authentication);
+        ResponseEntity<Map<String, Object>> response = challengePageController.completeChallenge(1L, authentication);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Challenge completed successfully", response.getBody());
+        assertEquals("Challenge completed successfully", response.getBody().get("message"));
 
         verify(challengeService, times(1)).completeChallenge("testUser", 1L);
     }
        @Test //Calls the endpoint with null authentication to simulate a non-logged-in user, Checks 401 Unauthorized is returned with the correct error message
     void TestCompleteChallengeNotAuthenticatedReturns401() {
-        ResponseEntity<String> response = challengePageController.completeChallenge(1L, null);
+        ResponseEntity<Map<String, Object>> response = challengePageController.completeChallenge(1L, null);
 
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-        assertEquals("User not authenticated", response.getBody());
+        assertEquals("User not authenticated", response.getBody().get("message"));
 
         verify(challengeService, never()).completeChallenge(any(), any());
     }
@@ -118,10 +120,10 @@ public class TestChallengePageController {
         doThrow(new RuntimeException("Challenge not found"))
             .when(challengeService).completeChallenge("testUser", 99L);
 
-        ResponseEntity<String> response = challengePageController.completeChallenge(99L, authentication);
+        ResponseEntity<Map<String, Object>> response = challengePageController.completeChallenge(99L, authentication);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Challenge not found", response.getBody());
+        assertEquals("Challenge not found", response.getBody().get("message"));
     }
 
     @Test         //Call the redirect endpoint, checks it redirects to the correct /tasks endpoint

@@ -10,7 +10,9 @@ import org.junit.platform.suite.api.Suite;
         TestLeaderboard.class,
         TestChallengeIntegration.class,
         TestLeaderboardIntegration.class,
-        TestEvidence.class
+        TestEvidence.class,
+        TestStreak.class,
+        TestTravel.class,
 })
 public class TestSuite {
 }
