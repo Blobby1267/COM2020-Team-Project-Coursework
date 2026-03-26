@@ -114,8 +114,7 @@ UPDATE users SET role='MODERATOR' WHERE username='your_username';
 ```
 
 ### 8. Backing up the production database
-
-Use `pg_dump` to create a backup of the PostgreSQL database. Connection details are available in the Render dashboard under **your PostgreSQL instance → Connect**.
+`pg_dump` and `pg_restore` are included with the [PostgreSQL client tools](https://www.postgresql.org/download/). 
 
 **Create a backup:**
 
@@ -136,7 +135,6 @@ PGPASSWORD=<password> pg_dump -h <external-host> -U <username> -d <database-name
 pg_restore -h <external-host> -U <username> -d <database-name> -F c backup.dump
 ```
 
-> **Note:** `pg_dump` and `pg_restore` are included with the [PostgreSQL client tools](https://www.postgresql.org/download/). 
 
 ## Locally Hosting
 
