@@ -113,6 +113,31 @@ New users are registered as `USER` by default. To promote a user to moderator, r
 UPDATE users SET role='MODERATOR' WHERE username='your_username';
 ```
 
+### 8. Backing up the production database
+
+Use `pg_dump` to create a backup of the PostgreSQL database. Connection details are available in the Render dashboard under **your PostgreSQL instance → Connect**.
+
+**Create a backup:**
+
+```bash
+pg_dump -h <external-host> -U <username> -d <database-name> -F c -f backup.dump
+```
+
+- `-F c` produces a custom-format archive (compressed, suitable for `pg_restore`).
+- You will be prompted for the password, or you can set the `PGPASSWORD` environment variable to avoid the prompt:
+
+```bash
+PGPASSWORD=<password> pg_dump -h <external-host> -U <username> -d <database-name> -F c -f backup.dump
+```
+
+**Restore from a backup:**
+
+```bash
+pg_restore -h <external-host> -U <username> -d <database-name> -F c backup.dump
+```
+
+> **Note:** `pg_dump` and `pg_restore` are included with the [PostgreSQL client tools](https://www.postgresql.org/download/). 
+
 ## Locally Hosting
 
 1. Open a terminal in the project root.
