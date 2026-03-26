@@ -166,10 +166,9 @@ For guidance on running testing, please refer the to deployment guide which can 
 
 # Projects / Issues
 
-Our [technical scrumboard](https://github.com/users/Blobby1267/projects/1) can be found in the Projects section, and contains issues for all the code aspects that needed to be implemented from our scrumboard.  
+Our [scrumboard](https://github.com/users/Blobby1267/projects/2) can be found in the Projects section, and contains issues for all the code aspects that needed to be implemented from our sprint plan.  
 
-To see the full scrumboard please see our sprint plan and scrumboards in ```02_process/scrumboard_export.pdf```.  
-
+To see the full sprint plan please see ```3_process/scrumboard_export.pdf```.    
 # Content
 
 ## ```/0_admin```
@@ -186,12 +185,34 @@ Contains all members of the team with their contact emails and student numbers.
 
 ```/cw1_prototype_report.pdf```  
 Report documenting an overview what we have built, and the process in order to achieve it, followed by an evaluation of our first Sprint.  
+**@Author** Armin Golahmadi, Madeleine Walters, Davi Oppes, Ben Hoskins 
+
+```/cw2_final_report.pdf```  
+An expanded and final version of our prototype document, detailing a further overview of what we have built, and the process covered during the second sprint.   
 **@Author** Armin Golahmadi, Madeleine Walters, Davi Oppes, Ben Hoskins  
 
-## ```/2_process```
+## ```/2_handover_pack```
+
+```/handover_index.pdf``` 
+An overview of the website we have built as well as the handover package, covering features of how to maintain it and the current usage.  
+**@Author** Madeleine Walters, Ben Hoskins  
+
+```/deployment_and_operations.pdf``` 
+Guide on how to install the code locally, host the website globally and run the testing suites for the website.  
+**@Author** Ben Hoskins, Davi Oppes  
+
+```/maintenance_and_troubleshooting.pdf```
+Covers any issues encountered in the development process of constructing the website with the solutions taken to resolve them. It also includes how to troubleshoot any potential issues that may occur.
+**@Author** Ben Hoskins, Marko Parkinson, Phoebe Say  
+
+```/data_management.pdf```
+Provides an overview of how the database is constructed, as well as the tables and relationships within it. It also covers backup and recovery, additionally it covers access and security measures.
+**@Author** Ben Hoskins, Jai Thacker
+
+## ```/3_process```
 
 ```/scrumboard_export.pdf```  
-Contains our sprint one plan and our weekly scrum boards used to track our progress in the project.  
+Contains our sprint plans and our weekly scrum boards used to track our progress in the first sprint of the project.  
 **@Author** Madeleine Walters  
 
 ```/meeting_minutes.pdf```  
@@ -202,39 +223,56 @@ Log of all the meetings and notes taken, as well as a log of members contributio
 List of the risks regarding the development of the project and mitigation actions taken, maintained by the Project Lead.  
 **@Author** Madeleine Walters  
 
-## ```/3_ethics_and_licensing```
+## ```/4_ethics_and_licensing```
 
 ```/ethical_and_legal_considerations.pdf```  
-Documents the legal, ethical and accessibility considerations made and upheld in this project and how we have ensured to uphold them.  
+Documents the legal, ethical and accessibility considerations made and upheld in this project and how we have ensured to uphold them. This covers sprint one.  
+**@Author** Zarreen Peeroo  
+
+```/ethical_and_legal_considerations_final.pdf```  
+The updated ethics and legal doc for sprint two, please refer to this one.
 **@Author** Zarreen Peeroo  
 
 ```/license_decision.pdf```  
-Our license for this project and the justification of it.  
+Our license for this project and the justification of it. This covers sprint one. 
 **@Author** Zarreen Peeroo  
 
-```/software_data_inventory.xlsx```  
-Dependencies required for the project.  
-**@Author**  
+```/license_decision_final.pdf```  
+The updated licensing doc, please refer to this one.
+**@Author** Zarreen Peeroo  
 
-## ```/4_technical```
+```/software_data_inventory_final.xlsx```  
+Dependencies required for the project.  
+**@Author** Ben Hoskins, Marko Parkinson 
+
+## ```/5_technical```
 
 ```/source_code_snapshot.zip```  
 ZIP of the source and testing code.  
 **@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Jai Thacker, Davi Oppes  
 
 ```/deployment_guide.pdf```  
-Instructions of running the tests.  
+Instructions of running the tests. 
+**Redundant, please refer to Deployment and Operations guide instead.**
 **@Author** Davi Oppes, Ben Hoskins  
 
 ```/testing_evidence.pdf```  
 Report of the E2E testing scenarios.  
-**@Author** Davi Oppes  
+**@Author** Davi Oppes, Zarreen Peeroo  
 
-## ```/5_presentation```
+```/security_checklist.pdf```  
+Covers all potential security issues around managing data privacy and how we have dealt with them.  
+**@Author** Zarreen Peeroo
+
+## ```/6_presentation```
 
 ```/cw1_demo_slides.pdf```  
-Slides used in the coursework presentation.  
+Slides used in the coursework presentation for sprint one.  
 **@Author** Zarreen Peeroo, Phoebe Say, Madeleine Walters  
+
+```/cw2_demo_slides.pdf```  
+Slides used in the coursework presentation for sprint two.  
+**@Author** Madeleine Walters  
 
 ## ```/src```
 Primary source code and test code for the Spring Boot application.  
