@@ -202,11 +202,11 @@ Guide on how to install the code locally, host the website globally and run the 
 **@Author** Ben Hoskins, Davi Oppes  
 
 ```/maintenance_and_troubleshooting.pdf```
-Covers any issues encountered in the development process of constructing the website with the solutions taken to resolve them. It also includes how to troubleshoot any potential issues that may occur.
+Covers any issues encountered in the development process of constructing the website with the solutions taken to resolve them. It also includes how to troubleshoot any potential issues that may occur.  
 **@Author** Ben Hoskins, Marko Parkinson, Phoebe Say  
 
 ```/data_management.pdf```
-Provides an overview of how the database is constructed, as well as the tables and relationships within it. It also covers backup and recovery, additionally it covers access and security measures.
+Provides an overview of how the database is constructed, as well as the tables and relationships within it. It also covers backup and recovery, additionally it covers access and security measures.  
 **@Author** Ben Hoskins, Jai Thacker
 
 ## ```/3_process```
@@ -216,7 +216,7 @@ Contains our sprint plans and our weekly scrum boards used to track our progress
 **@Author** Madeleine Walters  
 
 ```/meeting_minutes.pdf```  
-Log of all the meetings and notes taken, as well as a log of members contributions on specific dates.  
+Log of all the meetings and notes taken, as well as a log of members contributions on specific dates.   
 **@Author** Madeleine Walters  
 
 ```/risk_register.pdf```  
@@ -226,23 +226,23 @@ List of the risks regarding the development of the project and mitigation action
 ## ```/4_ethics_and_licensing```
 
 ```/ethical_and_legal_considerations.pdf```  
-Documents the legal, ethical and accessibility considerations made and upheld in this project and how we have ensured to uphold them. This covers sprint one.  
+Documents the legal, ethical and accessibility considerations made and upheld in this project and how we have ensured to uphold them. This covers sprint one.   
 **@Author** Zarreen Peeroo  
 
 ```/ethical_and_legal_considerations_final.pdf```  
-The updated ethics and legal doc for sprint two, please refer to this one.
+The updated ethics and legal doc for sprint two, please refer to this one.  
 **@Author** Zarreen Peeroo  
 
 ```/license_decision.pdf```  
-Our license for this project and the justification of it. This covers sprint one. 
+Our license for this project and the justification of it. This covers sprint one.  
 **@Author** Zarreen Peeroo  
 
 ```/license_decision_final.pdf```  
-The updated licensing doc, please refer to this one.
+The updated licensing doc, please refer to this one.  
 **@Author** Zarreen Peeroo  
 
 ```/software_data_inventory_final.xlsx```  
-Dependencies required for the project.  
+Dependencies required for the project.   
 **@Author** Ben Hoskins, Marko Parkinson 
 
 ## ```/5_technical```
@@ -252,7 +252,7 @@ ZIP of the source and testing code.
 **@Author** Ben Hoskins, Marko Parkinson, Phoebe Say, Jai Thacker, Davi Oppes  
 
 ```/deployment_guide.pdf```  
-Instructions of running the tests. 
+Instructions of running the tests.  
 **Redundant, please refer to Deployment and Operations guide instead.**
 **@Author** Davi Oppes, Ben Hoskins  
 
